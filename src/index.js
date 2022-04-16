@@ -1,5 +1,5 @@
 import React from "react";
-import { render as ReactDOMRender } from "react-dom";
+import { createRoot } from "react-dom/client";
 import App from "./components/App";
 
 import "./index.css";
@@ -12,6 +12,11 @@ window.roamToLatex = {};
 		version: "0.1.0"
 	};
 
-	ReactDOMRender(<App extension={extension}/>, document);
+	window.roamToLatex = {
+		extension
+	};
+
+	const root = createRoot(document.getElementsByTagName("body")[0]);
+	root.render(<App extension={extension}/>);
 
 })();
