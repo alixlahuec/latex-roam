@@ -99,8 +99,8 @@ function ExportDialog({ isOpen, onClose, uid }){
 					<Select 
 						filterable={false}
 						itemRenderer={itemRenderer}
+						items={Object.keys(documentClasses)}
 						onItemSelect={setDocumentClass}
-						options={Object.keys(documentClasses)}
 						placement="bottom"
 						popoverProps={popoverProps}>
 						<Button minimal={true} text={documentClasses[documentClass]} />
@@ -128,8 +128,8 @@ function ExportDialog({ isOpen, onClose, uid }){
 					<Select
 						filterable={false}
 						itemRenderer={itemRenderer}
+						items={Object.keys(headers)}
 						onItemSelect={handleStartHeaderChange}
-						options={Object.keys(headers)}
 						placement="bottom"
 						popoverProps={popoverProps} >
 						<Button minimal={true} text={headers[startWithHeader]} />

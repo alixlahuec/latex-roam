@@ -9,8 +9,6 @@ class App extends Component {
 	}
 
 	render(){
-		// let { extension } = this.props;
-
 		return (
 			<ExportContextProvider>
 				<GraphWatcher />

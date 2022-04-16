@@ -69,9 +69,9 @@ const GraphWatcher = React.memo(function GraphWatcher(){
 	return menus 
 		? menus.map((div, index) => {
 			let pageUID = div.getAttribute("data-uid");
-			return (
-				createPortal(<ExportButton key={index} uid={pageUID} />, div)
-			);
+			return pageUID
+				? createPortal(<ExportButton key={index} uid={pageUID} />, div)
+				: null;
 		})
 		: null;
 });
