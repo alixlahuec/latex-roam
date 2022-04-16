@@ -1,0 +1,47 @@
+{
+    "name": "@alixlahuec/latex-roam",
+    "version": "0.1.0",
+    "description": "Exporter to LaTeX for Roam Research users",
+    "license": "Apache-2.0",
+    "author": {
+        "name": "Alix Lahuec",
+        "email": "alix.lahuec@onmail.com",
+        "url": "https://ae-lhc.com"
+    },
+    "repository": "alixlahuec/latex-roam",
+    "bugs": {
+        "url": "https://github.com/alixlahuec/latex-roam/issues",
+        "email": "alix.lahuec@onmail.com"
+    },
+    "main": ".src/index.js",
+    "browser": "dist/roamToLatex.min.js",
+    "unpkg": "dist/roamToLatex.min.js",
+    "scripts": {
+        "dev": "webpack --config webpack.dev.config.js",
+        "build": "webpack",
+        "lint": "eslint"
+    },
+    "devDependencies": {
+        "@babel/core": "^7.17.9",
+        "@babel/preset-env": "^7.16.11",
+        "@babel/preset-react": "^7.16.7",
+        "babel-loader": "^8.2.4",
+        "css-loader": "^6.7.1",
+        "eslint": "^8.13.0",
+        "eslint-plugin-react": "^7.29.4",
+        "eslint-plugin-react-hooks": "^4.4.0",
+        "style-loader": "^3.3.1",
+        "webpack": "^5.72.0",
+        "webpack-cli": "^4.9.2",
+        "webpack-merge": "^5.8.0"
+    },
+    "dependencies": {
+        "@blueprintjs/core": "^4.1.2",
+        "@blueprintjs/icons": "^4.2.3",
+        "@blueprintjs/select": "^4.1.2",
+        "client-zip": "^2.0.1",
+        "prop-types": "^15.8.1",
+        "react": "^18.0.0",
+        "react-dom": "^18.0.0"
+    }
+}

@@ -1,0 +1,27 @@
+.roam-to-latex--dialog {
+    --rl-dialog-margin: 20%;
+    align-self: baseline;
+    width: calc(100% - 2*var(--rl-dialog-margin));
+}
+
+#roam-to-latex-export-settings {
+    align-items:center;
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:space-between;
+    margin-bottom:20px;
+}
+
+/* SMALLER DISPLAYS */
+
+@media (max-width: 1000px){
+    .roam-to-latex--dialog {
+        --rl-dialog-margin: 10%;
+    }
+}
+
+@media (max-width: 700px){
+    .roam-to-latex--dialog {
+        --rl-dialog-margin: 5%;
+    }
+}
