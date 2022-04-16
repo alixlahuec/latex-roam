@@ -9,14 +9,24 @@ window.roamToLatex = {};
 (()=>{
 
 	const extension = {
+		slot: "roam-to-latex",
 		version: "0.1.0"
 	};
 
 	window.roamToLatex = {
-		extension
+		version: extension.version
 	};
 
-	const root = createRoot(document.getElementsByTagName("body")[0]);
+	try{ 
+		document.getElementById(extension.version).remove(); 
+	} catch(e){
+		// Do nothing
+	}
+	let extensionSlot = document.createElement("div");
+	extensionSlot.id = extension.slot;
+	document.getElementById("app").appendChild(extensionSlot);
+
+	const root = createRoot(document.getElementById(extension.slot));
 	root.render(<App extension={extension}/>);
 
 })();
