@@ -15,6 +15,7 @@ function addMenus(){
 		let pageUID = findRoamPage(title);
 
 		let menu = document.createElement("div");
+		menu.classList.add(menuClass);
 		menu.setAttribute("data-title", title);
 		if(pageUID) { menu.setAttribute("data-uid", pageUID); }
 
