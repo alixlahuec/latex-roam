@@ -4,12 +4,10 @@
     width: calc(100% - 2*var(--rl-dialog-margin));
 }
 
-#roam-to-latex-export-settings {
-    align-items:center;
-    display:flex;
-    flex-wrap:wrap;
-    justify-content:space-between;
-    margin-bottom:20px;
+.roam-to-latex--settings-row {
+    align-items: center;
+    display: flex;
+    margin: 10px 0px;
 }
 
 /* SMALLER DISPLAYS */

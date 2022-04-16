@@ -19,10 +19,10 @@ const documentClasses = {
 };
 
 const headers = {
-	"1": "Level 1",
-	"2": "Level 2",
-	"3": "Level 3",
-	"4": "Level 4"
+	"1": "Start with header 1",
+	"2": "Start with header 2",
+	"3": "Start with header 3",
+	"4": "Start with header 4"
 };
 
 function itemRenderer(item, itemProps) {
@@ -95,7 +95,7 @@ function ExportDialog({ isOpen, onClose, uid }){
 		title="Export to LaTeX" >
 		<div className={Classes.DIALOG_BODY}>
 			<div id="roam-to-latex-export-div">
-				<div id="roam-to-latex-export-settings">
+				<div className="roam-to-latex--settings-row">
 					<Select 
 						filterable={false}
 						itemRenderer={itemRenderer}
@@ -103,8 +103,11 @@ function ExportDialog({ isOpen, onClose, uid }){
 						onItemSelect={setDocumentClass}
 						placement="bottom"
 						popoverProps={popoverProps}>
-						<Button minimal={true} text={documentClasses[documentClass]} />
+						<Button icon="double-caret-vertical" minimal={true} text={documentClasses[documentClass]} />
 					</Select>
+					<Switch checked={useCover} label="Use cover title" onChange={toggleCover} />
+				</div>
+				<div className="roam-to-latex--settings-row">
 					<InputGroup
 						autoComplete="off"
 						leftElement={<Tag minimal={true}>Written by</Tag>}
@@ -123,8 +126,8 @@ function ExportDialog({ isOpen, onClose, uid }){
 						type="text"
 						value={title}
 					/>
-					<Switch checked={useCover} label="Use cover title" onChange={toggleCover} />
-					<Switch checked={useNumberedHeaders} label="Numbered headers" onChange={toggleNumberedHeaders} />
+				</div>
+				<div className="roam-to-latex--settings-row">
 					<Select
 						filterable={false}
 						itemRenderer={itemRenderer}
@@ -132,21 +135,23 @@ function ExportDialog({ isOpen, onClose, uid }){
 						onItemSelect={handleStartHeaderChange}
 						placement="bottom"
 						popoverProps={popoverProps} >
-						<Button minimal={true} text={headers[startWithHeader]} />
+						<Button icon="double-caret-vertical" minimal={true} text={headers[startWithHeader]} />
 					</Select>
-					<Button id="roam-to-latex-export-trigger" intent="success" onClick={triggerExport} outlined={true} text="Export page contents" />
+					<Switch checked={useNumberedHeaders} label="Numbered headers" onChange={toggleNumberedHeaders} />
 				</div>
-				<form
+				<Button id="roam-to-latex-export-trigger" intent="success" minimal={true} onClick={triggerExport} outlined={true} text="Export page contents" />
+			</div>
+			{output.tex.content != ""
+				? <form
 					action="https://www.overleaf.com/docs"
 					className={Classes.FILL} 
 					id="roam-to-latex-export-form"
 					method="POST"
-					style={{ display: "none" }}
 					target="_blank" >
 					<TextArea id="roam-to-latex-export-contents" fill={true} growVertically={false} inputRef={outputArea} name="snip" onChange={handleOutputChange} readOnly={true} small={true} style={{ height: "200px" }} value={output.tex.content} />
-					<Button disabled={output.tex.content != ""} text="Export to Overleaf" type="submit" />
+					<Button text="Export to Overleaf" type="submit" />
 				</form>
-			</div>
+				: null}
 		</div>
 		<div className={Classes.DIALOG_FOOTER}>
 			<div className={Classes.DIALOG_FOOTER_ACTIONS}>
@@ -160,9 +165,8 @@ function ExportDialog({ isOpen, onClose, uid }){
 					? <AnchorButton download={title + ".tex"} href={output.tex.blobURL} outlined={true} text="Download .tex file" />
 					: null}
 				{output.full_package.blobURL
-					? <AnchorButton download={title + ".zip"} href={output.full_package.blobURL} />
+					? <AnchorButton download={title + ".zip"} href={output.full_package.blobURL} intent="primary" outlined={true} text="Download all files" />
 					: null}
-				<Button className="roam-to-latex-export-package" disabled={true} intent="primary" outlined={true} text="Download all files" />
 			</div>
 		</div>
 	</Dialog>;
