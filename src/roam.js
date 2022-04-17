@@ -1,3 +1,10 @@
+function addBlockMenuCommand(label, onClick){
+	return window.roamAlphaAPI.ui.blockContextMenu.addCommand({
+		label,
+		callback: (entity) => onClick(entity)
+	});
+}
+
 /** Searches a Roam page by its title
  * @param {String} title - The title to be searched
  * @returns {String|false} The UID of the Roam page (if it exists), otherwise `false`
@@ -51,6 +58,7 @@ function queryPageContentsByTitle(title){
 }
 
 export {
+	addBlockMenuCommand,
 	findRoamPage,
 	getBlockText,
 	queryBlockContents,

@@ -4,10 +4,26 @@
     width: calc(100% - 2*var(--rl-dialog-margin));
 }
 
+.roam-to-latex--menu {
+    opacity: 0.6;
+}
+
 .roam-to-latex--settings-row {
     align-items: center;
     display: flex;
-    margin: 10px 0px;
+}
+
+.roam-to-latex--settings-row > * {
+    margin: 5px;
+}
+
+#roam-to-latex-export-trigger {
+    justify-self: right;
+}
+
+#roam-to-latex-export-form {
+    margin: 10px;
+    padding: 10px;
 }
 
 /* SMALLER DISPLAYS */

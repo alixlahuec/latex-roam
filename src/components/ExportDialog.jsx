@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { bool, func, string } from "prop-types";
-import { AnchorButton, Button, Classes, Dialog, InputGroup, MenuItem, Switch, Tag, TextArea } from "@blueprintjs/core";
+import { AnchorButton, Button, Classes, Dialog, InputGroup, Label, MenuItem, Switch, TextArea } from "@blueprintjs/core";
 import { Select } from "@blueprintjs/select";
 
 import { useExportContext } from "./ExportContext";
@@ -96,6 +96,7 @@ function ExportDialog({ isOpen, onClose, uid }){
 		<div className={Classes.DIALOG_BODY}>
 			<div id="roam-to-latex-export-div">
 				<div className="roam-to-latex--settings-row">
+					<Label>Document class :</Label>
 					<Select 
 						filterable={false}
 						itemRenderer={itemRenderer}
@@ -103,31 +104,30 @@ function ExportDialog({ isOpen, onClose, uid }){
 						onItemSelect={setDocumentClass}
 						placement="bottom"
 						popoverProps={popoverProps}>
-						<Button icon="double-caret-vertical" minimal={true} text={documentClasses[documentClass]} />
+						<Button minimal={true} rightIcon="double-caret-vertical" text={documentClasses[documentClass]} />
 					</Select>
 					<Switch checked={useCover} label="Use cover title" onChange={toggleCover} />
 				</div>
 				<div className="roam-to-latex--settings-row">
+					<Label>Author(s) :</Label>
 					<InputGroup
 						autoComplete="off"
-						leftElement={<Tag minimal={true}>Written by</Tag>}
 						onChange={handleAuthorsChange}
-						placeholder="Author(s)"
 						spellCheck="false"
 						type="text"
 						value={authors}
 					/>
+					<Label>Title :</Label>
 					<InputGroup
 						autoComplete="off"
-						leftElement={<Tag minimal={true}>Title</Tag>}
 						onChange={handleTitleChange}
-						placeholder="Document Title"
 						spellCheck="false"
 						type="text"
 						value={title}
 					/>
 				</div>
 				<div className="roam-to-latex--settings-row">
+					<Label>Headers :</Label>
 					<Select
 						filterable={false}
 						itemRenderer={itemRenderer}
@@ -135,11 +135,13 @@ function ExportDialog({ isOpen, onClose, uid }){
 						onItemSelect={handleStartHeaderChange}
 						placement="bottom"
 						popoverProps={popoverProps} >
-						<Button icon="double-caret-vertical" minimal={true} text={headers[startWithHeader]} />
+						<Button minimal={true} rightIcon="double-caret-vertical" text={headers[startWithHeader]} />
 					</Select>
-					<Switch checked={useNumberedHeaders} label="Numbered headers" onChange={toggleNumberedHeaders} />
+					<Switch checked={useNumberedHeaders} label="Use numbers" onChange={toggleNumberedHeaders} />
 				</div>
-				<Button id="roam-to-latex-export-trigger" intent="success" minimal={true} onClick={triggerExport} outlined={true} text="Export page contents" />
+				<div className="roam-to-latex--settings-row">
+					<Button id="roam-to-latex-export-trigger" intent="success" minimal={true} onClick={triggerExport} outlined={true} text="Export page contents" />
+				</div>
 			</div>
 			{output.tex.content != ""
 				? <form
@@ -149,7 +151,7 @@ function ExportDialog({ isOpen, onClose, uid }){
 					method="POST"
 					target="_blank" >
 					<TextArea id="roam-to-latex-export-contents" fill={true} growVertically={false} inputRef={outputArea} name="snip" onChange={handleOutputChange} readOnly={true} small={true} style={{ height: "200px" }} value={output.tex.content} />
-					<Button text="Export to Overleaf" type="submit" />
+					<Button minimal={true} text="Export to Overleaf" type="submit" />
 				</form>
 				: null}
 		</div>

@@ -47,7 +47,7 @@ async function createTEX(exportUID, document_class = "book", {numbered = true, c
 		}
 	}
 
-	let bibPreamble = bibliography.length > 0 ? "\\usepackage[\nbackend=biber,\nstyle=apa,\nsorting=nyt]{biblatex}\n\\addbibresource{bibliography.bib}\n" : "";
+	let bibPreamble = bibliography.length > 0 ? "\\usepackage[backend=biber,style=apa,sorting=nyt]{biblatex}\n\\addbibresource{bibliography.bib}\n" : "";
 	let bibPrint = bibliography.length > 0 ? "\\medskip\n\n\\printbibliography\n" : "";
 
 	let header = `\n\\documentclass{${document_class}}\n\\title{${title}}\n\\author{${authors}}\n\\date{${todayDMY()}}\n\n\\usepackage{amsmath}\n\\usepackage{graphicx}\n\\usepackage{soul}\n${bibPreamble}\\usepackage{hyperref}\n\\hypersetup{colorlinks=true,citecolor=black}\n\n\\begin{document}\n${cover ? "\\maketitle" : ""}`;
