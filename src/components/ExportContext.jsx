@@ -86,12 +86,13 @@ const ExportContextProvider = ({ children }) => {
 
 		try {
 			let figFile = await fetch(url, { method: "GET" });
+			let figBlob = await figFile.blob();
 
 			setOutput(prevState => {
 				const { list } = prevState.figs;
 				figCount = list.length + 1;
 				let thisFig = {
-					input: figFile,
+					input: figBlob,
 					name: `figure-${figCount}.${fileExt}`
 				};
     

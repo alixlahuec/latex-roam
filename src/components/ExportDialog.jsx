@@ -139,9 +139,7 @@ function ExportDialog({ isOpen, onClose, uid }){
 					</Select>
 					<Switch checked={useNumberedHeaders} label="Use numbers" onChange={toggleNumberedHeaders} />
 				</div>
-				<div className="roam-to-latex--settings-row">
-					<Button id="roam-to-latex-export-trigger" intent="success" minimal={true} onClick={triggerExport} outlined={true} text="Export page contents" />
-				</div>
+				<Button id="roam-to-latex-export-trigger" intent="success" onClick={triggerExport} text="Export page contents" />
 			</div>
 			{output.tex.content != ""
 				? <form
@@ -151,7 +149,7 @@ function ExportDialog({ isOpen, onClose, uid }){
 					method="POST"
 					target="_blank" >
 					<TextArea id="roam-to-latex-export-contents" fill={true} growVertically={false} inputRef={outputArea} name="snip" onChange={handleOutputChange} readOnly={true} small={true} style={{ height: "200px" }} value={output.tex.content} />
-					<Button minimal={true} text="Export to Overleaf" type="submit" />
+					<Button id="roam-to-latex--overleaf-trigger" intent="success" text="Export to Overleaf" type="submit" />
 				</form>
 				: null}
 		</div>

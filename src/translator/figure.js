@@ -1,13 +1,13 @@
 import { formatText } from "./common";
 
-function figure(caption, url, extra, handlers){
+async function figure(caption, url, extra, handlers){
 	const { addFigure } = handlers;
 	let cleanURL = url.replaceAll("%2F", "/");
 	let fileInfo = Array.from(cleanURL.matchAll(/[^/]+?\.(png|jpg|jpeg)/g));
 	// let fileName = fileInfo[0][0];
 	let fileExt = fileInfo[0][1];
 
-	let figIndex = addFigure(url, fileExt);
+	let figIndex = await addFigure(url, fileExt);
 
 	// Parse extra information : label, description
 	// Note : the first bit of inline code will be used as the figure label, if there are others they will be ignored
