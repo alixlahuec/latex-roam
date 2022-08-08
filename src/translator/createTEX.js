@@ -1,12 +1,12 @@
 /* eslint-disable no-useless-escape */
 
-import { queryBlockContents } from "../roam";
 import { makeBibliography, sortRoamBlocks, todayDMY } from "../utils";
 import { formatText, grabRawText, isTableBlock, raw, regex } from "./common";
 import makeTable from "./makeTable";
+import { queryBlockContents } from "../roam";
 
 
-function convertBlocks(arr, {document_class = "book", numbered = true, start_header = 1} = {}, handlers){
+function convertBlocks(arr, { document_class = "book", numbered = true, start_header = 1 } = {}, handlers){
 	let output = "";
 	const blocks = sortRoamBlocks(arr);
 
@@ -59,7 +59,6 @@ async function createTEX(exportUID, document_class = "book", { numbered = true, 
 		console.error(e);
 	}
 
-	let footer = `\n${bibPrint}\\end{document}`;
 	const footer = `\n${bibPrint}\\end{document}`;
 
 	return `${header}\n${body}\n${footer}`;
@@ -127,6 +126,7 @@ function parseBlock(block, handlers){
 				break;
 			case "bulleted":
 			case "numbered":
+			default:
 				output = `${output}\n${makeList(children, format, 0, handlers)}`;
 				break;
 			}

@@ -1,6 +1,6 @@
 /* eslint-disable no-useless-escape */
 
-function cleanUpHref(url, text){
+function cleanUpHref({ text, url }){
 	let target = url;
 	target = target.replaceAll(/\\\&/g, "&");
 	target = target.replaceAll(/\\\%/g, "%");
@@ -57,14 +57,14 @@ async function makeBibliography(citekeys, {include = "biblatex"} = {}){
 }
 
 function sortRoamBlocks(arr){
-	return arr.sort((a,b) => a.order < b.order ? -1 : 1);
+	return [...arr].sort((a,b) => a.order < b.order ? -1 : 1);
 }
 
 function todayDMY(){
-	let today = new Date();
-	let dd = String(today.getDate()).padStart(2, "0");
-	let mm = String(today.getMonth() + 1).padStart(2, "0");
-	let yyyy = today.getFullYear();
+	const today = new Date();
+	const dd = String(today.getDate()).padStart(2, "0");
+	const mm = String(today.getMonth() + 1).padStart(2, "0");
+	const yyyy = today.getFullYear();
 
 	return `${dd}/${mm}/${yyyy}`;
 }
