@@ -155,13 +155,15 @@ const ExportContextProvider = ({ children }) => {
 	}, [output]);
 
 	const contextValue = useMemo(() => ({
-		addBibliography, 
-		addFigure, 
 		output, 
-		resetOutput, 
-		updateTEX, 
-		zipFigures,
-		zipPackage
+		handlers: {
+			addBibliography,
+			addFigure,
+			resetOutput,
+			updateTEX,
+			zipFigures,
+			zipPackage
+		}
 	}), [addBibliography, addFigure, output, resetOutput, updateTEX, zipFigures, zipPackage]);
 
 	return (

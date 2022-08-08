@@ -35,7 +35,7 @@ function itemRenderer(item, itemProps) {
 }
 
 function ExportDialog({ isOpen, onClose, uid }){
-	const { output, resetOutput, updateTEX, addBibliography, addFigure, zipFigures, zipPackage } = useExportContext();
+	const { output, handlers } = useExportContext();
 	const outputArea = useRef();
 	const [documentClass, setDocumentClass] = useState("report");
 	const [authors, setAuthors] = useState("");
@@ -63,32 +63,30 @@ function ExportDialog({ isOpen, onClose, uid }){
 	}, []);
 
 	const handleOutputChange = useCallback((event) => {
-		let value = event.target?.value;
-		updateTEX(value || "");
-	}, [updateTEX]);
-
-	const outputHandlers = useMemo(() => {
-		return {
-			addBibliography,
-			addFigure,
-			resetOutput,
-			updateTEX,
-			zipFigures,
-			zipPackage
-		};
-	}, [addBibliography, addFigure, resetOutput, updateTEX, zipFigures, zipPackage]);
+		handlers.updateTEX(event.target.value || "");
+	}, [handlers]);
 
 	const triggerExport = useCallback(() => {
-		startExport(uid, { authors, document_class: documentClass, headersNumbered: useNumberedHeaders, startWithHeader, title, useCover }, outputHandlers);
-	}, [uid, authors, documentClass, useNumberedHeaders, startWithHeader, title, useCover, outputHandlers]);
+		startExport(
+			uid, 
+			{ 
+				authors, 
+				document_class: documentClass, 
+				headersNumbered: useNumberedHeaders, 
+				startWithHeader, 
+				title, 
+				useCover
+			}, 
+			handlers);
+	}, [uid, authors, documentClass, handlers, useNumberedHeaders, startWithHeader, title, useCover]);
 
 	useEffect(() => {
 		if(isOpen){
 			setTitle(document.title);
 		} else {
-			resetOutput();
+			handlers.resetOutput();
 		}
-	}, [isOpen, resetOutput]);
+	}, [isOpen, handlers, setTitle]);
 
 	return <Dialog 
 		className={CustomClasses.DIALOG_CLASS} 
