@@ -1,9 +1,11 @@
 import React, { useCallback, useState } from "react";
 import { string } from "prop-types";
+
 import { Button } from "@blueprintjs/core";
 import ExportDialog from "./ExportDialog";
 
-import { buttonClass } from "../classes";
+import { CustomClasses } from "../constants";
+
 
 function ExportButton({ uid }){
 	const [isDialogOpen, setDialogOpen] = useState(false);
@@ -12,7 +14,7 @@ function ExportButton({ uid }){
 	const closeDialog = useCallback(() => setDialogOpen(false), []);
 
 	return <>
-		<Button className={buttonClass} icon="rect-width" minimal={true} onClick={openDialog} text="LaTeX" />
+		<Button className={CustomClasses.BUTTON_CLASS} icon="rect-width" minimal={true} onClick={openDialog} text="LaTeX" />
 		<ExportDialog isOpen={isDialogOpen} onClose={closeDialog} uid={uid} />
 	</>;
 }

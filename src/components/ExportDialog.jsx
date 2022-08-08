@@ -5,11 +5,13 @@ import { Select } from "@blueprintjs/select";
 
 import { useExportContext } from "./ExportContext";
 import startExport from "../export";
-import { dialogClass, popoverClass } from "../classes";
+
+import { CustomClasses } from "../constants";
+
 
 const popoverProps = {
 	minimal: true,
-	popoverClassName: popoverClass
+	popoverClassName: CustomClasses.POPOVER_CLASS
 };
 
 const documentClasses = {
@@ -88,14 +90,14 @@ function ExportDialog({ isOpen, onClose, uid }){
 	}, [isOpen, resetOutput]);
 
 	return <Dialog 
-		className={dialogClass} 
+		className={CustomClasses.DIALOG_CLASS} 
 		isCloseButtonShown={true}
 		isOpen={isOpen} 
 		onClose={onClose} 
 		title="Export to LaTeX" >
 		<div className={Classes.DIALOG_BODY}>
-			<div id="roam-to-latex-export-div">
-				<div className="roam-to-latex--settings-row">
+			<div id="latex-roam-export-div">
+				<div className="latex-roam--settings-row">
 					<Label>Document class :</Label>
 					<Select 
 						filterable={false}
@@ -108,7 +110,7 @@ function ExportDialog({ isOpen, onClose, uid }){
 					</Select>
 					<Switch checked={useCover} label="Use cover title" onChange={toggleCover} />
 				</div>
-				<div className="roam-to-latex--settings-row">
+				<div className="latex-roam--settings-row">
 					<Label>Author(s) :</Label>
 					<InputGroup
 						autoComplete="off"
@@ -126,7 +128,7 @@ function ExportDialog({ isOpen, onClose, uid }){
 						value={title}
 					/>
 				</div>
-				<div className="roam-to-latex--settings-row">
+				<div className="latex-roam--settings-row">
 					<Label>Headers :</Label>
 					<Select
 						filterable={false}
@@ -139,17 +141,17 @@ function ExportDialog({ isOpen, onClose, uid }){
 					</Select>
 					<Switch checked={useNumberedHeaders} label="Use numbers" onChange={toggleNumberedHeaders} />
 				</div>
-				<Button id="roam-to-latex-export-trigger" intent="success" onClick={triggerExport} text="Export page contents" />
+				<Button id="latex-roam-export-trigger" intent="success" onClick={triggerExport} text="Export page contents" />
 			</div>
 			{output.tex.content != ""
 				? <form
 					action="https://www.overleaf.com/docs"
 					className={Classes.FILL} 
-					id="roam-to-latex-export-form"
+					id="latex-roam-export-form"
 					method="POST"
 					target="_blank" >
-					<TextArea id="roam-to-latex-export-contents" fill={true} growVertically={false} inputRef={outputArea} name="snip" onChange={handleOutputChange} readOnly={true} small={true} style={{ height: "200px" }} value={output.tex.content} />
-					<Button id="roam-to-latex--overleaf-trigger" intent="success" text="Export to Overleaf" type="submit" />
+					<TextArea id="latex-roam-export-contents" fill={true} growVertically={false} inputRef={outputArea} name="snip" onChange={handleOutputChange} readOnly={true} small={true} style={{ height: "200px" }} value={output.tex.content} />
+					<Button id="latex-roam--overleaf-trigger" intent="success" text="Export to Overleaf" type="submit" />
 				</form>
 				: null}
 		</div>

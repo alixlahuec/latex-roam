@@ -1,42 +1,42 @@
-.roam-to-latex--dialog {
+.latex-roam--dialog {
     --rl-dialog-margin: 20%;
     align-self: baseline;
     width: calc(100% - 2*var(--rl-dialog-margin));
 }
 
-.roam-to-latex--menu {
+.latex-roam--menu {
     opacity: 0.6;
 }
 
-.roam-to-latex--settings-row {
+.latex-roam--settings-row {
     align-items: center;
     display: flex;
 }
 
-.roam-to-latex--settings-row > *,
-.roam-to-latex--settings-row > label.bp4-label {
+.latex-roam--settings-row > *,
+.latex-roam--settings-row > label.bp4-label {
     margin: 5px;
 }
 
-#roam-to-latex-export-form {
+#latex-roam-export-form {
     margin: 10px;
     padding: 10px;
 }
 
-#roam-to-latex--overleaf-trigger {
+#latex-roam--overleaf-trigger {
     margin: 10px 0px;
 }
 
 /* SMALLER DISPLAYS */
 
 @media (max-width: 1000px){
-    .roam-to-latex--dialog {
+    .latex-roam--dialog {
         --rl-dialog-margin: 10%;
     }
 }
 
 @media (max-width: 700px){
-    .roam-to-latex--dialog {
+    .latex-roam--dialog {
         --rl-dialog-margin: 5%;
     }
 }
