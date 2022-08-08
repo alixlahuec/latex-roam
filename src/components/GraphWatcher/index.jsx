@@ -1,29 +1,13 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import ExportButton from "./ExportButton";
 
-import { findRoamPage } from "../roam";
-import { hasNodeListChanged } from "../utils";
+import ExportButton from "../ExportButton";
 
-import { menuClass } from "../classes";
+import { addMenuDivs, findMenus } from "./utils";
+import { hasNodeListChanged } from "../../utils";
 
-function addMenus(){
-	let newHeaders = Array.from(document.querySelectorAll("h1.rm-title-display"))
-		.filter(page => !(page.parentElement.querySelector(`.${menuClass}`)));
-	for(const header of newHeaders){
-		let title = header.querySelector("span") ? header.querySelector("span").innerText : header.innerText;
-		let pageUID = findRoamPage(title);
+import { CustomClasses } from "../../constants";
 
-		let menu = document.createElement("div");
-		menu.classList.add(menuClass);
-		menu.setAttribute("data-title", title);
-		if(pageUID) { menu.setAttribute("data-uid", pageUID); }
-
-		header.insertAdjacentElement("afterend", menu);
-	}
-}
-
-const findMenus = () =>Array.from(document.querySelectorAll(`.${menuClass}`));
 
 const GraphWatcher = React.memo(function GraphWatcher(){
 	// From React Docs : https://reactjs.org/blog/2015/12/16/ismounted-antipattern.html
@@ -50,7 +34,7 @@ const GraphWatcher = React.memo(function GraphWatcher(){
 		// The contents of the <div>s will be managed by rendering portals
 		const watcher = setInterval(
 			() => {
-				addMenus();
+				addMenuDivs();
 
 				if(mounted.current){
 					updatePageElements();
@@ -62,13 +46,14 @@ const GraphWatcher = React.memo(function GraphWatcher(){
 		return () => {
 			mounted.current = false;
 			clearInterval(watcher);
-			Array.from(document.querySelectorAll(`.${menuClass}`)).forEach(div => div.remove());
+			Array.from(document.querySelectorAll(`[class="${CustomClasses.MENU_CLASS}"]`))
+				.forEach(div => div.remove());
 		};
 	}, [updatePageElements]);
 
 	return menus 
 		? menus.map((div, index) => {
-			let pageUID = div.getAttribute("data-uid");
+			const pageUID = div.getAttribute("data-uid");
 			return pageUID
 				? createPortal(<ExportButton key={index} uid={pageUID} />, div)
 				: null;
