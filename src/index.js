@@ -1,36 +1,44 @@
 import React from "react";
-import { createRoot } from "react-dom/client";
+import { render } from "react-dom";
+
 import App from "./components/App";
+
+import { initialize, setup, setupPortals, unmountExtensionIfExists } from "./setup";
+
+import { EXTENSION_SLOT_ID, EXTENSION_VERSION } from "./constants";
 
 import "@blueprintjs/core/lib/css/blueprint.css";
 import "@blueprintjs/icons/lib/css/blueprint-icons.css";
 import "@blueprintjs/select/lib/css/blueprint-select.css";
-
 import "./index.css";
 
-window.roamToLatex = {};
 
-(()=>{
+function onload({ extensionAPI }){
+	const { settings } = initialize({ extensionAPI });
 
-	const extension = {
-		slot: "roam-to-latex",
-		version: "0.1.0"
-	};
+	window.latexRoam = new LatexRoam();
 
-	window.roamToLatex = {
-		version: extension.version
-	};
+	setupPortals();
 
-	try{ 
-		document.getElementById(extension.version).remove(); 
-	} catch(e){
-		// Do nothing
-	}
-	let extensionSlot = document.createElement("div");
-	extensionSlot.id = extension.slot;
-	document.getElementById("app").appendChild(extensionSlot);
+	setup();
 
-	const root = createRoot(document.getElementById(extension.slot));
-	root.render(<App extension={extension}/>);
+	render(
+		<UserSettingsProvider extensionAPI={extensionAPI} init={{ ...settings, requests }}>
+			<App extension={{ 
+				version: EXTENSION_VERSION 
+			}}/>
+		</UserSettingsProvider>, 
+		document.getElementById(EXTENSION_SLOT_ID)
+	);
 
-})();
+}
+
+function offload(){
+	unmountExtensionIfExists();
+	delete window.latexRoam;
+}
+
+export default {
+	onload: onload,
+	onunload: offload
+};

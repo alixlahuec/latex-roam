@@ -1,13 +1,33 @@
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const path = require("path");
 
 module.exports = {
 	context: __dirname,
+    devtool: "source-map",
+    experiments: {
+        outputModule: true
+    },
+    externals: {
+        "@blueprintjs/core": ["Blueprint", "Core"],
+        "@blueprintjs/select": ["Blueprint", "Select"],
+        "react": "React",
+        "react-dom": "ReactDOM"
+    },
+    externalsType: "window",
 	entry: path.resolve(__dirname, "src", "index.js"),
 	output: {
-		path: path.resolve(__dirname, "dist"),
-		filename: "roamToLatex.min.js"
+		filename: "extension.js",
+        library: {
+            type: "module"
+        },
+        path: __dirname,
+        sourceMapFilename: "roamToLatex.min.js.map"
 	},
 	resolve: {
+        alias: {
+            "Roam": path.resolve(__dirname, "src/roam.js")
+        },
 		extensions: [".js", ".jsx", ".css"]
 	},
 	mode: "production",
@@ -25,8 +45,43 @@ module.exports = {
 			},
 			{
 				test: /\.css$/i,
-				use: ["style-loader", "css-loader"]
+				use: [
+                    {
+                        loader: MiniCssExtractPlugin.loader
+                    },
+                    {
+                        loader: "css-loader",
+                        options: {
+                            sourceMap: false
+                        }
+                    }
+                ]
 			}
 		]
-	}
+	},
+    plugins: [
+        new MiniCssExtractPlugin({
+            filename: "extension.css"
+        })
+    ],
+    optimization: {
+        minimizer: [
+            `...`,
+            new CssMinimizerPlugin()
+        ],
+        splitChunks: {
+            cacheGroups: {
+                styles: {
+                    name: "styles",
+                    type: "css/mini-extract",
+                    chunks: "all",
+                    enforce: true
+                }
+            }
+        }
+    },
+    performance: {
+        maxAssetSize: 2000000,
+        maxEntrypointSize: 2000000
+    }
 };
