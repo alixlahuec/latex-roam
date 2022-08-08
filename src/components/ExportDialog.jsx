@@ -1,10 +1,14 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef } from "react";
 import { bool, func, string } from "prop-types";
 
 import { AnchorButton, Button, Classes, Dialog, InputGroup, Label, MenuItem, Switch, TextArea } from "@blueprintjs/core";
 import { Select } from "@blueprintjs/select";
 
+import useBool from "../hooks/useBool";
 import { useExportContext } from "./ExportContext";
+import useSelect from "../hooks/useSelect";
+import useText from "../hooks/useText";
+
 import startExport from "../export";
 
 import { CustomClasses } from "../constants";
@@ -37,30 +41,12 @@ function itemRenderer(item, itemProps) {
 function ExportDialog({ isOpen, onClose, uid }){
 	const { output, handlers } = useExportContext();
 	const outputArea = useRef();
-	const [documentClass, setDocumentClass] = useState("report");
-	const [authors, setAuthors] = useState("");
-	const [title, setTitle] = useState("");
-	const [useCover, setUseCover] = useState(true);
-	const [useNumberedHeaders, setNumberedHeaders] = useState(true);
-	const [startWithHeader, setStartWithHeader] = useState("1");
-
-	const handleAuthorsChange = useCallback((event) => {
-		let value = event.target?.value;
-		setAuthors(value || "");
-	}, []);
-
-	const handleTitleChange = useCallback((event) => {
-		let value = event.target?.value;
-		setTitle(value || "");
-	}, []);
-
-	const toggleCover = useCallback(() => setUseCover(prev => !prev), []);
-	const toggleNumberedHeaders = useCallback(() => setNumberedHeaders(prev => !prev), []);
-
-	const handleStartHeaderChange = useCallback((event) => {
-		let value = event.target?.value;
-		setStartWithHeader(value || "1");
-	}, []);
+	const [documentClass, setDocumentClass] = useSelect("report");
+	const [authors, setAuthors] = useText("");
+	const [title, setTitle] = useText("");
+	const [useCover, { toggle: toggleCover }] = useBool(true);
+	const [useNumberedHeaders, { toggle: toggleNumberedHeaders }] = useBool(true);
+	const [startWithHeader, setStartWithHeader] = useSelect("1");
 
 	const handleOutputChange = useCallback((event) => {
 		handlers.updateTEX(event.target.value || "");
@@ -113,7 +99,7 @@ function ExportDialog({ isOpen, onClose, uid }){
 					<Label>Author(s) :</Label>
 					<InputGroup
 						autoComplete="off"
-						onChange={handleAuthorsChange}
+						onChange={setAuthors}
 						spellCheck="false"
 						type="text"
 						value={authors}
@@ -121,7 +107,7 @@ function ExportDialog({ isOpen, onClose, uid }){
 					<Label>Title :</Label>
 					<InputGroup
 						autoComplete="off"
-						onChange={handleTitleChange}
+						onChange={setTitle}
 						spellCheck="false"
 						type="text"
 						value={title}
@@ -133,7 +119,7 @@ function ExportDialog({ isOpen, onClose, uid }){
 						filterable={false}
 						itemRenderer={itemRenderer}
 						items={Object.keys(headers)}
-						onItemSelect={handleStartHeaderChange}
+						onItemSelect={setStartWithHeader}
 						placement="bottom"
 						popoverProps={popoverProps} >
 						<Button minimal={true} rightIcon="double-caret-vertical" text={headers[startWithHeader]} />
