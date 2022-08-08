@@ -38,12 +38,12 @@ async function createTEX(exportUID, document_class = "book", { numbered = true, 
 	// Scan for citations
 	const citekeys = getCitekeysList(contents, handlers);
 	let bibliography = "";
-	if(citekeys.length > 0 && window.zoteroRoam && true){
+	if(citekeys.length > 0){
 		try{
-			bibliography = await makeBibliography(citekeys, {include: "biblatex"});
+			bibliography = await makeBibliography(citekeys);
 			addBibliography(bibliography);
 		} catch(e){
-			alert(`There was an error while preparing the bibliography :\n${e}`);
+			console.error(e);
 		}
 	}
 

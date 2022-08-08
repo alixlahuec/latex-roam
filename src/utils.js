@@ -18,41 +18,16 @@ function hasNodeListChanged(prev, current){
 	return (prev.length + current.length) != 0 && (prev.length !== current.length || prev.some((el, i) => el !== current[i]));
 }
 
-async function makeBibliography(citekeys, {include = "biblatex"} = {}){
-	// Get the full data for the Zotero items
-	if(window.zoteroRoam?.data?.items && true){
-		let zoteroItems = citekeys.map(citekey => window.zoteroRoam.data.items.find(item => item.key == citekey));
-		let librariesToCall = [...new Set(zoteroItems.map(it => it.requestLabel))].map(lib => window.zoteroRoam.config.requests.find(req => req.name == lib));
-		// Make requests to the Zotero API for the bibliography entries of the items'
-		let apiCalls = [];
-		librariesToCall.forEach(lib => {
-			let libItemsToRequest = zoteroItems.filter(item => item.requestLabel == lib.name);
-			let zoteroKeys = libItemsToRequest.map(item => item.data.key);
-			let nbCalls = Math.ceil(zoteroKeys.length/50);
-			for(let i = 0; i < nbCalls; i++){
-				let keysList = zoteroKeys.slice(i*50, Math.min((i+1)*50, zoteroKeys.length)).join(",");
-				apiCalls.push(fetch(
-					`https://api.zotero.org/${lib.dataURI}?include=${include}&itemKey=${keysList}`,
-					{
-						method: "GET",
-						headers: {
-							"Zotero-API-Key": lib.apikey,
-							"Zotero-API-Version": 3
-						}
-					}
-				));
-			}
-		});
-		let bibResults = await Promise.all(apiCalls);
-		let bibEntries = await Promise.all(bibResults.map(data => data.json()));
-
-		let flatBibliography = bibEntries.flat(1).map(entry => entry[`${include}`]).sort().join("");
-
-		return flatBibliography;
-	} else if(window.zoteroRoam?.getBibEntries){
-		return await window.zoteroRoam.getBibEntries(citekeys);
+async function makeBibliography(citekeys){
+	if(!window.zoteroRoam){
+		throw new Error("No instance of zoteroRoam was found");
 	} else {
-		return "";
+		const instance = window.zoteroRoam;
+		if(!instance.getBibEntries){
+			throw new Error("The zoteroRoam instance does not expose bibliographic entries.");
+		} else {
+			return await instance.getBibEntries(citekeys);
+		}
 	}
 }
 
