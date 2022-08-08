@@ -1,8 +1,8 @@
 /* eslint-disable no-useless-escape */
+import { formatText, grabRawText, raw, regex } from "./common";
+import { isTableBlock, makeTable } from "./table";
 
 import { makeBibliography, sortRoamBlocks, todayDMY } from "../utils";
-import { formatText, grabRawText, isTableBlock, raw, regex } from "./common";
-import makeTable from "./makeTable";
 import { queryBlockContents } from "../roam";
 
 

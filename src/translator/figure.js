@@ -21,4 +21,8 @@ async function figure(caption, url, extra, handlers){
 	return `\\begin{figure}[p]\n\\includegraphics[width=\\textwidth]{figure-${figIndex}.${fileExt}}\n\\caption{${formatText(caption, handlers)}}\n${labelEl}\n${descEl}\\end{figure}`;
 }
 
-export default figure;
+function parseImage(_match, p1, p2, p3, handlers) {
+	return figure(p1, p2, p3, handlers);
+}
+
+export default parseImage;
