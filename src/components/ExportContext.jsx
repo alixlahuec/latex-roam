@@ -3,9 +3,8 @@ import { node } from "prop-types";
 
 import { downloadZip } from "client-zip";
 
-// https://devtrium.com/posts/how-use-react-context-pro#memoize-values-in-your-context-with-usememo-and-usecallback
 
-const defaultContext = {
+const emptyOutput = {
 	tex: {
 		content: "",
 		blob: null,
@@ -27,10 +26,10 @@ const defaultContext = {
 	}
 };
 
-const ExportContext = React.createContext(defaultContext);
+const ExportContext = React.createContext();
 
 const ExportContextProvider = ({ children }) => {
-	const [output, setOutput] = useState(() => defaultContext);
+	const [output, setOutput] = useState(() => emptyOutput);
 
 	const resetOutput = useCallback(() => {
 		setOutput(prevState => {
@@ -41,7 +40,7 @@ const ExportContextProvider = ({ children }) => {
 			if(tex.blob != null){ URL.revokeObjectURL(tex.blobURL); }
 
 			// Reset context contents
-			return defaultContext;
+			return emptyOutput;
 		});
 	}, []);
 
@@ -49,7 +48,7 @@ const ExportContextProvider = ({ children }) => {
 		setOutput(prevState => {
 			if(prevState.tex.content != value){
 				if(prevState.tex.blob != null){ URL.revokeObjectURL(prevState.tex.blobURL); }
-				let blob = new Blob([value], {type: "text/plain"});
+				const blob = new Blob([value], { type: "text/plain" });
 				
 				return {
 					...prevState,
@@ -69,7 +68,7 @@ const ExportContextProvider = ({ children }) => {
 	const addBibliography = useCallback((bibliography) => {
 		setOutput(prevState => {
 			if(prevState.bib.blob != null){ URL.revokeObjectURL(prevState.bib.blobURL); }
-			let blob = new Blob([bibliography], {type: "text/plain"});
+			const blob = new Blob([bibliography], { type: "text/plain" });
 			return {
 				...prevState,
 				bib: {
@@ -85,13 +84,13 @@ const ExportContextProvider = ({ children }) => {
 		let figCount = -1;
 
 		try {
-			let figFile = await fetch(url, { method: "GET" });
-			let figBlob = await figFile.blob();
+			const figFile = await fetch(url, { method: "GET" });
+			const figBlob = await figFile.blob();
 
 			setOutput(prevState => {
 				const { list } = prevState.figs;
 				figCount = list.length + 1;
-				let thisFig = {
+				const thisFig = {
 					input: figBlob,
 					name: `figure-${figCount}.${fileExt}`
 				};
@@ -116,7 +115,7 @@ const ExportContextProvider = ({ children }) => {
 	const zipFigures = useCallback(async() => {
 		const { list } = output.figs;
 		if(list.length > 0){
-			let blob = await downloadZip(list).blob();
+			const blob = await downloadZip(list).blob();
 			setOutput(prevState => {
 				if(prevState.figs.blob != null){ URL.revokeObjectURL(prevState.figs.blobURL); }
 				return {
@@ -133,13 +132,13 @@ const ExportContextProvider = ({ children }) => {
 
 	const zipPackage = useCallback(async(title) => {
 		const { bib, figs, tex } = output;
-		let packageFiles = [
+		const packageFiles = [
 			...figs.list,
 			{ name: `${title}.tex`, input: tex.content }
 		];
 		if(bib.blob != null){ packageFiles.push({ name: "bibliography.bib", input: bib.blob }); }
 
-		let blob = await downloadZip(packageFiles).blob();
+		const blob = await downloadZip(packageFiles).blob();
 
 		setOutput(prevState => {
 			if(prevState.full_package.blob != null){ URL.revokeObjectURL(prevState.full_package.blobURL); }

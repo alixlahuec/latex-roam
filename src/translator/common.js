@@ -145,9 +145,9 @@ function isTableBlock(string){
 function raw(block, start_indent = 0, handlers){
 	let output = "";
 	// If the block is a table, stop processing recursively & generate the table element
-	let is_table_block = isTableBlock(block.string);
+	const is_table_block = isTableBlock(block.string);
 	if(is_table_block){
-		let extra = is_table_block[1];
+		const extra = is_table_block[1];
 		output = `\n${makeTable(block, start_indent, extra, handlers)}\n`;
 	} else {
 		output = formatText(block.string, handlers);

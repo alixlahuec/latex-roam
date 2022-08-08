@@ -1,9 +1,10 @@
-import { grabRawText } from "./common";
 import { getBlockText } from "../roam";
+import { grabRawText } from "./common";
+
 
 function doublePar(content, mode = "raw", handlers){
 	// Check if content is a valid block reference
-	let isBlockRef = getBlockText(content);
+	const isBlockRef = getBlockText(content);
 	// If it's a block ref, render its contents
 	if(isBlockRef.length > 0){
 		switch(mode){

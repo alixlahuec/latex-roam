@@ -1,8 +1,9 @@
-import { queryPageContentsByTitle } from "../roam";
 import { grabRawText, raw } from "./common";
+import { queryPageContentsByTitle } from "../roam";
+
 
 function pageEmbed(title, mode = "raw", handlers){
-	let pageContents = queryPageContentsByTitle(title);
+	const pageContents = queryPageContentsByTitle(title);
 	switch(mode){
 	case "latex":
 		// TODO: handle actual processing of actual page structure

@@ -1,9 +1,9 @@
-import { queryBlockContents } from "../roam";
 import { grabRawText, raw } from "./common";
+import { queryBlockContents } from "Roam";
 
 // RAW only
 function blockEmbed(uid, mode = "raw", handlers){
-	let blockContents = queryBlockContents(uid);
+	const blockContents = queryBlockContents(uid);
 	switch(mode){
 	case "latex":
 		// TODO: handle processing of actual block structure

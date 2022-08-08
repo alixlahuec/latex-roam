@@ -2,8 +2,9 @@ import React, { Component } from "react";
 import { shape, string } from "prop-types";
 
 import { ExportContextProvider } from "./ExportContext";
-import GraphWatcher from "./GraphWatcher";
 import ExportDialog from "./ExportDialog";
+import GraphWatcher from "./GraphWatcher";
+
 
 import { addBlockMenuCommand } from "../roam";
 

@@ -10,7 +10,7 @@ function addBlockMenuCommand(label, onClick){
  * @returns {String|false} The UID of the Roam page (if it exists), otherwise `false`
  */
 function findRoamPage(title){
-	let pageSearch = window.roamAlphaAPI.q(`[
+	const pageSearch = window.roamAlphaAPI.q(`[
 		:find ?uid 
 		:in $ ?title 
 		:where
