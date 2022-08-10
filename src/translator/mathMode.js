@@ -13,7 +13,8 @@ async function mathMode(capture, label, offset){
 		}
 		return `\n\\begin{equation}\n${eqLabel}${capture}\n\\end{equation}`;
 	} else{
-		return `$${mathContent.replaceAll(/\\\&/g, "&")}$${await formatText(label)}`;
+		const eqLabel = label ? await formatText(label) : "";
+		return `$${mathContent.replaceAll(/\\\&/g, "&")}$${eqLabel}`;
 	}
 }
 
