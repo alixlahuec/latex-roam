@@ -1,0 +1,35 @@
+name: CI
+on: [push]
+jobs:
+  commit-checks:
+    name: Lint, test, and build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+
+      - name: Install packages
+        run: npm ci --legacy-peer-deps
+      
+      - name: ESLint
+        run: npm run ci:lint
+
+      - name: Jest
+        run: npm run ci:test
+
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          directory: ./coverage/
+          verbose: true
+      
+      - name: Webpack build (Roam Depot)
+        run: npm run build:roam
+
+      - name: Commit to repository
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "auto-commit: lint, test, build"
+        continue-on-error: true # See https://github.com/stefanzweifel/git-auto-commit-action/issues/204
