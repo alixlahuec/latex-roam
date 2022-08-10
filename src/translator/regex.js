@@ -1,45 +1,45 @@
-/* eslint-disable no-useless-escape */
+
 
 /** @constant {Object} The dictionary of RegExps */
 const REGEX = {
 	// Aliases
 	aliasAll: /(?:^|[^!])\[(.+?)\]\((.+?)\)/g,
-	aliasBlock: /(?!^| )\[(.+?)\]\(\(\((.+?)\)\)\)/g,
+	aliasBlock: /(?!^| )\[(.+?)\]\({3}(.+?)\){3}/g,
 	aliasPage: /\[([^\]]+?)\]\(\[\[(.+?)\]\]\)/g,
 
 	// Embeds
-	embedBlock: /\{{2}(\[\[)?embed(\]\])?: ?\(\((.+?)\)\)\}{2}/g,
-	embedPage: /\{{2}(\[\[)?embed(\]\])?: ?\[\[(.+?)\]\]\}{2}/g,
+	embedBlock: /\{{2}(\[{2})?embed(\]{2})?: ?\({2}(.+?)\){2}\}{2}/g,
+	embedPage: /\{{2}(\[{2})?embed(\]{2})?: ?\[{2}(.+?)\]{2}\}{2}/g,
 
 	// Groupings and pages
-	doublePar: /\(\(([^\(\)]+?)\)\)/g,
-	doubleBraces: /\{\{(.+?)\}\}/g,
+	doublePar: /\({2}([^()]+?)\){2}/g,
+	doubleBraces: /\{{2}(.+?)\}{2}/g,
 	// Note: this will target all instances of `[[` and `]]`, even if they're not page references.
 	doubleBrackets: /(\[|\]){2}/g,
-	tag: /(?!^| )\#(.+?)( |$)/g,
+	tag: /(?!^| )#(.+?)( |$)/g,
 	
 	// Citations
-	refCitekey: /\[\[@(.+?)\]\]/g,
-	citekeyList: /\((.*?)(\[\[@.+?\]\])((?: ?[,;] ?\[\[@.+?\]\]){1,})(.*?)\)/g,
-	citekeyPar: /\(([^\)]*?)\[\[@([^\)]+?)\]\]([^\)]*?)\)/g,
-	citekey: /(^|[^\#])\[\[@([^\]]+?)\]\]/g,
+	refCitekey: /\[{2}@(.+?)\]{2}/g,
+	citekeyList: /\((.*?)(\[{2}@.+?\]{2})((?: ?[,;] ?\[{2}@.+?\]{2}){1,})(.*?)\)/g,
+	citekeyPar: /\(([^)]*?)\[{2}@([^)]+?)\]{2}([^)]*?)\)/g,
+	citekey: /(^|[^#])\[{2}@([^\]]+?)\]{2}/g,
 	
 	// Code
 	codeBlock: /```([\s\S]+?)```/g,
 	codeInline: /(?:^|[^`])`([^`]+?)`/g,
 	
 	// Markup
-	bold: /\*{2}([^\*]+?)\*{2}/g,
+	bold: /\*{2}([^*]+?)\*{2}/g,
 	italics: /_{2}([^_]+?)_{2}/g,
-	highlight: /\^{2}([^\^]+?)\^{2}/g,
+	highlight: /\^{2}([^^]+?)\^{2}/g,
 
 	// Miscellaneous
 	image: /!\[(.*?)\]\((.+?)\)(.*)/g,
-	math: /\$\$([\s\S^\$]+?)\$\$([\s\S]+)?/g,
-	table: /{{\[{0,2}table\]{0,2}}}(.*)/g,
+	math: /\$\$([\s\S^$]+?)\$\$([\s\S]+)?/g,
+	table: /\{{2}(\[{2})?table(\]{2})?\}{2}(.*)/g,
 	
 	// Special references
-	specialRef: /\{\{(fig|eq|table)\:(.+?)\}\}/g
+	specialRef: /\{{2}(fig|eq|table):(.+?)\}{2}/g
 };
 
 export default REGEX;
