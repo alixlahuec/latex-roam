@@ -22,7 +22,7 @@ module.exports = {
             type: "module"
         },
         path: __dirname,
-        sourceMapFilename: "roamToLatex.min.js.map"
+        sourceMapFilename: "extension.js.map"
 	},
 	resolve: {
         alias: {
