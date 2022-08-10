@@ -1,10 +1,11 @@
 /* eslint-disable no-useless-escape */
-import { formatText, grabRawText, raw, regex } from "./common";
+import { formatText, grabRawText, raw } from "./common";
 import { isTableBlock, makeTable } from "./table";
 
 import { makeBibliography, sortRoamBlocks, todayDMY } from "../utils";
 import { queryBlockContents } from "../roam";
 
+import REGEX from "./regex";
 
 
 async function convertBlocks(arr, { document_class = "book", numbered = true, start_header = 1 }){
