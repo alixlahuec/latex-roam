@@ -5,7 +5,7 @@ import doublePar from "./doublePar";
 import pageEmbed from "./pageEmbed";
 
 
-function expandInserts(string, handlers){
+async function expandInserts(string){
 	let output = string;
 
 	// Block aliases

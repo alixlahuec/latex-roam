@@ -2,7 +2,7 @@ import { getBlockText } from "../roam";
 import { grabRawText } from "./common";
 
 
-function doublePar(content, mode = "raw", handlers){
+async function doublePar(content, mode = "raw"){
 	// Check if content is a valid block reference
 	const isBlockRef = getBlockText(content);
 	// If it's a block ref, render its contents
@@ -12,7 +12,7 @@ function doublePar(content, mode = "raw", handlers){
 			return isBlockRef[0][0];
 		case "raw":
 		default: 
-			return grabRawText({ string: isBlockRef[0][0] }, handlers);
+			return await grabRawText({ string: isBlockRef[0][0] });
 		}
 	} else{
 		switch(mode){

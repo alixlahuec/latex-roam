@@ -13,30 +13,35 @@ function isTableBlock(string){
 	}
 }
 
-function traverseTable(block, handlers){
-	const rows = [];
-	sortRoamBlocks(block.children).forEach(child => {
-		rows.push(...traverseRow(child, handlers));
-	});
-	return rows;
+async function traverseTable(block){
+	return await (sortRoamBlocks(block.children).reduce(async(rows, child) => {
+		const prev = await rows;
+		const content = await traverseRow(child);
+		return [...prev, ...content];
+	}, []));
 }
 
-function traverseRow(block, handlers){
+async function traverseRow(block){
 	if(!block.children){
-		return [[storeCell(block, handlers)]];
+		return [[await storeCell(block)]];
 	} else {
-		return sortRoamBlocks(block.children).map(child => traverseRow(child, handlers).map(path => [storeCell(block, handlers), ...path])).flat(1);
+		return (await Promise.all(sortRoamBlocks(block.children)
+			.map(async(child) => {
+				const content = await traverseRow(child);
+				return await Promise.all(content.map(async(path) => [await storeCell(block), ...path]));
+			})))
+			.flat(1);
 	}
 }
 
-function storeCell(block, handlers){
+async function storeCell(block){
 	return {
-		text: formatText(block.string, handlers),
+		text: await formatText(block.string),
 		align: block["text-align"] ? block["text-align"].charAt(0) : "l"
 	};
 }
 
-function makeTable(block, start_indent = 0, extra = "", handlers){
+async function makeTable(block, start_indent = 0, extra = ""){
 	const table_indent = "\t".repeat(start_indent);
 
 	const afterTextMatch = Array.from(block.string.matchAll(/\{\{(?:\[\[)?table(?:\]\])?\}\}(.+)/g))[0] || false;
@@ -46,9 +51,10 @@ function makeTable(block, start_indent = 0, extra = "", handlers){
 	const labelEl = labelMatch ? `${table_indent}\\label{table:${labelMatch[0].slice(1,-1)}}\n` : "";
 
 	const desc = extra.replace(labelRegex, "").trim();
-	const descEl = (desc.length > 0) ? `${table_indent}\\caption{${formatText(afterTextMatch[1], handlers)}}\n` : "";
+	const descEl = (desc.length > 0) ? `${table_indent}\\caption{${await formatText(afterTextMatch[1])}}\n` : "";
 
-	const rows = traverseTable(block, handlers);
+	const rows = await traverseTable(block);
+
 	// Count the actual number of columns
 	const n_cols = rows.reduce((f, s) => f.length >= s.length ? f.length : s.length);
 	// Extract alignment sequence from header row

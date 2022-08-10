@@ -9,19 +9,19 @@ import { parseCodeBlock, parseCodeInline } from "./code";
 import expandInserts from "./expand";
 import mathMode from "./mathMode";
 import parseDoubleBraces from "./doubleBraces";
-import parseImage from "./figure";
+import { parseImage } from "./figure";
 import parseSpecialReferences from "./specialReferences";
 import { replaceCitekeys } from "./citekeys";
 
 import REGEX from "./regex";
 
 
-function formatText(string, handlers){
+async function formatText(string){
 	let output = string;
 
 	// RENDERING BLOCK + PAGE REFS/EMBEDS, DOUBLE PARENTHESES ---------
 	// Aka, is there additional text content that needs to be pulled ?
-	output = expandInserts(output, handlers);
+	output = await expandInserts(output);
 
 	// DELETING ELEMENTS : iframe, word-count, block part
 	output = output.replaceAll(REGEX.doubleBraces, parseDoubleBraces);
@@ -36,7 +36,8 @@ function formatText(string, handlers){
 	// Alias links markup
 	output = output.replaceAll(REGEX.aliasAll, parseAlias);
 	// Image links markup
-	output = output.replaceAll(REGEX.image, (_match, p1, p2, p3) => parseImage(_match, p1, p2, p3, handlers));
+	output = await asyncReplaceAll(output, REGEX.image, parseImage);
+
 	// Code blocks
 	output = output.replaceAll(REGEX.codeBlock, parseCodeBlock);
 	// Tags : will be removed
@@ -55,7 +56,7 @@ function formatText(string, handlers){
 
 	// Clean up wrong escapes
 	// Math mode :
-	output = output.replaceAll(REGEX.math, (_match, capture, label, offset) => mathMode(capture, label, offset, handlers));
+	output = await asyncReplaceAll(output, REGEX.math, async(_match, capture, label, offset) => await mathMode(capture, label, offset));
 	// URLs :
 	const urlRegex = /\\href\{(.+?)\}\{(.+?)\}/g;
 	output = output.replaceAll(urlRegex, (_match, p1, p2) => cleanUpHref({ url: p1, text: p2 }));
@@ -75,27 +76,28 @@ function formatText(string, handlers){
 	return output;
 }
 
-function grabRawText(block, handlers){
+async function grabRawText(block){
 	let output = block.string || "";
 	if(block.children){
-		output = `${output} ${block.children.map(child => grabRawText(child, handlers)).join(" ")}`;
+		output = `${output} ${(await Promise.all(block.children.map(async(child) => await grabRawText(child)))).join(" ")}`;
 	}
-	output = expandInserts(output, handlers);
+	output = await expandInserts(output);
     
 	return output;
 }
 
-function raw(block, start_indent = 0, handlers){
+async function raw(block, start_indent = 0){
 	let output = "";
 	// If the block is a table, stop processing recursively & generate the table element
 	const is_table_block = isTableBlock(block.string);
 	if(is_table_block){
 		const extra = is_table_block[1];
-		output = `\n${makeTable(block, start_indent, extra, handlers)}\n`;
+		const table = await makeTable(block, start_indent, extra);
+		output = `\n${table}\n`;
 	} else {
-		output = formatText(block.string, handlers);
+		output = formatText(block.string);
 		if(block.children){
-			output = `${output}\\\\${block.children.map(child => raw(child, start_indent, handlers)).join("\\\\")}`;
+			output = `${output}\\\\${(await Promise.all(block.children.map(async(child) => await raw(child, start_indent)))).join("\\\\")}`;
 		}
 	}
 	return output;

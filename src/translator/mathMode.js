@@ -1,7 +1,7 @@
 /* eslint-disable no-useless-escape */
 import { formatText } from "./common";
 
-function mathMode(capture, label, offset, handlers){
+async function mathMode(capture, label, offset){
 	const mathContent = capture;
 	if(offset == 0){
 		let eqLabel = label;
@@ -13,7 +13,7 @@ function mathMode(capture, label, offset, handlers){
 		}
 		return `\n\\begin{equation}\n${eqLabel}${capture}\n\\end{equation}`;
 	} else{
-		return `$${mathContent.replaceAll(/\\\&/g, "&")}$${formatText(label, handlers)}`;
+		return `$${mathContent.replaceAll(/\\\&/g, "&")}$${await formatText(label)}`;
 	}
 }
 
