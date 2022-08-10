@@ -5,13 +5,19 @@ async function asyncReplaceAll(str, regex, asyncReplaceFn){
 	const substrs = [];
 	let match;
 	let i = 0;
-	while ((match = regex.exec(str)) !== null) {
+
+	// The regex needs to be cloned, because global regexes are stateful
+	// (.lastIndex will be kept in memory, which can cause an infinite loop
+	// if we match against the same regex at a different step in the stack)
+	const regexClone = new RegExp(regex, regex.flags);
+
+	while ((match = regexClone.exec(str)) !== null) {
 		// Push the non-matching string
 		substrs.push(str.slice(i, match.index));
 		// Call the async replacer function with the match information
 		// The asyncFn receives (match, p1, p2, p3, ...)
 		substrs.push(asyncReplaceFn(...match));
-		i = regex.lastIndex;
+		i = regexClone.lastIndex;
 	}
 	// Push the rest of the string
 	substrs.push(str.slice(i));
