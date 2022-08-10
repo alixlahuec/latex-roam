@@ -1,4 +1,3 @@
-import React from "react";
 import { string } from "prop-types";
 
 import { Button } from "@blueprintjs/core";

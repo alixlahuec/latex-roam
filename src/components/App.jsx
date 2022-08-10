@@ -1,5 +1,5 @@
-import React, { Component } from "react";
 import { shape, string } from "prop-types";
+import { Component } from "react";
 
 import ExportDialog from "./ExportDialog";
 import GraphWatcher from "./GraphWatcher";

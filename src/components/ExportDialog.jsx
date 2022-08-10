@@ -1,5 +1,5 @@
 import { bool, func, string } from "prop-types";
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 import { AnchorButton, Button, Classes, Dialog, InputGroup, Label, MenuItem, Switch, TextArea } from "@blueprintjs/core";
 import { Select } from "@blueprintjs/select";
