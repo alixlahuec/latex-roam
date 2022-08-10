@@ -68,7 +68,7 @@ function ExportDialog({ isOpen, onClose, uid }){
 
 	useEffect(() => {
 		if(isOpen){
-			setTitle(document.title);
+			setTitle({ target: { value: document.title } });
 		} else {
 			handlers.resetOutput();
 		}
