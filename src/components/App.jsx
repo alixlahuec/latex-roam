@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { shape, string } from "prop-types";
 
-import { ExportContextProvider } from "./ExportContext";
 import ExportDialog from "./ExportDialog";
 import GraphWatcher from "./GraphWatcher";
 
@@ -30,10 +29,10 @@ class App extends Component {
 		const { dialogIsOpen, exportUID } = this.state;
 
 		return (
-			<ExportContextProvider>
+			<>
 				<GraphWatcher />
 				<ExportDialog isOpen={dialogIsOpen} onClose={this.closeDialog} uid={exportUID} />
-			</ExportContextProvider>
+			</>
 		);
 	}
 

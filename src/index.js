@@ -11,12 +11,13 @@ import "@blueprintjs/core/lib/css/blueprint.css";
 import "@blueprintjs/icons/lib/css/blueprint-icons.css";
 import "@blueprintjs/select/lib/css/blueprint-select.css";
 import "./index.css";
+import { ExportManager } from "./extension";
 
 
 function onload({ extensionAPI }){
 	const { settings } = initialize({ extensionAPI });
 
-	window.latexRoam = new LatexRoam();
+	window.latexRoam = new ExportManager();
 
 	setupPortals();
 
@@ -35,6 +36,7 @@ function onload({ extensionAPI }){
 
 function offload(){
 	unmountExtensionIfExists();
+	window.latexRoam.resetExport();
 	delete window.latexRoam;
 }
 

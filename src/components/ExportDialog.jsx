@@ -1,15 +1,14 @@
-import React, { useCallback, useEffect, useRef } from "react";
 import { bool, func, string } from "prop-types";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 
 import { AnchorButton, Button, Classes, Dialog, InputGroup, Label, MenuItem, Switch, TextArea } from "@blueprintjs/core";
 import { Select } from "@blueprintjs/select";
 
 import useBool from "../hooks/useBool";
-import { useExportContext } from "./ExportContext";
 import useSelect from "../hooks/useSelect";
 import useText from "../hooks/useText";
 
-import startExport from "../export";
+import { DEFAULT_OUTPUT } from "../extension";
 
 import { CustomClasses } from "../constants";
 
@@ -39,7 +38,7 @@ function itemRenderer(item, itemProps) {
 }
 
 function ExportDialog({ isOpen, onClose, uid }){
-	const { output, handlers } = useExportContext();
+	const [output, setOutput] = useState(DEFAULT_OUTPUT);
 	const outputArea = useRef();
 	const [document_class, setDocumentClass] = useSelect({
 		start: "report"
@@ -52,9 +51,11 @@ function ExportDialog({ isOpen, onClose, uid }){
 		start: "1"
 	});
 
-	const triggerExport = useCallback(() => {
-		startExport(
-			uid, 
+	const triggerExport = useCallback(async() => {
+		const client = window.latexRoam;
+		client.resetExport();
+		const exportOutput = await client.generateExport(
+			uid,
 			{ 
 				authors, 
 				cover,
@@ -70,9 +71,9 @@ function ExportDialog({ isOpen, onClose, uid }){
 		if(isOpen){
 			setTitle({ target: { value: document.title } });
 		} else {
-			handlers.resetOutput();
+			window.latexRoam.resetExport();
 		}
-	}, [isOpen, handlers, setTitle]);
+	}, [isOpen, setTitle]);
 
 	return <Dialog 
 		className={CustomClasses.DIALOG_CLASS} 
@@ -151,8 +152,8 @@ function ExportDialog({ isOpen, onClose, uid }){
 				{output.tex.blobURL
 					? <AnchorButton download={title + ".tex"} href={output.tex.blobURL} outlined={true} text="Download .tex file" />
 					: null}
-				{output.full_package.blobURL
-					? <AnchorButton download={title + ".zip"} href={output.full_package.blobURL} intent="primary" outlined={true} text="Download all files" />
+				{output.package.blobURL
+					? <AnchorButton download={title + ".zip"} href={output.package.blobURL} intent="primary" outlined={true} text="Download all files" />
 					: null}
 			</div>
 		</div>
