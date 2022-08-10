@@ -3,13 +3,10 @@ import { render } from "react-dom";
 
 import App from "./components/App";
 
-import { initialize, setup, setupPortals, unmountExtensionIfExists } from "./setup";
+import { initialize, setup, unmountExtensionIfExists } from "./setup";
 
 import { EXTENSION_SLOT_ID, EXTENSION_VERSION } from "./constants";
 
-import "@blueprintjs/core/lib/css/blueprint.css";
-import "@blueprintjs/icons/lib/css/blueprint-icons.css";
-import "@blueprintjs/select/lib/css/blueprint-select.css";
 import "./index.css";
 import { ExportManager } from "./extension";
 
@@ -19,16 +16,12 @@ function onload({ extensionAPI }){
 
 	window.latexRoam = new ExportManager();
 
-	setupPortals();
-
-	setup();
+	setup({ settings });
 
 	render(
-		<UserSettingsProvider extensionAPI={extensionAPI} init={{ ...settings, requests }}>
-			<App extension={{ 
-				version: EXTENSION_VERSION 
-			}}/>
-		</UserSettingsProvider>, 
+		<App extension={{ 
+			version: EXTENSION_VERSION 
+		}}/>, 
 		document.getElementById(EXTENSION_SLOT_ID)
 	);
 
