@@ -179,7 +179,6 @@ async function parseListElement(block, start_indent){
 		case "numbered":
 		default:{
 			const text = await formatText(block.string);
-			console.log("Default list element:", text);
 			if(block.children){
 				const list = await makeList(block.children, format, start_indent + 1);
 				output = `\\item{${text}}\n${list}`;

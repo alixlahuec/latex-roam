@@ -1,8 +1,8 @@
-import { getBlockText } from "../roam";
+import { getBlockText } from "Roam";
 import { grabRawText } from "./common";
 
 
-async function doublePar(content, mode = "raw"){
+async function doublePar(content, mode){
 	// Check if content is a valid block reference
 	const isBlockRef = getBlockText(content);
 	// If it's a block ref, render its contents
