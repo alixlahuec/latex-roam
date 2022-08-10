@@ -1,4 +1,5 @@
 import REGEX from "./regex";
+import { asyncReplaceAll } from "../utils";
 
 import blockEmbed from "./blockEmbed";
 import doublePar from "./doublePar";
@@ -9,13 +10,13 @@ async function expandInserts(string){
 	let output = string;
 
 	// Block aliases
-	output = output.replaceAll(REGEX.aliasBlock, (_match, p1, p2) => `${p1} \\footnote{${doublePar(p2, "raw")}}`);
+	output = await asyncReplaceAll(output, REGEX.aliasBlock, async(_match, p1, p2) => `${p1} \\footnote{${await doublePar(p2, "raw")}}`);
 	// Embeds : blocks
-	output = output.replaceAll(REGEX.embedBlock, (_match, _p1, _p2, p3) => blockEmbed(p3, "latex"));
+	output = await asyncReplaceAll(output, REGEX.embedBlock, async(_match, _p1, _p2, p3) => await blockEmbed(p3, "latex"));
 	// Embeds : pages
-	output = output.replaceAll(REGEX.embedPage, (_match, _p1, _p2, p3) => pageEmbed(p3, "latex"));
+	output = await asyncReplaceAll(output, REGEX.embedPage, async(_match, _p1, _p2, p3) => await pageEmbed(p3, "latex"));
 	// `(())` markup
-	output = output.replaceAll(REGEX.doublePar, (_match, p1) => doublePar(p1, "latex"));
+	output = await asyncReplaceAll(output, REGEX.doublePar, async(_match, p1) => await doublePar(p1, "latex"));
 
 	return output;
 }
