@@ -1,17 +1,16 @@
-import React, { useCallback, useState } from "react";
+import React from "react";
 import { string } from "prop-types";
 
 import { Button } from "@blueprintjs/core";
 import ExportDialog from "./ExportDialog";
 
+import useBool from "../hooks/useBool";
+
 import { CustomClasses } from "../constants";
 
 
 function ExportButton({ uid }){
-	const [isDialogOpen, setDialogOpen] = useState(false);
-
-	const openDialog = useCallback(() => setDialogOpen(true), []);
-	const closeDialog = useCallback(() => setDialogOpen(false), []);
+	const [isDialogOpen, { on: openDialog, off: closeDialog }] = useBool(false);
 
 	return <>
 		<Button className={CustomClasses.BUTTON_CLASS} icon="rect-width" minimal={true} onClick={openDialog} text="LaTeX" />

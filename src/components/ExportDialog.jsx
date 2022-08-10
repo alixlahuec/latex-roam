@@ -129,7 +129,7 @@ function ExportDialog({ isOpen, onClose, uid }){
 				</div>
 				<Button id="latex-roam-export-trigger" intent="success" onClick={triggerExport} text="Export page contents" />
 			</div>
-			{output.tex.content != ""
+			{output.tex.content.length > 0
 				? <form
 					action="https://www.overleaf.com/docs"
 					className={Classes.FILL} 
