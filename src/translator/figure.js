@@ -17,7 +17,7 @@ async function figure(caption, url, extra){
 	const desc = extra.replace(labelRegex, "").trim();
 	const descEl = (desc.length > 0) ? `\\medskip\n${await formatText(desc)}\n` : "";
 
-	return `\\begin{figure}[p]\n\\includegraphics[width=\\textwidth]{figure-${figIndex}.${fileExt}}\n\\caption{${await formatText(caption)}}\n${labelEl}\n${descEl}\\end{figure}`;
+	return `\\begin{figure}[p]\n\\includegraphics[width=\\textwidth]{figure-${figIndex}.${fileExt}}\n\\caption{${await formatText(caption.trim())}}\n${labelEl}\n${descEl}\\end{figure}`;
 }
 
 async function parseImage(_match, p1, p2, p3) {

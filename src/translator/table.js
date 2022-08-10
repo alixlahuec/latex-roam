@@ -51,7 +51,7 @@ async function makeTable(block, start_indent = 0, extra = ""){
 	const labelEl = labelMatch ? `${table_indent}\\label{table:${labelMatch[0].slice(1,-1)}}\n` : "";
 
 	const desc = extra.replace(labelRegex, "").trim();
-	const descEl = (desc.length > 0) ? `${table_indent}\\caption{${await formatText(afterTextMatch[1])}}\n` : "";
+	const descEl = (desc.length > 0) ? `${table_indent}\\caption{${await formatText(afterTextMatch[1].trim())}}\n` : "";
 
 	const rows = await traverseTable(block);
 
