@@ -144,6 +144,7 @@ async function parseBlock(block){
 				const elems = await Promise.all(children.map(async(child) => await parseBlock(child)));
 				output = `${output}\\\\\n${elems.join("\\\\")}`;
 				break;
+			}
 			case "bulleted":
 			case "numbered":
 			default:{

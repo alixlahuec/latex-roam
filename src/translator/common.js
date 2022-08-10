@@ -1,6 +1,6 @@
 /* eslint-disable no-useless-escape */
 
-import { cleanUpHref } from "../utils";
+import { asyncReplaceAll, cleanUpHref } from "../utils";
 
 
 import { isTableBlock, makeTable } from "./table";

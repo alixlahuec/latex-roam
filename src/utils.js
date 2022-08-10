@@ -1,5 +1,24 @@
 /* eslint-disable no-useless-escape */
 
+// From Jason Yu: https://dev.to/ycmjason/stringprototypereplace-asynchronously-28k9
+async function asyncReplaceAll(str, regex, asyncReplaceFn){
+	const substrs = [];
+	let match;
+	let i = 0;
+	while ((match = regex.exec(str)) !== null) {
+		// Push the non-matching string
+		substrs.push(str.slice(i, match.index));
+		// Call the async replacer function with the match information
+		// The asyncFn receives (match, p1, p2, p3, ...)
+		substrs.push(asyncReplaceFn(...match));
+		i = regex.lastIndex;
+	}
+	// Push the rest of the string
+	substrs.push(str.slice(i));
+	// Wait for the asyncFn calls to finish, and join all the pieces back into one string
+	return (await Promise.all(substrs)).join("");
+}
+
 function cleanUpHref({ text, url }){
 	let target = url;
 	target = target.replaceAll(/\\\&/g, "&");
@@ -45,6 +64,7 @@ function todayDMY(){
 }
 
 export {
+	asyncReplaceAll,
 	cleanUpHref,
 	hasNodeListChanged,
 	makeBibliography,
