@@ -41,12 +41,16 @@ function itemRenderer(item, itemProps) {
 function ExportDialog({ isOpen, onClose, uid }){
 	const { output, handlers } = useExportContext();
 	const outputArea = useRef();
-	const [documentClass, setDocumentClass] = useSelect("report");
+	const [document_class, setDocumentClass] = useSelect({
+		start: "report"
+	});
 	const [authors, setAuthors] = useText("");
 	const [title, setTitle] = useText("");
 	const [useCover, { toggle: toggleCover }] = useBool(true);
 	const [useNumberedHeaders, { toggle: toggleNumberedHeaders }] = useBool(true);
-	const [startWithHeader, setStartWithHeader] = useSelect("1");
+	const [startWithHeader, setStartWithHeader] = useSelect({
+		start: "1"
+	});
 
 	const handleOutputChange = useCallback((event) => {
 		handlers.updateTEX(event.target.value || "");
