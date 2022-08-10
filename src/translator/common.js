@@ -95,7 +95,7 @@ async function raw(block, start_indent = 0){
 		const table = await makeTable(block, start_indent, extra);
 		output = `\n${table}\n`;
 	} else {
-		output = formatText(block.string);
+		output = await formatText(block.string);
 		if(block.children){
 			output = `${output}\\\\${(await Promise.all(block.children.map(async(child) => await raw(child, start_indent)))).join("\\\\")}`;
 		}
