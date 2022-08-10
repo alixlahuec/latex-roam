@@ -51,7 +51,9 @@ async function _createTEX(exportUID, document_class = "book", { numbered = true,
 	if(citekeys.length > 0){
 		try{
 			bibliography = await makeBibliography(citekeys);
-			addBibliography(bibliography);
+			if(bibliography && JSON.stringify(bibliography) !== ""){
+				window.latexRoam.addBibliography(bibliography);
+			}
 		} catch(e){
 			console.error(e);
 		}
