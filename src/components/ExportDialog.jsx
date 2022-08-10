@@ -52,10 +52,6 @@ function ExportDialog({ isOpen, onClose, uid }){
 		start: "1"
 	});
 
-	const handleOutputChange = useCallback((event) => {
-		handlers.updateTEX(event.target.value || "");
-	}, [handlers]);
-
 	const triggerExport = useCallback(() => {
 		startExport(
 			uid, 
@@ -139,7 +135,7 @@ function ExportDialog({ isOpen, onClose, uid }){
 					id="latex-roam-export-form"
 					method="POST"
 					target="_blank" >
-					<TextArea id="latex-roam-export-contents" fill={true} growVertically={false} inputRef={outputArea} name="snip" onChange={handleOutputChange} readOnly={true} small={true} style={{ height: "200px" }} value={output.tex.content} />
+					<TextArea id="latex-roam-export-contents" fill={true} growVertically={false} inputRef={outputArea} name="snip" readOnly={true} small={true} style={{ height: "200px" }} value={output.tex.content} />
 					<Button id="latex-roam--overleaf-trigger" intent="success" text="Export to Overleaf" type="submit" />
 				</form>
 				: null}
