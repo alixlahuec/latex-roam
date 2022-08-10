@@ -46,8 +46,8 @@ function ExportDialog({ isOpen, onClose, uid }){
 	});
 	const [authors, setAuthors] = useText("");
 	const [title, setTitle] = useText("");
-	const [useCover, { toggle: toggleCover }] = useBool(true);
-	const [useNumberedHeaders, { toggle: toggleNumberedHeaders }] = useBool(true);
+	const [cover, { toggle: toggleCover }] = useBool(true);
+	const [numberedHeaders, { toggle: toggleNumberedHeaders }] = useBool(true);
 	const [startWithHeader, setStartWithHeader] = useSelect({
 		start: "1"
 	});
@@ -61,14 +61,14 @@ function ExportDialog({ isOpen, onClose, uid }){
 			uid, 
 			{ 
 				authors, 
-				document_class: documentClass, 
-				headersNumbered: useNumberedHeaders, 
-				startWithHeader, 
-				title, 
-				useCover
-			}, 
-			handlers);
-	}, [uid, authors, documentClass, handlers, useNumberedHeaders, startWithHeader, title, useCover]);
+				cover,
+				document_class, 
+				numbered: numberedHeaders, 
+				start_header: Number(startWithHeader),
+				title
+			});
+		setOutput(exportOutput);
+	}, [uid, authors, cover, document_class, numberedHeaders, startWithHeader, title]);
 
 	useEffect(() => {
 		if(isOpen){
@@ -95,9 +95,9 @@ function ExportDialog({ isOpen, onClose, uid }){
 						onItemSelect={setDocumentClass}
 						placement="bottom"
 						popoverProps={popoverProps}>
-						<Button minimal={true} rightIcon="double-caret-vertical" text={documentClasses[documentClass]} />
+						<Button minimal={true} rightIcon="double-caret-vertical" text={documentClasses[document_class]} />
 					</Select>
-					<Switch checked={useCover} label="Use cover title" onChange={toggleCover} />
+					<Switch checked={cover} label="Use cover title" onChange={toggleCover} />
 				</div>
 				<div className="latex-roam--settings-row">
 					<Label>Author(s) :</Label>
@@ -128,7 +128,7 @@ function ExportDialog({ isOpen, onClose, uid }){
 						popoverProps={popoverProps} >
 						<Button minimal={true} rightIcon="double-caret-vertical" text={headers[startWithHeader]} />
 					</Select>
-					<Switch checked={useNumberedHeaders} label="Use numbers" onChange={toggleNumberedHeaders} />
+					<Switch checked={numberedHeaders} label="Use numbers" onChange={toggleNumberedHeaders} />
 				</div>
 				<Button id="latex-roam-export-trigger" intent="success" onClick={triggerExport} text="Export page contents" />
 			</div>
