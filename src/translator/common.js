@@ -13,7 +13,7 @@ import parseImage from "./figure";
 import parseSpecialReferences from "./specialReferences";
 import { replaceCitekeys } from "./citekeys";
 
-import REGEX from "./REGEX";
+import REGEX from "./regex";
 
 
 function formatText(string, handlers){
