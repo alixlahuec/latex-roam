@@ -2,7 +2,7 @@ import { grabRawText, raw } from "./common";
 import { queryBlockContents } from "Roam";
 
 // RAW only
-async function blockEmbed(uid, mode = "raw"){
+async function blockEmbed(uid, mode){
 	const blockContents = queryBlockContents(uid);
 	switch(mode){
 	case "latex":
