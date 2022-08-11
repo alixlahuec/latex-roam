@@ -13,7 +13,7 @@ const REGEX = {
 
 	// Groupings and pages
 	doublePar: /\({2}([^()]+?)\){2}/g,
-	doubleBraces: /\{{2}(.+?)\}{2}/g,
+	doubleBraces: /( ?)\{{2}(.+?)\}{2}( ?)/g,
 	// Note: this will target all instances of `[[` and `]]`, even if they're not page references.
 	doubleBrackets: /(\[|\]){2}/g,
 	tag: /(?!^| )#(.+?)( |$)/g,
@@ -36,6 +36,7 @@ const REGEX = {
 	// Miscellaneous
 	image: /!\[(.*?)\]\((.+?)\)(.*)/g,
 	math: /\$\$([\s\S^$]+?)\$\$([\s\S]+)?/g,
+	popover: /=:([^|]+)\|(.+)/g,
 	table: /\{{2}(\[{2})?table(\]{2})?\}{2}(.*)/g,
 	
 	// Special references

@@ -24,7 +24,7 @@ async function formatText(string){
 	output = await expandInserts(output);
 
 	// DELETING ELEMENTS : iframe, word-count, block part
-	output = output.replaceAll(REGEX.doubleBraces, parseDoubleBraces);
+	output = await asyncReplaceAll(output, REGEX.doubleBraces, parseDoubleBraces);
 
 	// REPLACING ELEMENTS
 	// Citekeys
