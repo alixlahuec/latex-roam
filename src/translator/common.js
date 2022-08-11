@@ -97,7 +97,8 @@ async function raw(block, start_indent = 0){
 	} else {
 		output = await formatText(block.string);
 		if(block.children){
-			output = `${output}\\\\${(await Promise.all(block.children.map(async(child) => await raw(child, start_indent)))).join("\\\\")}`;
+			const elems = await Promise.all(block.children.map(async(child) => await raw(child, start_indent)));
+			output = `${output}\\\\${elems.join("\\\\")}`;
 		}
 	}
 	return output;
