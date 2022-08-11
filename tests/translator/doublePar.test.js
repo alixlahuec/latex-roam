@@ -1,6 +1,7 @@
 import REGEX from "../../src/translator/regex";
 import { asyncReplaceAll } from "../../src/utils";
-import doublePar from "../../src/translator/doublePar";
+
+import { doublePar, parseBlockAlias, parseDoublePars } from "../../src/translator/doublePar";
 
 import { defaultUID, sampleBlocks } from "../../mocks/roam";
 
@@ -39,7 +40,7 @@ describe("Replace all - Double parentheses", () => {
 	test.each(cases)(
 		"%# - %s",
 		async(_id, input, expectation) => {
-			expect(await asyncReplaceAll(input, REGEX.doublePar, async(_match, p1) => await doublePar(p1, "latex")))
+			expect(await asyncReplaceAll(input, REGEX.doublePar, parseDoublePars))
 				.toBe(expectation);
 		}
 	);
@@ -57,7 +58,7 @@ describe("Replace all - Block aliases", () => {
 	test.each(cases)(
 		"%# - %s",
 		async(_id, input, expectation) => {
-			expect(await asyncReplaceAll(input, REGEX.aliasBlock, async(_match, p1, p2) => `${p1} \\footnote{${await doublePar(p2, "raw")}}`))
+			expect(await asyncReplaceAll(input, REGEX.aliasBlock, parseBlockAlias))
 				.toBe(expectation);
 		}
 	);

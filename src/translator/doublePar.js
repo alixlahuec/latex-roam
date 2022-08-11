@@ -27,4 +27,16 @@ async function doublePar(content, mode){
 	}
 }
 
-export default doublePar;
+async function parseBlockAlias(_match, p1, p2){
+	return `${p1} \\footnote{${await doublePar(p2, "raw")}}`;
+}
+
+async function parseDoublePars(_match, p1){
+	return await doublePar(p1, "latex");
+}
+
+export {
+	doublePar,
+	parseBlockAlias,
+	parseDoublePars
+};

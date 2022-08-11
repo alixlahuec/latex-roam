@@ -1,4 +1,4 @@
-import blockEmbed from "../../src/translator/blockEmbed";
+import { blockEmbed, parseBlockEmbed } from "../../src/translator/blockEmbed";
 
 import { defaultUID, sampleBlocks, uidWithFormatting } from "../../mocks/roam";
 import { grabRawText, raw } from "../../src/translator/common";

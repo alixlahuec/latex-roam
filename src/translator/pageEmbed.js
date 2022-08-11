@@ -15,4 +15,11 @@ async function pageEmbed(title, mode = "raw"){
 	}
 }
 
-export default pageEmbed;
+async function parsePageEmbed(_match, _p1, _p2, p3){
+	return await pageEmbed(p3, "latex");
+}
+
+export {
+	pageEmbed,
+	parsePageEmbed
+};

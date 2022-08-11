@@ -15,4 +15,10 @@ async function blockEmbed(uid, mode = "raw"){
 	}
 }
 
-export default blockEmbed;
+async function parseBlockEmbed(_match, _p1, _p2, p3){
+	return await blockEmbed(p3, "latex");
+}
+export {
+	blockEmbed,
+	parseBlockEmbed
+};
