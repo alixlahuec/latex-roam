@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 function addBlockMenuCommand(label, onClick){
 	return window.roamAlphaAPI.ui.blockContextMenu.addCommand({
 		label,
