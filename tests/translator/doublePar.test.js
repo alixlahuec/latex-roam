@@ -6,22 +6,20 @@ import { defaultUID, sampleBlocks } from "../../mocks/roam";
 
 
 describe("Parsing content inside of double parentheses", () => {
-	test("Block reference - raw, simple text", async() => {
-		expect(await doublePar(defaultUID, "raw"))
-			.toBe(sampleBlocks[defaultUID].string);
-	});
-	test("Block reference - LaTeX, simple text", async() => {
-		expect(await doublePar(defaultUID, "latex"))
-			.toBe(sampleBlocks[defaultUID].string);
-	});
-	test("Simple text - raw", async() => {
-		expect(await doublePar("Parenthesised text", "raw"))
-			.toBe("Parenthesised text");
-	});
-	test("Simple text - LaTeX", async() => {
-		expect(await doublePar("Parenthesised text", "latex"))
-			.toBe("\\footnote{Parenthesised text}");
-	});
+	const cases = [
+		[defaultUID, "raw", sampleBlocks[defaultUID].string],
+		[defaultUID, "latex", sampleBlocks[defaultUID].string],
+		["Parenthesised text", "raw", "Parenthesised text"],
+		["Parenthesised text", "latex", "\\footnote{Parenthesised text}"]
+	];
+
+	test.each(cases)(
+		"%# - %s (mode: %s)",
+		async(content, mode, expectation) => {
+			expect(await doublePar(content, mode))
+				.toBe(expectation);
+		}
+	);
 });
 
 test("Replace all - Double parentheses", async() => {
