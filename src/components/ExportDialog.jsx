@@ -38,7 +38,7 @@ function itemRenderer(item, itemProps) {
 }
 
 function ExportDialog({ isOpen, onClose, uid }){
-	const [output, setOutput] = useState(DEFAULT_OUTPUT);
+	const [output, setOutput] = useState({ ...DEFAULT_OUTPUT });
 	const outputArea = useRef();
 	const [document_class, setDocumentClass] = useSelect({
 		start: "report"
@@ -50,6 +50,16 @@ function ExportDialog({ isOpen, onClose, uid }){
 	const [startWithHeader, setStartWithHeader] = useSelect({
 		start: "1"
 	});
+
+	const onOpening = useCallback(() => {
+		setTitle({ target: { value: document.title } });
+	}, [setTitle]);
+
+	const handleClose = useCallback(() => {
+		window.latexRoam.resetExport();
+		setOutput({ ...DEFAULT_OUTPUT });
+		onClose();
+	}, [onClose]);
 
 	const triggerExport = useCallback(async() => {
 		const client = window.latexRoam;
@@ -68,18 +78,17 @@ function ExportDialog({ isOpen, onClose, uid }){
 	}, [uid, authors, cover, document_class, numberedHeaders, startWithHeader, title]);
 
 	useEffect(() => {
-		if(isOpen){
-			setTitle({ target: { value: document.title } });
-		} else {
+		return () => {
 			window.latexRoam.resetExport();
-		}
-	}, [isOpen, setTitle]);
+		};
+	}, []);
 
 	return <Dialog 
 		className={CustomClasses.DIALOG_CLASS} 
 		isCloseButtonShown={true}
 		isOpen={isOpen} 
-		onClose={onClose} 
+		onClose={handleClose} 
+		onOpening={onOpening}
 		title="Export to LaTeX" >
 		<div className={Classes.DIALOG_BODY}>
 			<div id="latex-roam-export-div">

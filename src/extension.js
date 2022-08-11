@@ -28,16 +28,17 @@ export const DEFAULT_OUTPUT = {
 
 export class ExportManager {
 	constructor(){
-		this.bib = DEFAULT_OUTPUT.bib;
-		this.figs = DEFAULT_OUTPUT.figs;
-		this.tex = DEFAULT_OUTPUT.tex;
-		this.package = DEFAULT_OUTPUT.package;
+		this.bib = { ...DEFAULT_OUTPUT.bib };
+		this.figs = { ...DEFAULT_OUTPUT.figs };
+		this.tex = { ...DEFAULT_OUTPUT.tex };
+		this.package = { ...DEFAULT_OUTPUT.package };
 	}
 
 	#resetBlobBib(){
 		if(this.bib.blob != null){ 
 			URL.revokeObjectURL(this.bib.blobURL);
 			this.bib.blob = null;
+			this.bib.blobURL = null;
 		}
 	}
 
@@ -45,6 +46,7 @@ export class ExportManager {
 		if(this.figs.blob != null){ 
 			URL.revokeObjectURL(this.figs.blobURL);
 			this.figs.blob = null;
+			this.figs.blobURL = null;
 		}
 	}
 
@@ -52,6 +54,7 @@ export class ExportManager {
 		if(this.tex.blob != null){ 
 			URL.revokeObjectURL(this.tex.blobURL);
 			this.tex.blob = null;
+			this.tex.blobURL = null;
 		}
 	}
 
@@ -59,7 +62,18 @@ export class ExportManager {
 		if(this.package.blob != null){
 			URL.revokeObjectURL(this.package.blobURL);
 			this.package.blob = null;
+			this.package.blobURL = null;
 		}
+	}
+
+	#resetToDefault(){
+		this.bib = { ...DEFAULT_OUTPUT.bib };
+		this.figs = { 
+			...DEFAULT_OUTPUT.figs,
+			list: []
+		};
+		this.tex = { ...DEFAULT_OUTPUT.tex };
+		this.package = { ...DEFAULT_OUTPUT.package };
 	}
 
 	resetExport(){
@@ -69,16 +83,13 @@ export class ExportManager {
 		this.#resetBlobTEX();
 		this.#resetBlobPackage();
 
-		this.bib = DEFAULT_OUTPUT.bib;
-		this.figs = DEFAULT_OUTPUT.figs;
-		this.tex = DEFAULT_OUTPUT.tex;
-		this.package = DEFAULT_OUTPUT.package;
+		this.#resetToDefault();
 	}
 
 	#updateTEX(tex){
 		if(tex != this.tex.content){
 			this.#resetBlobTEX();
-			this.tex = DEFAULT_OUTPUT.tex;
+			this.tex = { ...DEFAULT_OUTPUT.tex };
 
 			const blob = new Blob([tex], { type: "text/plain" });
 
@@ -92,7 +103,7 @@ export class ExportManager {
 
 	addBibliography(bibliography){
 		this.#resetBlobBib();
-		this.bib = DEFAULT_OUTPUT.bib;
+		this.bib = { ...DEFAULT_OUTPUT.bib };
 
 		const blob = new Blob([bibliography], { type: "text/plain" });
         
