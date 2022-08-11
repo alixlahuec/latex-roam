@@ -10,7 +10,8 @@
         "plugin:react-hooks/recommended"
     ],
     "globals": {
-        "PACKAGE_VERSION": "readonly"
+        "PACKAGE_VERSION": "readonly",
+        "global": "readonly"
     },
     "ignorePatterns": ["webpack.*config.js"],
     "overrides": [

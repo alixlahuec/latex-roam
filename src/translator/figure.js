@@ -12,12 +12,15 @@ async function figure(caption, url, extra){
 	// Note : the first bit of inline code will be used as the figure label, if there are others they will be ignored
 	const labelRegex = /(`.+?`)/g;
 	const labelMatch = Array.from(extra.matchAll(labelRegex))[0] || false;
-	const labelEl = labelMatch ? `\\label{fig:${labelMatch[0].slice(1,-1)}}\n` : "";
+	const labelEl = labelMatch ? `\\label{fig:${labelMatch[0].slice(1,-1)}}` : "";
 
 	const desc = extra.replace(labelRegex, "").trim();
-	const descEl = (desc.length > 0) ? `\\medskip\n${await formatText(desc)}\n` : "";
+	const descEl = (desc.length > 0) ? `\\medskip\n${await formatText(desc)}` : "";
 
-	return `\\begin{figure}[p]\n\\includegraphics[width=\\textwidth]{figure-${figIndex}.${fileExt}}\n\\caption{${await formatText(caption.trim())}}\n${labelEl}\n${descEl}\\end{figure}`;
+	let extraContent = [labelEl, descEl].filter(Boolean).join("\n");
+	if(extraContent){ extraContent += "\n"; }
+
+	return `\\begin{figure}[p]\n\\includegraphics[width=\\textwidth]{figure-${figIndex}.${fileExt}}\n\\caption{${await formatText(caption.trim())}}\n${extraContent}\\end{figure}`;
 }
 
 async function parseImage(_match, p1, p2, p3) {
