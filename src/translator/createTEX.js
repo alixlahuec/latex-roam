@@ -3,7 +3,7 @@ import { formatText, grabRawText, raw } from "./common";
 import { isTableBlock, makeTable } from "./table";
 
 import { makeBibliography, sortRoamBlocks, todayDMY } from "../utils";
-import { queryBlockContents } from "../roam";
+import { queryBlockContents } from "Roam";
 
 import REGEX from "./regex";
 

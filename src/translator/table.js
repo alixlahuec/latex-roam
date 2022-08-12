@@ -7,7 +7,7 @@ import { sortRoamBlocks } from "../utils";
 function isTableBlock(string){
 	const match = Array.from(string.matchAll(REGEX.table));
 	if(match.length > 0){
-		const [_match, extra, _index, _input] = match[0];
+		const [/*_match*/, extra/*, _index, _input*/] = match[0];
 		return extra;
 	} else {
 		return false;

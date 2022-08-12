@@ -3,7 +3,6 @@ import { formatText } from "./common";
 
 async function mathMode(capture, extra = "", offset){
 	const mathContent = capture;
-	console.log(capture, extra, offset);
 	
 	if(offset == 0){
 		const labelRegex = /(`.+?`)/g;
