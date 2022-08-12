@@ -1,7 +1,7 @@
 import REGEX from "./regex";
 
 function parseAlias(_match, p1, p2){
-	return ` \\href{${p2}}}{${p1}}`;
+	return ` \\href{${p2}}{${p1}}`;
 }
 
 function parseAliasPage(_match, p1){
