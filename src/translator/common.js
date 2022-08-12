@@ -7,9 +7,9 @@ import { isTableBlock, makeTable } from "./table";
 import { parseAlias, parseAliasPage, replaceTextFormatting } from "./markup";
 import { parseCodeBlock, parseCodeInline } from "./code";
 import expandInserts from "./expand";
-import mathMode from "./mathMode";
 import parseDoubleBraces from "./doubleBraces";
 import { parseImage } from "./figure";
+import { parseMathMode } from "./mathMode";
 import parseSpecialReferences from "./specialReferences";
 import { replaceCitekeys } from "./citekeys";
 
@@ -56,7 +56,7 @@ async function formatText(string){
 
 	// Clean up wrong escapes
 	// Math mode :
-	output = await asyncReplaceAll(output, REGEX.math, async(_match, capture, label, offset) => await mathMode(capture, label, offset));
+	output = await asyncReplaceAll(output, REGEX.math, parseMathMode);
 	// URLs :
 	const urlRegex = /\\href\{(.+?)\}\{(.+?)\}/g;
 	output = output.replaceAll(urlRegex, (_match, p1, p2) => cleanUpHref({ url: p1, text: p2 }));

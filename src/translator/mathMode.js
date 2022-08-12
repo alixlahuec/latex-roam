@@ -1,21 +1,26 @@
 /* eslint-disable no-useless-escape */
 import { formatText } from "./common";
 
-async function mathMode(capture, label, offset){
+async function mathMode(capture, extra = "", offset){
 	const mathContent = capture;
+	console.log(capture, extra, offset);
+	
 	if(offset == 0){
-		let eqLabel = label;
-		if(typeof(eqLabel) == "undefined"){
-			eqLabel = "";
-		} else{
-			const hasLabel = Array.from(eqLabel.matchAll(/(`.+?`)/g))[0] || false;
-			eqLabel = hasLabel[0] ? `\\label{eq:${hasLabel[0].slice(1,-1)}}\n` : "";
-		}
-		return `\n\\begin{equation}\n${eqLabel}${capture}\n\\end{equation}`;
-	} else{
-		const eqLabel = label ? await formatText(label) : "";
+		const labelRegex = /(`.+?`)/g;
+		const labelMatch = Array.from(extra.matchAll(labelRegex))[0] || false;
+		const labelEl = labelMatch ? `\\label{eq:${labelMatch[0].slice(1,-1)}}` : "";
+
+		return `\n\\begin{equation}\n${labelEl}${mathContent}\n\\end{equation}`;
+	} else {
+		const eqLabel = extra ? await formatText(extra) : "";
 		return `$${mathContent.replaceAll(/\\\&/g, "&")}$${eqLabel}`;
 	}
 }
 
-export default mathMode;
+async function parseMathMode(_match, capture, extra, offset){
+	return await mathMode(capture, extra, offset);
+}
+
+export {
+	parseMathMode
+};
