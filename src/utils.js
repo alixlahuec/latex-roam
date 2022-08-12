@@ -16,7 +16,7 @@ async function asyncReplaceAll(str, regex, asyncReplaceFn){
 		substrs.push(str.slice(i, match.index));
 		// Call the async replacer function with the match information
 		// The asyncFn receives (match, p1, p2, p3, ...)
-		substrs.push(asyncReplaceFn(...match));
+		substrs.push(asyncReplaceFn(...match, match.index));
 		i = regexClone.lastIndex;
 	}
 	// Push the rest of the string
