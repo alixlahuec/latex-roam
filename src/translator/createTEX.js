@@ -192,4 +192,6 @@ async function parseListElement(block, start_indent){
 	return output;
 }
 
-export default _createTEX;
+export {
+	_createTEX
+};

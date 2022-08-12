@@ -1,6 +1,6 @@
 import { downloadZip } from "client-zip";
 
-import _createTEX from "./translator/createTEX";
+import { _createTEX } from "./translator/createTEX";
 
 
 export const DEFAULT_OUTPUT = {
