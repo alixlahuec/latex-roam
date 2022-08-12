@@ -7,7 +7,8 @@ import { sortRoamBlocks } from "../utils";
 function isTableBlock(string){
 	const match = Array.from(string.matchAll(REGEX.table));
 	if(match.length > 0){
-		return match[0];
+		const [_match, extra, _index, _input] = match[0];
+		return extra;
 	} else {
 		return false;
 	}
@@ -37,7 +38,7 @@ async function traverseRow(block){
 async function storeCell(block){
 	return {
 		text: await formatText(block.string),
-		align: block["text-align"] ? block["text-align"].charAt(0) : "l"
+		align: (block["text-align"] || "left").charAt(0)
 	};
 }
 
@@ -73,5 +74,6 @@ async function makeTable(block, start_indent = 0, extra = ""){
 
 export {
 	isTableBlock,
-	makeTable
+	makeTable,
+	traverseTable
 };

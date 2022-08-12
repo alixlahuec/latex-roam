@@ -90,7 +90,7 @@ async function raw(block, start_indent = 0){
 	let output = "";
 	// If the block is a table, stop processing recursively & generate the table element
 	const is_table_block = isTableBlock(block.string);
-	if(is_table_block){
+	if(is_table_block.constructor === String){
 		const extra = is_table_block[1];
 		const table = await makeTable(block, start_indent, extra);
 		output = `\n${table}\n`;

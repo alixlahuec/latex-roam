@@ -129,7 +129,7 @@ async function parseBlock(block){
 	let output = "";
 	// If the block is a table, stop processing recursively & generate the table element
 	const is_table_block = isTableBlock(block.string);
-	if(is_table_block){
+	if(is_table_block.constructor === String){
 		const extra = is_table_block[1];
 		output = await makeTable(block, 0, extra);
 	} else {
@@ -161,7 +161,7 @@ async function parseBlock(block){
 async function parseListElement(block, start_indent){
 	let output = "";
 	const is_table_block = isTableBlock(block.string);
-	if(is_table_block){
+	if(is_table_block.constructor === String){
 		const extra = is_table_block[1];
 		const table = await makeTable(block, start_indent+1, extra);
 		output = `\\item{\n${table}}`;

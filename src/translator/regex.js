@@ -37,7 +37,7 @@ const REGEX = {
 	image: /!\[(.*?)\]\((.+?)\)(.*)/g,
 	math: /\$\$([\s\S^$]+?)\$\$([\s\S]+)?/g,
 	popover: /=:([^|]+)\|(.+)/g,
-	table: /\{{2}(\[{2})?table(\]{2})?\}{2}(.*)/g,
+	table: /\{{2}(?:\[{2})?table(?:\]{2})?\}{2}(.*)/g,
 	
 	// Special references
 	specialRef: /\{{2}(fig|eq|table):(.+?)\}{2}/g
