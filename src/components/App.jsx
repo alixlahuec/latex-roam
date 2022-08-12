@@ -5,7 +5,7 @@ import ExportDialog from "./ExportDialog";
 import GraphWatcher from "./GraphWatcher";
 
 
-import { addBlockMenuCommand } from "../roam";
+import { addBlockMenuCommand } from "Roam";
 
 class App extends Component {
 	constructor(props){

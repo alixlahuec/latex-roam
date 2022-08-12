@@ -1,8 +1,8 @@
 import { grabRawText, raw } from "./common";
-import { queryPageContentsByTitle } from "../roam";
+import { queryPageContentsByTitle } from "Roam";
 
 
-async function pageEmbed(title, mode = "raw"){
+async function pageEmbed(title, mode){
 	const pageContents = queryPageContentsByTitle(title);
 	switch(mode){
 	case "latex":

@@ -1,5 +1,5 @@
 import { CustomClasses } from "../../constants";
-import { findRoamPage } from "../../roam";
+import { findRoamPage } from "Roam";
 
 /* istanbul ignore next */
 const findMenus = () =>{
