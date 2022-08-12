@@ -2,6 +2,15 @@
 
 export const defaultUID = "some_uid";
 export const uidWithFormatting = "with_formatting";
+export const defaultPageUID = "some_page_uid";
+
+const plainBlock = {
+	string: "Text extracted from block reference",
+	order: 0,
+	heading: 0,
+	"view-type": "bulleted",
+	"text-align": "left"
+};
 
 export const sampleBlocks = {
 	[uidWithFormatting]: {
@@ -11,10 +20,12 @@ export const sampleBlocks = {
 		"view-type": "document",
 		"text-align": "left"
 	},
-	[defaultUID]: {
-		string: "Text extracted from block reference",
-		order: 0,
-		heading: 0,
+	[defaultUID]: plainBlock,
+	[defaultPageUID]: {
+		title: defaultPageTitle,
+		children: [
+			plainBlock
+		],
 		"view-type": "bulleted",
 		"text-align": "left"
 	}
