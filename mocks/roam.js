@@ -20,10 +20,33 @@ export const sampleBlocks = {
 	}
 };
 
+export const defaultPageTitle = "Some Title";
+export const emptyPageTitle = "An Empty Page";
+
+export const samplePages = {
+	[defaultPageTitle]: {
+		title: defaultPageTitle,
+		children: [
+			sampleBlocks[defaultUID]
+		],
+		"view-type": "bulleted",
+		"text-align": "left"
+	},
+	[emptyPageTitle]: {
+		title: emptyPageTitle,
+		"view-type": "document",
+		"text-align": "left"
+	}
+};
+
 export function getBlockText(uid){
 	return Object.keys(sampleBlocks).includes(uid) ? [[sampleBlocks[uid].string]] : [];
 }
 
 export function queryBlockContents(uid){
 	return sampleBlocks[uid] || sampleBlocks[defaultUID];
+}
+
+export function queryPageContentsByTitle(title){
+	return samplePages[title] || samplePages[defaultPageTitle];
 }
