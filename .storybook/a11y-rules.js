@@ -1,4 +1,4 @@
-const A11Y_RULES = [
+export const A11Y_RULES = [
     {
         id: "color-contrast",
         // axe-playwright currently generates inconsistent results for color contrast.
@@ -6,5 +6,3 @@ const A11Y_RULES = [
         reviewOnFail: true
     }
 ];
-
-export default A11Y_RULES;

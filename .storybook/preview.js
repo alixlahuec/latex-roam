@@ -7,7 +7,7 @@ import "../node_modules/@blueprintjs/core/lib/css/blueprint.css";
 import "../node_modules/@blueprintjs/select/lib/css/blueprint-select.css";
 import "../src/index.css";
 
-import A11Y_RULES from "./a11y-rules";
+import { A11Y_RULES } from "./a11y-rules";
 
 
 // https://storybook.js.org/docs/react/essentials/toolbars-and-globals

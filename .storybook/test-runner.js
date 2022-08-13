@@ -1,7 +1,7 @@
 const { checkA11y, configureAxe,/* getViolations,*/ injectAxe } = require('axe-playwright');
 const fs = require('fs');
 
-const A11Y_RULES = require("./a11y-rules");
+const { A11Y_RULES } = require("./a11y-rules");
 
 // https://storybook.js.org/blog/automate-accessibility-tests-with-storybook/
 module.exports = {
