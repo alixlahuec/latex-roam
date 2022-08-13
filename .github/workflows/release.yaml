@@ -20,6 +20,8 @@ jobs:
       
       - name: Release as latest
         run: npm run release:latest
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v3
