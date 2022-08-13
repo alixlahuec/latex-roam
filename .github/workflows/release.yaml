@@ -1,0 +1,26 @@
+name: Automatic release
+on: [push]
+  branch: main
+jobs:
+  release:
+    name: Make release
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v2
+
+      - name: Install packages
+        run: npm ci --legacy-peer-deps
+      
+      - name: Release as latest
+        run: npm run release:latest
+
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          directory: ./coverage/
+          verbose: true
