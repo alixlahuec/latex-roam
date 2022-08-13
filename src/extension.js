@@ -152,9 +152,7 @@ export class ExportManager {
 	async #zipPackage(title){
 		this.#jszipPackage.file(`${title}.tex`, this.tex.content);
 		
-		if(this.bib.blob != null){
-			this.#jszipPackage.file("bibliography.bib", this.bib.blob);
-		}
+		if(this.bib.blob != null){ this.#jszipPackage.file("bibliography.bib", this.bib.blob); }
 
 		if(this.figs.list.length > 0){
 			this.figs.list.forEach((entry) => {
