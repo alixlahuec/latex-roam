@@ -7,7 +7,6 @@ export const defaultPageUID = "some_page_uid";
 const plainBlock = {
 	string: "Text extracted from block reference",
 	order: 0,
-	heading: 0,
 	"view-type": "bulleted",
 	"text-align": "left"
 };
