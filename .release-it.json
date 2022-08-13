@@ -48,6 +48,10 @@
                     {
                         "type": "test",
                         "hidden": true
+                    },
+                    {
+                        "type": "auto-commit",
+                        "hidden": true
                     }
                 ]
             }
