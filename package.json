@@ -29,14 +29,15 @@
         "build-storybook": "build-storybook --quiet",
         "test-storybook": "test-storybook",
         "ci:test-storybook": "test-storybook --coverage",
-        "release": "release-it minor --git.requireBranch=main",
-        "release:beta": "release-it minor --git.requireBranch=beta major --preRelease=beta",
+        "release:latest": "release-it --ci --git.requireBranch=main",
+        "release:beta": "release-it --ci --git.requireBranch=beta --preRelease=beta",
         "release:preview": "release-it --dry-run"
     },
     "devDependencies": {
         "@babel/core": "^7.17.9",
         "@babel/preset-env": "^7.16.11",
         "@babel/preset-react": "^7.18.6",
+        "@release-it/conventional-changelog": "^5.0.0",
         "@storybook/addon-a11y": "^6.5.10",
         "@storybook/addon-actions": "^6.5.10",
         "@storybook/addon-controls": "^6.5.10",

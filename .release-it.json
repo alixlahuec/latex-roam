@@ -24,5 +24,41 @@
     "npm": {
         "allowSameVersion": true,
         "publish": true
+    },
+    "plugins": {
+        "@release-it/conventional-changelog": {
+            "header": "# Changelog",
+            "infile": "CHANGELOG.md",
+            "strictSemVer": true,
+            "preset": {
+                "name": "conventionalcommits",
+                "types": [
+                    {
+                        "type": "feat",
+                        "section": "Features"
+                    },
+                    {
+                        "type": "fix",
+                        "section": "Bug Fixes"
+                    },
+                    {
+                        "type": "chore",
+                        "hidden": true
+                    },
+                    {
+                        "type": "refactor",
+                        "hidden": true
+                    },
+                    {
+                        "type": "test",
+                        "hidden": true
+                    },
+                    {
+                        "type": "auto-commit",
+                        "hidden": true
+                    }
+                ]
+            }
+        }
     }
 }
