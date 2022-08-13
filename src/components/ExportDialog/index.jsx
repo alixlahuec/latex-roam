@@ -77,6 +77,7 @@ function ExportDialog({ isOpen, onClose, uid }){
 		setOutput(exportOutput);
 	}, [uid, authors, cover, document_class, numberedHeaders, startWithHeader, title]);
 
+	/* istanbul ignore next */
 	useEffect(() => {
 		return () => {
 			window.latexRoam.resetExport();
