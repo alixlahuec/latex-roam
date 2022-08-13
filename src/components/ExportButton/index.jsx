@@ -1,11 +1,11 @@
 import { string } from "prop-types";
 
 import { Button } from "@blueprintjs/core";
-import ExportDialog from "./ExportDialog";
+import ExportDialog from "../ExportDialog";
 
-import useBool from "../hooks/useBool";
+import useBool from "../../hooks/useBool";
 
-import { CustomClasses } from "../constants";
+import { CustomClasses } from "../../constants";
 
 
 function ExportButton({ uid }){
