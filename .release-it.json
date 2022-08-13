@@ -9,7 +9,6 @@
         ]
     },
     "git": {
-        "commitArgs": ["-S"],
         "commitMessage": "chore: release ${version}",
         "tag": true,
         "tagMatch": "[0-9]*\\.[0-9]*\\.[0-9]*"
