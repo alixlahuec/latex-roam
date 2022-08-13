@@ -29,7 +29,7 @@
         "build-storybook": "build-storybook --quiet",
         "test-storybook": "test-storybook",
         "ci:test-storybook": "test-storybook --coverage",
-        "release:latest": "release-it --git.requireBranch=main",
+        "release:latest": "release-it --ci --git.requireBranch=main",
         "release:beta": "release-it --ci --git.requireBranch=beta --preRelease=beta",
         "release:preview": "release-it --dry-run"
     },
