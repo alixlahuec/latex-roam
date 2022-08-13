@@ -29,8 +29,8 @@
         "build-storybook": "build-storybook --quiet",
         "test-storybook": "test-storybook",
         "ci:test-storybook": "test-storybook --coverage",
-        "release:latest": "release-it --ci --git.requireBranch=main",
-        "release:beta": "release-it --ci --git.requireBranch=beta --preRelease=beta",
+        "release:latest": "release-it --ci --git.requireBranch=main --npm.skipChecks",
+        "release:beta": "release-it --ci --git.requireBranch=beta --preRelease=beta --npm.skipChecks",
         "release:preview": "release-it --dry-run"
     },
     "devDependencies": {
