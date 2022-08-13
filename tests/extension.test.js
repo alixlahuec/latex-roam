@@ -4,10 +4,8 @@ import { pageUIDWithFigure } from "../mocks/roam";
 
 const mockBlob = new Blob([{ some: "content" }]);
 
-jest.mock("client-zip", () => ({
-	downloadZip: () => ({
-		blob: () => Promise.resolve(mockBlob)
-	})
+jest.mock("jszip", () => ({
+	generateAsync: () => Promise.resolve(mockBlob)
 }));
 
 beforeEach(() => {
