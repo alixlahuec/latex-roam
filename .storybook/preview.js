@@ -10,6 +10,8 @@ import "../src/index.css";
 import { A11Y_RULES } from "./a11y-rules";
 
 
+window.latexRoam = new ExportManager();
+
 // https://storybook.js.org/docs/react/essentials/toolbars-and-globals
 const withTheme = (Story, context) => {
     const [{ theme }, /* updateGlobals */] = useGlobals();
@@ -18,10 +20,6 @@ const withTheme = (Story, context) => {
         document.getElementById("root").parentElement.setAttribute("latex-roam-dark-theme", (theme == "dark").toString());
     }, [theme]);
 
-    useEffect(() => {
-        window.latexRoam = new ExportManager();
-    }, []);
-
     return <div style={{ margin: "50px", padding: "20px", height: "1000px" }}>
         <Story {...context} />
     </div>;
@@ -29,7 +27,7 @@ const withTheme = (Story, context) => {
 
 export const globalTypes = {
     theme: {
-        name: 'Theme',
+        title: 'Theme',
         description: 'Global theme for components',
         defaultValue: 'light',
         toolbar: {
