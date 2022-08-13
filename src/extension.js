@@ -80,6 +80,9 @@ export class ExportManager {
 		};
 		this.tex = { ...DEFAULT_OUTPUT.tex };
 		this.package = { ...DEFAULT_OUTPUT.package };
+
+		this.#jszipFigures = new JSZip();
+		this.#jszipPackage = new JSZip();
 	}
 
 	resetExport(){
