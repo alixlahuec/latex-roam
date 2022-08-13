@@ -22,7 +22,7 @@
         "releaseName": "v${version}"
     },
     "npm": {
-        "allowSameVersion": true,
+        "allowSameVersion": false,
         "publish": true
     },
     "plugins": {
