@@ -16,6 +16,9 @@
     "main": ".src/index.js",
     "browser": "extension.js",
     "unpkg": "extension.js",
+    "publishConfig": {
+        "access": "public"
+    },
     "scripts": {
         "build:roam": "webpack",
         "lint": "eslint",
