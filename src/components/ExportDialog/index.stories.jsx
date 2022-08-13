@@ -1,6 +1,6 @@
 import ExportDialog from "../ExportDialog";
 
-import { defaultPageUID } from "../../../mocks/roam";
+import { pageUIDWithFigure } from "../../../mocks/roam";
 
 import { expect, jest } from "@storybook/jest";
 import { userEvent, within } from "@storybook/testing-library";
@@ -13,7 +13,7 @@ export default {
 	args: {
 		isOpen: true,
 		onClose: jest.fn(),
-		uid: defaultPageUID
+		uid: pageUIDWithFigure
 	},
 	argTypes: {
 		onClose: { action: true }
@@ -24,6 +24,11 @@ const Template = (args) => <ExportDialog {...args} />;
 
 export const Default = Template.bind({});
 Default.play = async({ args, canvasElement }) => {
+
+	global.fetch = jest.fn().mockImplementation(() => Promise.resolve({
+		blob: () => Promise.resolve(new Blob([{ some: "content" }]))
+	}));
+
 	const frame = within(canvasElement.parentElement);
 
 	const exportButton = frame.getByRole("button", { name: "Export page contents" });
@@ -36,6 +41,8 @@ Default.play = async({ args, canvasElement }) => {
 	await expect(frame.getByRole("button", { name: "Export to Overleaf" }))
 		.toBeInTheDocument();
 	await expect(frame.getByRole("button", { name: "Download .tex file" }))
+		.toBeInTheDocument();
+	await expect(frame.getByRole("button", { name: "Download figures (1)" }))
 		.toBeInTheDocument();
 
 	const closeButton = frame.getByRole("button", { name: "Close" });
