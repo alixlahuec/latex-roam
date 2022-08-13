@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import { shape, string } from "prop-types";
 import { Component } from "react";
 
