@@ -42,6 +42,10 @@
                         "section": "Bug Fixes"
                     },
                     {
+                        "type": "chore",
+                        "hidden": true
+                    },
+                    {
                         "type": "refactor",
                         "hidden": true
                     },
