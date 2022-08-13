@@ -25,7 +25,10 @@
         "storybook": "start-storybook -p 6006",
         "build-storybook": "build-storybook --quiet",
         "test-storybook": "test-storybook",
-        "ci:test-storybook": "test-storybook --coverage"
+        "ci:test-storybook": "test-storybook --coverage",
+        "release": "release-it minor --git.requireBranch=main",
+        "release:beta": "release-it minor --git.requireBranch=beta major --preRelease=beta",
+        "release:preview": "release-it --dry-run"
     },
     "devDependencies": {
         "@babel/core": "^7.17.9",
@@ -61,6 +64,7 @@
         "jest-environment-jsdom": "^27.5.1",
         "jest-transform-css": "^4.0.1",
         "mini-css-extract-plugin": "^2.6.1",
+        "release-it": "^15.3.0",
         "style-loader": "^3.3.1",
         "webpack": "^5.72.0",
         "webpack-cli": "^4.9.2",
