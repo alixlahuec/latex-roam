@@ -1,7 +1,7 @@
-import { _createTEX, makeHeader, parseBlock } from "../../src/translator/createTEX";
+import { _createTEX, makeHeader, makeList, parseBlock } from "../../src/translator/createTEX";
 import { todayDMY } from "../../src/utils";
 
-import { defaultPageUID, defaultUID, sampleBlocks } from "../../mocks/roam";
+import { defaultPageUID, defaultUID, pageUIDWithHeader, plainBlock, sampleBlocks } from "../../mocks/roam";
 import { sampleBulletedList, sampleDocumentList, sampleNumberedList } from "../../mocks/content/lists";
 
 
@@ -132,6 +132,18 @@ describe("Parsing list blocks", () => {
 				.toBe(expectation);
 		}
 	);
+
+	test("Parsing list elements", async() => {
+		expect(await makeList([sampleDocumentList], "bulleted", 0))
+			.toBe(
+				[
+					"\\begin{itemize}",
+					"\t\\item{A document list:\\\\A list element\\\\Another list element\\\\A \\textbf{formatted} block\\\\A grandchild}",
+					"\\end{itemize}"
+				].join("\n")
+			);
+	});
+
 });
 
 describe("Generating TEX document with settings", () => {
@@ -147,6 +159,21 @@ describe("Generating TEX document with settings", () => {
 				title: "Some title"
 			},
 			sampleBlocks[defaultUID].string
+		],
+		[
+			pageUIDWithHeader,
+			{
+				document_class: "book",
+				numbered: false,
+				cover: false,
+				start_header: "1",
+				authors: "Some authors",
+				title: "Some title"
+			},
+			[
+				"Header Text\\\\",
+				plainBlock.string
+			].join("\n")
 		]
 	];
 

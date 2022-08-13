@@ -195,5 +195,6 @@ async function parseListElement(block, start_indent){
 export {
 	_createTEX,
 	makeHeader,
+	makeList,
 	parseBlock
 };

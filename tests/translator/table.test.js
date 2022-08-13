@@ -1,5 +1,5 @@
 import { isTableBlock, makeTable, traverseTable } from "../../src/translator/table";
-import { parseBlock } from "../../src/translator/createTEX";
+import { makeList, parseBlock } from "../../src/translator/createTEX";
 
 import { sampleTable } from "../../mocks/content/tables";
 
@@ -59,4 +59,24 @@ test("Generating table LaTeX", async () => {
     
 	expect(await parseBlock(sampleTable))
 		.toEqual(await makeTable(sampleTable, 0, " Table caption, à la Lorem ipsum"));
+    
+	expect(await makeList([sampleTable], "bulleted", 0))
+		.toBe(
+			[
+				"\\begin{itemize}",
+				"\t\\item{",
+				"\t\t\\begin{table}[h!]",
+				"\t\t\\centering",
+				"\t\t\\begin{tabular}{l c c}",
+				"\t\t\t\\hline",
+				"\t\t\tCol1 Header & Col2 Header & Col3 Header \\\\",
+				"\t\t\tCell1 & Cell2 & Cell3 \\\\",
+				"\t\t\t\\hline",
+				"\t\t\\end{tabular}",
+				"\t\t\\caption{Table caption, à la Lorem ipsum}",
+				"\t\t\\end{table}}",
+				"\\end{itemize}"
+			].join("\n")
+		);
+
 });

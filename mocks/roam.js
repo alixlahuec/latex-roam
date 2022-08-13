@@ -4,8 +4,9 @@ export const defaultUID = "some_uid";
 export const uidWithFormatting = "with_formatting";
 export const defaultPageUID = "some_page_uid";
 export const pageUIDWithFigure = "some_page_with_fig";
+export const pageUIDWithHeader = "some_page_with_header";
 
-const plainBlock = {
+export const plainBlock = {
 	string: "Text extracted from block reference",
 	order: 0,
 	"view-type": "bulleted",
@@ -15,6 +16,15 @@ const plainBlock = {
 const imageBlock = {
 	string: "Text with an ![image](http://example.com/figure.png)",
 	order: 0
+};
+
+const headerBlock = {
+	string: "Header Text",
+	order: 0,
+	heading: 1,
+	children: [
+		plainBlock
+	]
 };
 
 export const sampleBlocks = {
@@ -41,6 +51,12 @@ export const sampleBlocks = {
 		],
 		"view-type": "bulleted",
 		"text-align": "left"
+	},
+	[pageUIDWithHeader]: {
+		title: "Page with Header",
+		children: [
+			headerBlock
+		]
 	}
 };
 
