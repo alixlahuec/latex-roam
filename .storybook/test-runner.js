@@ -21,7 +21,7 @@ module.exports = {
 
         await configureAxe(page, {
             rules: A11Y_RULES
-          })
+        })
 
         const config = {
             detailedReport: true,
