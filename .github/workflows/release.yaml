@@ -1,6 +1,8 @@
 name: Automatic release
-on: [push]
-  branch: main
+on:
+  push:
+    branches: 
+      - main
 jobs:
   release:
     name: Make release

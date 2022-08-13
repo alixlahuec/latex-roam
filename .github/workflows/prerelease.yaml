@@ -1,6 +1,8 @@
 name: Automatic pre-release
-on: [push]
-  branch: beta
+on:
+  push:
+    branches: 
+      - beta
 jobs:
   release:
     name: Make release
