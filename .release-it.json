@@ -9,14 +9,12 @@
         ]
     },
     "git": {
-        "commitMessage": "chore: release ${version}",
+        "commitMessage": "release: v${version}",
         "tag": true,
         "tagMatch": "[0-9]*\\.[0-9]*\\.[0-9]*"
     },
     "github": {
         "assets": ["extension.css", "extension.js"],
-        "autoGenerate": true,
-        "draft": true,
         "release": true,
         "releaseName": "v${version}"
     },
@@ -26,8 +24,12 @@
     },
     "plugins": {
         "@release-it/conventional-changelog": {
+            "gitRawCommitsOpts": {
+                "from": "3c159c0ecfa242be0780c700f339c0876449c10e"
+            },
             "header": "# Changelog",
             "infile": "CHANGELOG.md",
+            "skipUnstable": true,
             "strictSemVer": true,
             "preset": {
                 "name": "conventionalcommits",
@@ -54,6 +56,14 @@
                     },
                     {
                         "type": "auto-commit",
+                        "hidden": true
+                    },
+                    {
+                        "type": "release",
+                        "hidden": true
+                    },
+                    {
+                        "type": "ci",
                         "hidden": true
                     }
                 ]
