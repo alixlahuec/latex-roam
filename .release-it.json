@@ -26,8 +26,10 @@
     },
     "plugins": {
         "@release-it/conventional-changelog": {
+            "from": "v0.2.0",
             "header": "# Changelog",
             "infile": "CHANGELOG.md",
+            "skipUnstable": true,
             "strictSemVer": true,
             "preset": {
                 "name": "conventionalcommits",
