@@ -12,7 +12,7 @@ function ExportButton({ uid }){
 	const [isDialogOpen, { on: openDialog, off: closeDialog }] = useBool(false);
 
 	return <>
-		<Button className={CustomClasses.BUTTON_CLASS} icon="rect-width" minimal={true} onClick={openDialog} text="LaTeX" />
+		<Button className={CustomClasses.BUTTON_CLASS} icon="code" minimal={true} onClick={openDialog} text="LaTeX" />
 		<ExportDialog isOpen={isDialogOpen} onClose={closeDialog} uid={uid} />
 	</>;
 }
