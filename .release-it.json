@@ -26,7 +26,7 @@
     },
     "plugins": {
         "@release-it/conventional-changelog": {
-            "from": "v0.2.0",
+            "from": "b4ca6af1b7367c14d931a8d6815286ca7aa112e6",
             "header": "# Changelog",
             "infile": "CHANGELOG.md",
             "skipUnstable": true,
