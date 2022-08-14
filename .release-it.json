@@ -15,8 +15,6 @@
     },
     "github": {
         "assets": ["extension.css", "extension.js"],
-        "autoGenerate": true,
-        "draft": true,
         "release": true,
         "releaseName": "v${version}"
     },
