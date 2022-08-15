@@ -184,7 +184,7 @@ function ExportDialog({ isOpen, onClose, uid }){
 		</div>
 		<div className={Classes.DIALOG_BODY}>
 			<div id="latex-roam-export-div">
-				<ControlGroup className="latex-roam--settings-col" vertical={true}>
+				<ControlGroup className="rl--settings-col" vertical={true}>
 					<FormGroup label="Title" labelFor="doc-title">
 						<InputGroup
 							autoComplete="off"
@@ -206,7 +206,7 @@ function ExportDialog({ isOpen, onClose, uid }){
 						/>
 					</FormGroup>
 				</ControlGroup>
-				<ControlGroup className="latex-roam--settings-col" vertical={true}>
+				<ControlGroup className="rl--settings-col" vertical={true}>
 					<FormGroup inline={true} label="Document class">
 						<SingleSelect menuTitle="Select a LaTeX document class" onChange={setDocumentClass} options={DOC_CLASS_OPTIONS} value={document_class} />
 					</FormGroup>

@@ -25,20 +25,20 @@
     font-size: 0.85rem;
 }
 
-.latex-roam--settings-col .bp3-label {
+.rl--settings-col .bp3-label {
     font-weight: 500;
 }
 
-.latex-roam--settings-col.bp3-vertical .bp3-form-group:not(.bp3-inline) {
+.rl--settings-col.bp3-vertical .bp3-form-group:not(.bp3-inline) {
     margin-bottom: 10px;
 }
 
-.latex-roam--settings-col .bp3-form-group.bp3-inline {
+.rl--settings-col .bp3-form-group.bp3-inline {
     justify-content: space-between;
     margin: 0px;
 }
 
-.latex-roam--settings-col .bp3-form-group.bp3-inline .bp3-switch {
+.rl--settings-col .bp3-form-group.bp3-inline .bp3-switch {
     margin-bottom: 0px;
 }
 
