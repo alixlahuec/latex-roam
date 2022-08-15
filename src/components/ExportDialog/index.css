@@ -1,0 +1,94 @@
+.latex-roam--dialog {
+    align-self: baseline;
+    background: var(--rl-dialog-bg);
+    width: calc(100% - 2*var(--rl-dialog-margin));
+}
+
+.latex-roam--dialog > .bp3-dialog-header {
+    justify-content: space-between;
+}
+
+.latex-roam--dialog > .bp3-dialog-body {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 20px;
+}
+
+#latex-roam-export-div {
+    display: flex;
+    flex: 0 0 30%;
+    flex-direction: column;
+}
+
+#latex-roam-export-div,
+#latex-roam-export-div .bp3-control-group .bp3-button {
+    font-size: 0.85rem;
+}
+
+.latex-roam--settings-col .bp3-label {
+    font-weight: 500;
+}
+
+.latex-roam--settings-col.bp3-vertical .bp3-form-group:not(.bp3-inline) {
+    margin-bottom: 10px;
+}
+
+.latex-roam--settings-col .bp3-form-group.bp3-inline {
+    justify-content: space-between;
+    margin: 0px;
+}
+
+.latex-roam--settings-col .bp3-form-group.bp3-inline .bp3-switch {
+    margin-bottom: 0px;
+}
+
+#latex-roam-export-trigger {
+    margin: 10px 0px;
+}
+
+#latex-roam-export-form {
+    flex: 0 0 65%;
+    margin: 10px;
+    padding: 10px;
+    position: relative;
+}
+
+.rl-tex-buttons--top {
+    background: #f4f4f4;
+    top: 10px;
+}
+
+.rl-tex-buttons--bottom {
+    background: white;
+    bottom: 10px;
+}
+
+.rl-tex-buttons--top,
+.rl-tex-buttons--bottom {
+    position: absolute;
+    right: 10px;
+}
+
+#latex-roam-export-contents {
+    background: white;
+    box-shadow: none;
+    height: 60vh;
+}
+
+#latex-roam-export-contents::-webkit-scrollbar {
+    width: 2px;
+}
+
+/* SMALLER DISPLAYS */
+
+@media (max-width: 1000px){
+    .latex-roam--dialog {
+        --rl-dialog-margin: 10%;
+    }
+}
+
+@media (max-width: 700px){
+    .latex-roam--dialog {
+        --rl-dialog-margin: 5%;
+    }
+}
