@@ -22,7 +22,7 @@ coverage:
       components:
         paths:
           - src/components/
-        target: 85%
+        target: 95%
         threshold: 5%
       parser:
         paths:
