@@ -1,45 +1,141 @@
-import { bool, func, string } from "prop-types";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { arrayOf, bool, func, instanceOf, shape, string } from "prop-types";
+import { useCallback, useEffect, useMemo } from "react";
 
-import { AnchorButton, Button, Classes, Dialog, InputGroup, Label, MenuItem, Switch, TextArea } from "@blueprintjs/core";
+import { AnchorButton, Button, ButtonGroup, Classes, ControlGroup, Dialog, FormGroup, Icon, InputGroup, MenuItem, Spinner, Switch, TextArea } from "@blueprintjs/core";
 import { Select } from "@blueprintjs/select";
 
 import useBool from "../../hooks/useBool";
+import useExport from "../../hooks/useExport";
 import useSelect from "../../hooks/useSelect";
 import useText from "../../hooks/useText";
 
-import { DEFAULT_OUTPUT } from "../../extension";
-
 import { CustomClasses } from "../../constants";
+
+import "./index.css";
 
 
 const popoverProps = {
+	canEscapeKeyClose: false,
 	minimal: true,
 	popoverClassName: CustomClasses.POPOVER_CLASS
 };
 
-const documentClasses = {
-	"article": "Article",
-	"book": "Book",
-	"report": "Report"
-};
+const DOC_CLASS_OPTIONS = [
+	{ value: "article", label: "Article" },
+	{ value: "book", label: "Book" },
+	{ value: "report", label: "Report" }
+];
 
-const headers = {
-	"1": "Start with header 1",
-	"2": "Start with header 2",
-	"3": "Start with header 3",
-	"4": "Start with header 4"
-};
-
-function itemRenderer(item, itemProps) {
+function renderAsMenuItem(item, itemProps) {
 	const { handleClick, modifiers: { active } } = itemProps;
 
-	return <MenuItem active={active} key={item} onClick={handleClick} text={item} />;
+	return <MenuItem active={active} key={item.value} onClick={handleClick} text={item.label} />;
 }
 
+function SingleSelect({ menuTitle, onChange, options, value }){
+    
+	const menuProps = useMemo(() => ({
+		title: menuTitle
+	}), [menuTitle]);
+
+	const popoverTargetProps = useMemo(() => ({
+		style: { textAlign: "right" },
+		title: menuTitle
+	}), [menuTitle]);
+
+	const selectValue = useCallback((item) => {
+		onChange(item.value);
+	}, [onChange]);
+
+	return (
+		<Select 
+			filterable={false}
+			itemRenderer={renderAsMenuItem}
+			itemsEqual="value"
+			items={options}
+			menuProps={menuProps}
+			onItemSelect={selectValue}
+			placement="bottom"
+			popoverProps={popoverProps}
+			popoverTargetProps={popoverTargetProps} >
+			<Button minimal={true} rightIcon="caret-down" text={options.find(op => op.value == value).label} />
+		</Select>
+	);
+}
+SingleSelect.propTypes = {
+	menuTitle: string,
+	onChange: func,
+	options: arrayOf(shape({ label: string, value: string })),
+	value: string
+};
+
+function DownloadButton({ entity, fileName, icon = null, text, ...buttonProps }){
+	return entity.blobURL
+		? <AnchorButton download={fileName} href={entity.blobURL} icon={icon} text={text} {...buttonProps} />
+		: null;
+}
+DownloadButton.propTypes = {
+	entity: shape({
+		blob: instanceOf(Blob),
+		blobURL: string
+	}),
+	fileName: string,
+	icon: string,
+	text: string
+};
+
+function Output({ isLoading, output, title }){
+
+	return output.tex.content.length > 0
+		? <form
+			action="https://www.overleaf.com/docs"
+			className={Classes.FILL} 
+			id="latex-roam-export-form"
+			method="POST"
+			target="_blank" >
+			<TextArea aria-label="Generated LaTeX output" id="latex-roam-export-contents" fill={true} growVertically={false} name="snip" readOnly={true} small={true} value={output.tex.content} />
+			<ButtonGroup className="rl-tex-buttons--top" minimal={true} >
+				<DownloadButton entity={output.tex} fileName={title + ".tex"} icon="download" minimal={true} text=".TEX" title="Download .tex file" />
+				<Button icon="share" minimal={true} text="Open in Overleaf" title="Open LaTeX document in Overleaf" type="submit" />
+			</ButtonGroup>
+			<ButtonGroup className="rl-tex-buttons--bottom" minimal={true} >
+				<DownloadButton entity={output.bib} fileName="bibliography.bib" icon="manual" intent="primary" text=".BIB" title="Download bibliography" />
+				<DownloadButton entity={output.figs} fileName="figures.zip" icon="media" intent="primary" text={"Figures (" + output.figs.list.length + ")"} title="Download figures" />
+				<DownloadButton entity={output.package} fileName={title + ".zip"} icon="download" intent="success" text="Download all" title="Download all files" />
+			</ButtonGroup>
+		</form>
+		: isLoading 
+			? <Spinner size={16} />
+			: null;
+}
+Output.propTypes = {
+	isLoading: bool,
+	output: shape({
+		bib: shape({
+			content: string,
+			blob: instanceOf(Blob),
+			blobURL: string
+		}),
+		figs: shape({
+			list: arrayOf(shape({ input: instanceOf(Blob), name: string })),
+			blob: instanceOf(Blob),
+			blobURL: string
+		}),
+		tex: shape({
+			content: string,
+			blob: instanceOf(Blob),
+			blobURL: string
+		}),
+		package: shape({
+			blob: instanceOf(Blob),
+			blobURL: string
+		}),
+	}),
+	title: string
+};
+
 function ExportDialog({ isOpen, onClose, uid }){
-	const [output, setOutput] = useState({ ...DEFAULT_OUTPUT });
-	const outputArea = useRef();
+	const [output, { isLoading, resetOutput, triggerExport }] = useExport({ uid });
 	const [document_class, setDocumentClass] = useSelect({
 		start: "report"
 	});
@@ -47,35 +143,25 @@ function ExportDialog({ isOpen, onClose, uid }){
 	const [title, setTitle] = useText("");
 	const [cover, { toggle: toggleCover }] = useBool(true);
 	const [numberedHeaders, { toggle: toggleNumberedHeaders }] = useBool(true);
-	const [startWithHeader, setStartWithHeader] = useSelect({
-		start: "1"
-	});
 
-	const onOpening = useCallback(() => {
-		setTitle({ target: { value: document.title } });
-	}, [setTitle]);
+	const onOpening = useCallback(() => setTitle({ target: { value: document.title } }), [setTitle]);
 
 	const handleClose = useCallback(() => {
 		window.latexRoam.resetExport();
-		setOutput({ ...DEFAULT_OUTPUT });
+		resetOutput();
 		onClose();
-	}, [onClose]);
+	}, [onClose, resetOutput]);
 
-	const triggerExport = useCallback(async() => {
-		const client = window.latexRoam;
-		client.resetExport();
-		const exportOutput = await client.generateExport(
-			uid,
-			{ 
-				authors, 
-				cover,
-				document_class, 
-				numbered: numberedHeaders, 
-				start_header: Number(startWithHeader),
-				title
-			});
-		setOutput(exportOutput);
-	}, [uid, authors, cover, document_class, numberedHeaders, startWithHeader, title]);
+	const exportConfig = useMemo(() => ({
+		authors,
+		cover,
+		document_class,
+		numbered: numberedHeaders,
+		start_header: 1,
+		title
+	}), [authors, cover, document_class, numberedHeaders, title]);
+
+	const startExport = useCallback(async() => await triggerExport(exportConfig), [exportConfig, triggerExport]);
 
 	/* istanbul ignore next */
 	useEffect(() => {
@@ -85,87 +171,55 @@ function ExportDialog({ isOpen, onClose, uid }){
 	}, []);
 
 	return <Dialog 
-		className={CustomClasses.DIALOG_CLASS} 
-		isCloseButtonShown={true}
+		className={CustomClasses.DIALOG_CLASS}
 		isOpen={isOpen} 
 		onClose={handleClose} 
-		onOpening={onOpening}
-		title="Export to LaTeX" >
+		onOpening={onOpening} >
+		<div className={Classes.DIALOG_HEADER}>
+			<div>
+				<Icon icon="cargo-ship" />
+				<span>Export to LaTeX</span>
+			</div>
+			<Button icon="small-cross" minimal={true} onClick={handleClose} title="Close dialog" />
+		</div>
 		<div className={Classes.DIALOG_BODY}>
 			<div id="latex-roam-export-div">
-				<div className="latex-roam--settings-row">
-					<Label>Document class :</Label>
-					<Select 
-						filterable={false}
-						itemRenderer={itemRenderer}
-						items={Object.keys(documentClasses)}
-						onItemSelect={setDocumentClass}
-						placement="bottom"
-						popoverProps={popoverProps}>
-						<Button minimal={true} rightIcon="double-caret-vertical" text={documentClasses[document_class]} />
-					</Select>
-					<Switch checked={cover} label="Use cover title" onChange={toggleCover} />
-				</div>
-				<div className="latex-roam--settings-row">
-					<Label>Author(s) :</Label>
-					<InputGroup
-						autoComplete="off"
-						onChange={setAuthors}
-						spellCheck="false"
-						type="text"
-						value={authors}
-					/>
-					<Label>Title :</Label>
-					<InputGroup
-						autoComplete="off"
-						onChange={setTitle}
-						spellCheck="false"
-						type="text"
-						value={title}
-					/>
-				</div>
-				<div className="latex-roam--settings-row">
-					<Label>Headers :</Label>
-					<Select
-						filterable={false}
-						itemRenderer={itemRenderer}
-						items={Object.keys(headers)}
-						onItemSelect={setStartWithHeader}
-						placement="bottom"
-						popoverProps={popoverProps} >
-						<Button minimal={true} rightIcon="double-caret-vertical" text={headers[startWithHeader]} />
-					</Select>
-					<Switch checked={numberedHeaders} label="Use numbers" onChange={toggleNumberedHeaders} />
-				</div>
-				<Button id="latex-roam-export-trigger" intent="success" onClick={triggerExport} text="Export page contents" />
+				<ControlGroup className="latex-roam--settings-col" vertical={true}>
+					<FormGroup label="Title" labelFor="doc-title">
+						<InputGroup
+							autoComplete="off"
+							id="doc-title"
+							onChange={setTitle}
+							spellCheck="false"
+							type="text"
+							value={title}
+						/>
+					</FormGroup>
+					<FormGroup label="Author(s)" labelFor="doc-authors">
+						<InputGroup
+							autoComplete="off"
+							id="doc-authors"
+							onChange={setAuthors}
+							spellCheck="false"
+							type="text"
+							value={authors}
+						/>
+					</FormGroup>
+				</ControlGroup>
+				<ControlGroup className="latex-roam--settings-col" vertical={true}>
+					<FormGroup inline={true} label="Document class">
+						<SingleSelect menuTitle="Select a LaTeX document class" onChange={setDocumentClass} options={DOC_CLASS_OPTIONS} value={document_class} />
+					</FormGroup>
+					<FormGroup inline={true} label="Use cover" labelFor="doc-cover">
+						<Switch checked={cover} id="doc-cover" onChange={toggleCover} />
+					</FormGroup>
+					<FormGroup inline={true} label="Use numbered headers" labelFor="doc-headers-nb">
+						<Switch checked={numberedHeaders} id="doc-headers-nb" onChange={toggleNumberedHeaders} />
+					</FormGroup>
+				</ControlGroup>
+				<Button id="latex-roam-export-trigger" intent="primary" loading={isLoading} onClick={startExport} rightIcon="repeat" text="Generate LaTeX" title="Export contents as LaTeX" />
 			</div>
-			{output.tex.content.length > 0
-				? <form
-					action="https://www.overleaf.com/docs"
-					className={Classes.FILL} 
-					id="latex-roam-export-form"
-					method="POST"
-					target="_blank" >
-					<TextArea aria-label="Generated LaTeX output" id="latex-roam-export-contents" fill={true} growVertically={false} inputRef={outputArea} name="snip" readOnly={true} small={true} style={{ height: "200px" }} value={output.tex.content} />
-					<Button id="latex-roam--overleaf-trigger" intent="success" text="Export to Overleaf" type="submit" />
-				</form>
-				: null}
-		</div>
-		<div className={Classes.DIALOG_FOOTER}>
-			<div className={Classes.DIALOG_FOOTER_ACTIONS}>
-				{output.bib.blobURL
-					? <AnchorButton download="bibliography.bib" href={output.bib.blobURL} outlined={true} text="Download bibliography" />
-					: null}
-				{output.figs.blobURL
-					? <AnchorButton download="figures.zip" href={output.figs.blobURL} outlined={true} text={"Download figures (" + output.figs.list.length + ")"} />
-					: null}
-				{output.tex.blobURL
-					? <AnchorButton download={title + ".tex"} href={output.tex.blobURL} outlined={true} text="Download .tex file" />
-					: null}
-				{output.package.blobURL
-					? <AnchorButton download={title + ".zip"} href={output.package.blobURL} intent="primary" outlined={true} text="Download all files" />
-					: null}
-			</div>
+			<Output isLoading={isLoading} output={output} title={title} />
 		</div>
 	</Dialog>;
 }

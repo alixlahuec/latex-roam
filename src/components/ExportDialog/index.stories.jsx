@@ -31,21 +31,21 @@ Default.play = async({ args, canvasElement }) => {
 
 	const frame = within(canvasElement.parentElement);
 
-	const exportButton = frame.getByRole("button", { name: "Export page contents" });
+	const exportButton = frame.getByRole("button", { name: "Generate LaTeX" });
 	await userEvent.click(exportButton);
 
 	await sleep(3000);
 
 	await expect(frame.getByRole("textbox", { name: "Generated LaTeX output" }))
 		.toBeInTheDocument();
-	await expect(frame.getByRole("button", { name: "Export to Overleaf" }))
+	await expect(frame.getByRole("button", { name: "Open in Overleaf" }))
 		.toBeInTheDocument();
-	await expect(frame.getByRole("button", { name: "Download .tex file" }))
+	await expect(frame.getByRole("button", { name: ".TEX" }))
 		.toBeInTheDocument();
-	await expect(frame.getByRole("button", { name: "Download figures (1)" }))
+	await expect(frame.getByRole("button", { name: "Figures (1)" }))
 		.toBeInTheDocument();
 
-	const closeButton = frame.getByRole("button", { name: "Close" });
+	const closeButton = frame.getByRole("button", { name: "Close dialog" });
 	await userEvent.click(closeButton);
 	await expect(args.onClose).toHaveBeenCalled();
 
