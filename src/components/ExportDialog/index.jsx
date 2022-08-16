@@ -180,7 +180,7 @@ function ExportDialog({ isOpen, onClose, uid }){
 				<Icon icon="cargo-ship" />
 				<span>Export to LaTeX</span>
 			</div>
-			<Button icon="small-cross" minimal={true} onClick={handleClose} title="Close dialog" />
+			<Button icon="cross" minimal={true} onClick={handleClose} title="Close dialog" />
 		</div>
 		<div className={Classes.DIALOG_BODY}>
 			<div id="latex-roam-export-div">
@@ -188,6 +188,7 @@ function ExportDialog({ isOpen, onClose, uid }){
 					<FormGroup label="Title" labelFor="doc-title">
 						<InputGroup
 							autoComplete="off"
+							className="rl-text-input"
 							id="doc-title"
 							onChange={setTitle}
 							spellCheck="false"
@@ -198,6 +199,7 @@ function ExportDialog({ isOpen, onClose, uid }){
 					<FormGroup label="Author(s)" labelFor="doc-authors">
 						<InputGroup
 							autoComplete="off"
+							className="rl-text-input"
 							id="doc-authors"
 							onChange={setAuthors}
 							spellCheck="false"
@@ -217,7 +219,7 @@ function ExportDialog({ isOpen, onClose, uid }){
 						<Switch checked={numberedHeaders} id="doc-headers-nb" onChange={toggleNumberedHeaders} />
 					</FormGroup>
 				</ControlGroup>
-				<Button id="latex-roam-export-trigger" intent="primary" loading={isLoading} onClick={startExport} rightIcon="repeat" text="Generate LaTeX" title="Export contents as LaTeX" />
+				<Button id="latex-roam-export-trigger" intent="primary" loading={isLoading} onClick={startExport} outlined={true} rightIcon="lightning" text="Generate LaTeX" title="Export contents as LaTeX" />
 			</div>
 			<Output isLoading={isLoading} output={output} title={title} />
 		</div>
