@@ -6,7 +6,7 @@ export const EXTENSION_SLOT_ID = "latex-roam-slot";
 
 export const CustomClasses = {
 	BUTTON_CLASS: "latex-roam--button",
-	DIALOG_CLASS: "latex-roam--dialog",
-	MENU_CLASS: "latex-roam--menu",
+	DIALOG_CLASS: "rl--dialog",
+	MENU_CLASS: "rl--menu",
 	POPOVER_CLASS: "latex-roam-popover"
 };
