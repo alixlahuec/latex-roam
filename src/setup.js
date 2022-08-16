@@ -35,7 +35,7 @@ export function initialize({ extensionAPI }){
  * @param {Boolean} use_dark - If the extension's theme should be `dark`
  */
 function setupDarkTheme(use_dark = false){
-	document.getElementsByTagName("body")[0].setAttribute("latex-roam-dark-theme", (use_dark == true).toString());
+	document.getElementsByTagName("body")[0].setAttribute("rl-dark-theme", (use_dark == true).toString());
 }
 
 /* istanbul ignore next */

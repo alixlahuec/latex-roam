@@ -17,7 +17,7 @@ const withTheme = (Story, context) => {
     const [{ theme }, /* updateGlobals */] = useGlobals();
 
     useEffect(() => {
-        document.getElementById("root").parentElement.setAttribute("latex-roam-dark-theme", (theme == "dark").toString());
+        document.getElementById("root").parentElement.setAttribute("rl-dark-theme", (theme == "dark").toString());
     }, [theme]);
 
     return <div style={{ margin: "50px", padding: "20px", height: "1000px" }}>
@@ -34,10 +34,8 @@ export const globalTypes = {
             icon: 'circlehollow',
             // Array of plain string values or MenuItem shape (see below)
             items: ['light', 'dark'],
-            // Property that specifies if the name of the item will be displayed
-            showName: true,
             // Change title based on selected value
-            dynamicTitle: true,
+            dynamicTitle: true
         },
     },
 };
