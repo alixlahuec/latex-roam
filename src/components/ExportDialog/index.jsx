@@ -1,7 +1,7 @@
 import { arrayOf, bool, func, instanceOf, shape, string } from "prop-types";
 import { useCallback, useEffect, useMemo } from "react";
 
-import { AnchorButton, Button, ButtonGroup, Classes, ControlGroup, Dialog, FormGroup, Icon, InputGroup, MenuItem, Spinner, Switch, TextArea } from "@blueprintjs/core";
+import { AnchorButton, Button, ButtonGroup, Classes, ControlGroup, Dialog, FormGroup, Icon, InputGroup, MenuItem, NonIdealState, Spinner, Switch, TextArea } from "@blueprintjs/core";
 import { Select } from "@blueprintjs/select";
 
 import useBool from "../../hooks/useBool";
@@ -106,7 +106,7 @@ function Output({ isLoading, output, title }){
 		</form>
 		: isLoading 
 			? <Spinner size={16} />
-			: null;
+			: <NonIdealState description="Pick some settings to generate LaTeX." icon="clean" title="Ready to export" />;
 }
 Output.propTypes = {
 	isLoading: bool,
