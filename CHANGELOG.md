@@ -1,5 +1,22 @@
 # Changelog
 
+## [0.3.0-beta.0](https://github.com/alixlahuec/latex-roam/compare/0.2.8-beta.0...0.3.0-beta.0) (2022-08-17)
+
+
+### Features
+
+* setup settings panel ([#11](https://github.com/alixlahuec/latex-roam/issues/11)) ([4c202c9](https://github.com/alixlahuec/latex-roam/commit/4c202c94b885378d07d635bc3f01b512192dfc3e))
+
+### [0.2.8-beta.0](https://github.com/alixlahuec/latex-roam/compare/0.2.8-beta.0...0.3.0-beta.0) (2022-08-16)
+
+### [0.2.7-beta.0](https://github.com/alixlahuec/latex-roam/compare/0.2.8-beta.0...0.3.0-beta.0) (2022-08-14)
+
+### [0.2.6-beta.0](https://github.com/alixlahuec/latex-roam/compare/0.2.8-beta.0...0.3.0-beta.0) (2022-08-14)
+
+### [0.2.5-beta.0](https://github.com/alixlahuec/latex-roam/compare/0.2.8-beta.0...0.3.0-beta.0) (2022-08-13)
+
+### [0.2.4-beta.0](https://github.com/alixlahuec/latex-roam/compare/0.2.8-beta.0...0.3.0-beta.0) (2022-08-13)
+
 ### [0.2.8-beta.0](https://github.com/alixlahuec/latex-roam/compare/0.2.7-beta.0...0.2.8-beta.0) (2022-08-16)
 
 ### [0.2.7-beta.0](https://github.com/alixlahuec/latex-roam/compare/0.2.7-beta.0...0.2.8-beta.0) (2022-08-14)
