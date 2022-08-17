@@ -56,6 +56,14 @@ async function makeBibliography(citekeys){
 	}
 }
 
+/* istanbul ignore next */
+/** Sets up the extension's theme (light vs dark)
+ * @param {Boolean} use_dark - If the extension's theme should be `dark`
+ */
+function setDarkTheme(use_dark = false){
+	document.getElementsByTagName("body")[0].setAttribute("rl-dark-theme", (use_dark == true).toString());
+}
+
 function sortRoamBlocks(arr){
 	return [...arr].sort((a,b) => a.order < b.order ? -1 : 1);
 }
@@ -74,6 +82,7 @@ export {
 	cleanUpHref,
 	hasNodeListChanged,
 	makeBibliography,
+	setDarkTheme,
 	sortRoamBlocks,
 	todayDMY
 };
