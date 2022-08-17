@@ -6,9 +6,9 @@ import App from "./components/App";
 import { initialize, setup, unmountExtensionIfExists } from "./setup";
 
 import { EXTENSION_SLOT_ID, EXTENSION_VERSION } from "./constants";
+import { ExportManager } from "./extension";
 
 import "./index.css";
-import { ExportManager } from "./extension";
 
 
 function onload({ extensionAPI }){

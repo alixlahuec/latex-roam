@@ -2,9 +2,7 @@ import { setupInitialSettings } from "../src/setup";
 
 describe("Parsing initial user settings", () => {
 	const defaults = {
-		other: {
-			darkTheme: false
-		}
+		darkTheme: false
 	};
 
 	it("should return defaults if given no settings", () => {
