@@ -2,7 +2,8 @@
     "hooks": {
         "before:init": [
             "npm run ci:lint",
-            "npm run ci:test"
+            "npm run ci:test",
+            "./ci-storybook.sh"
         ],
         "after:bump": [
             "npm run build:roam"
