@@ -1,4 +1,4 @@
-import { downloadZip } from "client-zip";
+import JSZip from "jszip/dist/jszip";
 
 import { _createTEX } from "./translator/createTEX";
 
@@ -27,11 +27,17 @@ export const DEFAULT_OUTPUT = {
 
 
 export class ExportManager {
+	#jszipFigures;
+	#jszipPackage;
+
 	constructor(){
 		this.bib = { ...DEFAULT_OUTPUT.bib };
 		this.figs = { ...DEFAULT_OUTPUT.figs };
 		this.tex = { ...DEFAULT_OUTPUT.tex };
 		this.package = { ...DEFAULT_OUTPUT.package };
+        
+		this.#jszipFigures = new JSZip();
+		this.#jszipPackage = new JSZip();
 	}
 
 	#resetBlobBib(){
@@ -74,6 +80,9 @@ export class ExportManager {
 		};
 		this.tex = { ...DEFAULT_OUTPUT.tex };
 		this.package = { ...DEFAULT_OUTPUT.package };
+
+		this.#jszipFigures = new JSZip();
+		this.#jszipPackage = new JSZip();
 	}
 
 	resetExport(){
@@ -131,7 +140,11 @@ export class ExportManager {
 
 	async #zipFigures(){
 		if(this.figs.list.length > 0){
-			const blob = await downloadZip(this.figs.list).blob();
+			this.figs.list.forEach((entry) => {
+				this.#jszipFigures.file(entry.name, entry.input);
+			});
+
+			const blob = await this.#jszipFigures.generateAsync({ type: "blob" });
 			this.#resetBlobFigs();
 
 			this.figs.blob = blob;
@@ -140,13 +153,17 @@ export class ExportManager {
 	}
 
 	async #zipPackage(title){
-		const packageFiles = [
-			...this.figs.list,
-			{ name: `${title}.tex`, input: this.tex.content }
-		];
-		if(this.bib.blob != null){ packageFiles.push({ name: "bibliography.bib", input: this.bib.blob }); }
+		this.#jszipPackage.file(`${title}.tex`, this.tex.content);
+		
+		if(this.bib.blob != null){ this.#jszipPackage.file("bibliography.bib", this.bib.blob); }
 
-		const blob = await downloadZip(packageFiles).blob();
+		if(this.figs.list.length > 0){
+			this.figs.list.forEach((entry) => {
+				this.#jszipPackage.file(entry.name, entry.input);
+			});
+		}
+
+		const blob = await this.#jszipPackage.generateAsync({ type: "blob" });
 		this.#resetBlobPackage();
 
 		this.package.blob = blob;

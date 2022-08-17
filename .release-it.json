@@ -9,20 +9,65 @@
         ]
     },
     "git": {
-        "commitArgs": ["-S"],
-        "commitMessage": "chore: release ${version}",
+        "commitMessage": "release: v${version}",
         "tag": true,
         "tagMatch": "[0-9]*\\.[0-9]*\\.[0-9]*"
     },
     "github": {
         "assets": ["extension.css", "extension.js"],
-        "autoGenerate": true,
-        "draft": true,
         "release": true,
         "releaseName": "v${version}"
     },
     "npm": {
-        "allowSameVersion": true,
+        "allowSameVersion": false,
         "publish": true
+    },
+    "plugins": {
+        "@release-it/conventional-changelog": {
+            "gitRawCommitsOpts": {
+                "from": "3c159c0ecfa242be0780c700f339c0876449c10e"
+            },
+            "header": "# Changelog",
+            "infile": "CHANGELOG.md",
+            "skipUnstable": true,
+            "strictSemVer": true,
+            "preset": {
+                "name": "conventionalcommits",
+                "types": [
+                    {
+                        "type": "feat",
+                        "section": "Features"
+                    },
+                    {
+                        "type": "fix",
+                        "section": "Bug Fixes"
+                    },
+                    {
+                        "type": "chore",
+                        "hidden": true
+                    },
+                    {
+                        "type": "refactor",
+                        "hidden": true
+                    },
+                    {
+                        "type": "test",
+                        "hidden": true
+                    },
+                    {
+                        "type": "auto-commit",
+                        "hidden": true
+                    },
+                    {
+                        "type": "release",
+                        "hidden": true
+                    },
+                    {
+                        "type": "ci",
+                        "hidden": true
+                    }
+                ]
+            }
+        }
     }
 }

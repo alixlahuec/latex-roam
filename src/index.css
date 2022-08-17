@@ -1,42 +1,139 @@
-.latex-roam--dialog {
-    --rl-dialog-margin: 20%;
-    align-self: baseline;
-    width: calc(100% - 2*var(--rl-dialog-margin));
+:root {
+    --rl-accent-1-hsl: 208, 100%, 40%;
+    --rl-accent-2-hsl: 18, 63%, 39%;
+    --rl-negative-hsl: 0, 92%, 41%;
+    --rl-positive-hsl: 155, 58%, 27%;
+    --rl-border-co: #ececec;
+    --rl-box-bg: #f8f8f8;
+    --rl-dialog-bg: #f7f7f7;
+    --rl-dialog-margin: 15%;
+    --rl-text-co: inherit;
+    --rl-text-small: 0.85rem;
 }
 
-.latex-roam--menu {
+[rl-dark-theme="true"] {
+    --rl-accent-1-hsl: 208, 100%, 62%;
+    --rl-accent-2-hsl: 30, 70%, 51%;
+    --rl-negative-hsl: 0, 85%, 69%;
+    --rl-positive-hsl: 172, 50%, 18%;
+    --rl-border-co: #2f3133;
+    --rl-box-bg: #1f1f1f;
+    --rl-dialog-bg: #191919;
+    --rl-text-co: #92a3b4;
+}
+
+.rl--menu {
     opacity: 0.6;
 }
 
-.latex-roam--settings-row {
-    align-items: center;
-    display: flex;
+[class^="rl"] .bp3-non-ideal-state h4.bp3-heading,
+[class^="rl"] .bp3-non-ideal-state .bp3-icon {
+    color: hsla(var(--rl-accent-1-hsl), 70%);
 }
 
-.latex-roam--settings-row > *,
-.latex-roam--settings-row > label.bp4-label {
-    margin: 5px;
+.rl-text-input input,
+[class^="rl"] textarea {
+    box-shadow: none;
+    color: var(--rl-text-co);
+    outline: 1px var(--rl-border-co) solid;
 }
 
-#latex-roam-export-form {
-    margin: 10px;
-    padding: 10px;
+.rl-text-input input {
+    background: var(--rl-box-bg);
 }
 
-#latex-roam--overleaf-trigger {
-    margin: 10px 0px;
+[class^="rl"] textarea {
+    background: var(--rl-dialog-bg);
 }
 
-/* SMALLER DISPLAYS */
-
-@media (max-width: 1000px){
-    .latex-roam--dialog {
-        --rl-dialog-margin: 10%;
-    }
+[class^="rl"] .bp3-control.bp3-switch input:checked ~ .bp3-control-indicator {
+  background-color: hsla(var(--rl-accent-1-hsl), 70%);
 }
 
-@media (max-width: 700px){
-    .latex-roam--dialog {
-        --rl-dialog-margin: 5%;
-    }
+[class^="rl"] .bp3-control.bp3-switch .bp3-control-indicator::before {
+  background: var(--rl-dialog-bg);
+  box-shadow: none;
+}
+
+[class^="rl"] .bp3-menu-item.bp3-active, 
+[class^="rl"] .bp3-menu-item.bp3-active:hover, 
+[class^="rl"] .bp3-menu-item.bp3-active:active {
+    background: hsla(var(--rl-accent-1-hsl), 8%);
+    color: inherit;
+}
+
+[class^="rl"] a:not(.bp3-menu-item) {
+    color: hsla(var(--rl-accent-1-hsl), 95%);
+}
+
+[class^="rl"] .bp3-button.bp3-intent-primary,
+[class^="rl"] .bp3-button-group button.bp3-intent-primary {
+    --rl-base-tone: var(--rl-accent-1-hsl);
+}
+
+[class^="rl"] .bp3-button.bp3-intent-warning,
+[class^="rl"] .bp3-button-group button.bp3-intent-warning {
+    --rl-base-tone: var(--rl-accent-2-hsl);
+}
+
+[class^="rl"] .bp3-button.bp3-intent-success,
+[class^="rl"] .bp3-button-group button.bp3-intent-success {
+    --rl-base-tone: var(--rl-positive-hsl);
+}
+
+[class^="rl"] .bp3-button.bp3-intent-danger,
+[class^="rl"] .bp3-button-group button.bp3-intent-danger {
+    --rl-base-tone: var(--rl-negative-hsl);
+}
+
+[class^="rl"] .bp3-button.bp3-minimal:not([class*="bp3-intent-"]) {
+    color: var(--rl-text-co);
+}
+
+[class^="rl"] .bp3-button.bp3-minimal:not([class*="bp3-intent-"]):hover,
+[class^="rl"] .bp3-popover-target .bp3-button.bp3-minimal:not([class*="bp3-intent-"]) {
+    background: var(--rl-box-bg);
+}
+
+[class^="rl"] .bp3-button[class*="bp3-intent-"]:not(.bp3-minimal):not(.bp3-outlined) {
+    background: hsla(var(--rl-base-tone), 80%);
+    color: white;
+}
+
+[class^="rl"] .bp3-button[class*="bp3-intent-"]:not(.bp3-minimal):not(.bp3-outlined):hover {
+    background: hsla(var(--rl-base-tone), 90%);
+    color: white;
+}
+
+[class^="rl"] .bp3-button.bp3-minimal[class*="bp3-intent-"],
+[class^="rl"] .bp3-button.bp3-outlined[class*="bp3-intent-"],
+[class^="rl"] .bp3-button.bp3-minimal[class*="bp3-intent-"]:hover,
+[class^="rl"] .bp3-button-group.bp3-minimal button[class*="bp3-intent-"] {
+    color: hsla(var(--rl-base-tone), 95%);
+}
+
+[class^="rl"] .bp3-button.bp3-outlined[class*="bp3-intent-"] {
+    border-color: hsla(var(--rl-base-tone), 10%);
+}
+
+[class^="rl"] .bp3-button.bp3-minimal[class*="bp3-intent-"]:hover {
+    background: hsla(var(--rl-base-tone), 10%);
+}
+  
+.latex-roam-popover.bp3-popover2 .bp3-popover2-content,
+.latex-roam-popover.bp3-popover .bp3-popover-content,
+.latex-roam-popover .bp3-menu,
+[class^="rl"] .bp3-menu {
+    background: var(--rl-box-bg);
+    color: var(--rl-text-co);
+    font-size: var(--rl-text-small);
+}
+
+.latex-roam-popover.bp3-popover2 .bp3-popover2-arrow-fill {
+    fill: var(--rl-box-bg);
+}
+
+.latex-roam-popover .bp3-menu-item:hover {
+    background: var(--rl-dialog-bg);
+    color: var(--rl-text-co);
 }

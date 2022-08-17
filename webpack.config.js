@@ -11,6 +11,7 @@ module.exports = {
     externals: {
         "@blueprintjs/core": ["Blueprint", "Core"],
         "@blueprintjs/select": ["Blueprint", "Select"],
+        "jszip": ["RoamLazy", "JSZip"],
         "react": "React",
         "react-dom": "ReactDOM"
     },

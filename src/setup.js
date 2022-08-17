@@ -1,19 +1,38 @@
 import { unmountComponentAtNode } from "react-dom";
 
 import { EXTENSION_SLOT_ID } from "./constants";
+import { setDarkTheme } from "./utils";
 
 
 export function setupInitialSettings(settingsObject){
 	const {
-		other = {}
+		darkTheme = false
 	} = settingsObject;
 
 	return {
-		other: {
-			darkTheme: false,
-			...other
-		}
+		darkTheme
 	};
+}
+
+/* istanbul ignore next */
+function setupRoamPanel({ extensionAPI }){
+	const panelConfig = {
+		tabTitle: "LaTeX Exporter",
+		settings: [
+			{ id: "darkTheme",
+				name: "Dark Theme",
+				description: "Toggle dark theme for the extension's interface",
+				action: {
+					type: "switch",
+					onChange: (e) => {
+						setDarkTheme(e.target.checked);
+					} 
+				} 
+			}
+		]
+	};
+
+	extensionAPI.settings.panel.create(panelConfig);
 }
 
 /* istanbul ignore next */
@@ -25,17 +44,11 @@ export function initialize({ extensionAPI }){
 		extensionAPI.settings.set(key, val);
 	});
 
+	setupRoamPanel({ extensionAPI });
+
 	return {
 		settings
 	};
-}
-
-/* istanbul ignore next */
-/** Sets up the extension's theme (light vs dark)
- * @param {Boolean} use_dark - If the extension's theme should be `dark`
- */
-function setupDarkTheme(use_dark = false){
-	document.getElementsByTagName("body")[0].setAttribute("latex-roam-dark-theme", (use_dark == true).toString());
 }
 
 /* istanbul ignore next */
@@ -54,7 +67,7 @@ function setupPortals(){
 /** Sets up the extension */
 export function setup({ settings }){
 	setupPortals();
-	setupDarkTheme(settings.other.darkTheme);
+	setDarkTheme(settings.darkTheme);
 }
 
 /* istanbul ignore next */
