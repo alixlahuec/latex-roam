@@ -3,6 +3,7 @@
         "before:init": [
             "npm run ci:lint",
             "npm run ci:test",
+            "chmod +x \"./ci-storybook.sh\"",
             "./ci-storybook.sh"
         ],
         "after:bump": [

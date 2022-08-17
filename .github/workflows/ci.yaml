@@ -24,7 +24,9 @@ jobs:
         run: npm run ci:test
       
       - name: Storybook CI
-        run: ./ci-storybook.sh
+        run: |
+          chmod +x "./ci-storybook.sh"
+          ./ci-storybook.sh
         shell: bash
 
       - name: Upload coverage reports to Codecov
