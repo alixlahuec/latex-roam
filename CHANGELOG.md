@@ -1,5 +1,7 @@
 # Changelog
 
+### [0.3.2-beta.0](https://github.com/alixlahuec/latex-roam/compare/0.3.1-beta.0...0.3.2-beta.0) (2022-08-18)
+
 ### [0.3.1-beta.0](https://github.com/alixlahuec/latex-roam/compare/0.3.0...0.3.1-beta.0) (2022-08-17)
 
 ## [0.3.0](https://github.com/alixlahuec/latex-roam/compare/0.3.0...0.3.1-beta.0) (2022-08-17)
