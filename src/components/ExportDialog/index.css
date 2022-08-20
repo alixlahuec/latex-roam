@@ -11,6 +11,10 @@
     justify-content: space-between;
 }
 
+.rl--dialog > .bp3-dialog-header .bp3-icon {
+    color: var(--rl-text-co);
+}
+
 .rl--dialog > .bp3-dialog-body {
     align-items: center;
     display: flex;
