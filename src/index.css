@@ -42,6 +42,10 @@
     background: var(--rl-box-bg);
 }
 
+.rl-text-input input:focus {
+    box-shadow: 2px 2px 0px 2px var(--rl-border-co);
+}
+
 [class*="rl-"] textarea {
     background: var(--rl-dialog-bg);
 }
