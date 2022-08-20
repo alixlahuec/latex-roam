@@ -28,6 +28,7 @@
         "@release-it/conventional-changelog": {
             "header": "# Changelog",
             "infile": "CHANGELOG.md",
+            "releaseCount": 0,
             "skipUnstable": true,
             "strictSemVer": true,
             "preset": {
