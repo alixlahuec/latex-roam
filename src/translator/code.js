@@ -6,8 +6,8 @@ function codeInline(capture){
 	return `\\verb|${capture}|`;
 }
 
-function parseCodeBlock(_match, capture){
-	return codeBlock(capture);
+function parseCodeBlock(_match, _language, code){
+	return codeBlock(code);
 }
 
 function parseCodeInline(_match, capture){
