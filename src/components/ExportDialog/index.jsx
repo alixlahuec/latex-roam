@@ -1,7 +1,7 @@
 import { arrayOf, bool, func, instanceOf, shape, string } from "prop-types";
 import { useCallback, useEffect, useMemo } from "react";
 
-import { AnchorButton, Button, ButtonGroup, Classes, ControlGroup, Dialog, FormGroup, Icon, InputGroup, MenuItem, NonIdealState, Spinner, Switch, TextArea } from "@blueprintjs/core";
+import { AnchorButton, Button, ButtonGroup, Classes, ControlGroup, Dialog, FormGroup, Icon, InputGroup, MenuItem, NonIdealState, Switch, TextArea } from "@blueprintjs/core";
 import { Select } from "@blueprintjs/select";
 
 import useBool from "../../hooks/useBool";
@@ -84,7 +84,7 @@ DownloadButton.propTypes = {
 	text: string
 };
 
-function Output({ isLoading, output, title }){
+function Output({ output, title }){
 
 	return output.tex.content.length > 0
 		? <form
@@ -104,12 +104,9 @@ function Output({ isLoading, output, title }){
 				<DownloadButton entity={output.package} fileName={title + ".zip"} icon="download" intent="success" text="Download all" title="Download all files" />
 			</ButtonGroup>
 		</form>
-		: isLoading 
-			? <Spinner size={16} />
-			: <NonIdealState description="Pick some settings to generate LaTeX." icon="clean" title="Ready to export" />;
+		: <NonIdealState description="Pick some settings to generate LaTeX." icon="clean" title="Ready to export" />;
 }
 Output.propTypes = {
-	isLoading: bool,
 	output: shape({
 		bib: shape({
 			content: string,
@@ -221,7 +218,7 @@ function ExportDialog({ isOpen, onClose, uid }){
 				</ControlGroup>
 				<Button id="latex-roam-export-trigger" intent="primary" loading={isLoading} onClick={startExport} outlined={true} rightIcon="lightning" text="Generate LaTeX" title="Export contents as LaTeX" />
 			</div>
-			<Output isLoading={isLoading} output={output} title={title} />
+			<Output output={output} title={title} />
 		</div>
 	</Dialog>;
 }
