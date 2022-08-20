@@ -26,13 +26,13 @@
     opacity: 0.6;
 }
 
-[class^="rl"] .bp3-non-ideal-state h4.bp3-heading,
-[class^="rl"] .bp3-non-ideal-state .bp3-icon {
+[class*="rl-"] .bp3-non-ideal-state h4.bp3-heading,
+[class*="rl-"] .bp3-non-ideal-state .bp3-icon {
     color: hsla(var(--rl-accent-1-hsl), 70%);
 }
 
 .rl-text-input input,
-[class^="rl"] textarea {
+[class*="rl-"] textarea {
     box-shadow: none;
     color: var(--rl-text-co);
     outline: 1px var(--rl-border-co) solid;
@@ -42,88 +42,88 @@
     background: var(--rl-box-bg);
 }
 
-[class^="rl"] textarea {
+[class*="rl-"] textarea {
     background: var(--rl-dialog-bg);
 }
 
-[class^="rl"] .bp3-control.bp3-switch input:checked ~ .bp3-control-indicator {
+[class*="rl-"] .bp3-control.bp3-switch input:checked ~ .bp3-control-indicator {
   background-color: hsla(var(--rl-accent-1-hsl), 70%);
 }
 
-[class^="rl"] .bp3-control.bp3-switch .bp3-control-indicator::before {
+[class*="rl-"] .bp3-control.bp3-switch .bp3-control-indicator::before {
   background: var(--rl-dialog-bg);
   box-shadow: none;
 }
 
-[class^="rl"] .bp3-menu-item.bp3-active, 
-[class^="rl"] .bp3-menu-item.bp3-active:hover, 
-[class^="rl"] .bp3-menu-item.bp3-active:active {
+[class*="rl-"] .bp3-menu-item.bp3-active, 
+[class*="rl-"] .bp3-menu-item.bp3-active:hover, 
+[class*="rl-"] .bp3-menu-item.bp3-active:active {
     background: hsla(var(--rl-accent-1-hsl), 8%);
     color: inherit;
 }
 
-[class^="rl"] a:not(.bp3-menu-item) {
+[class*="rl-"] a:not(.bp3-menu-item) {
     color: hsla(var(--rl-accent-1-hsl), 95%);
 }
 
-[class^="rl"] .bp3-button.bp3-intent-primary,
-[class^="rl"] .bp3-button-group button.bp3-intent-primary {
+[class*="rl-"] .bp3-button.bp3-intent-primary,
+[class*="rl-"] .bp3-button-group button.bp3-intent-primary {
     --rl-base-tone: var(--rl-accent-1-hsl);
 }
 
-[class^="rl"] .bp3-button.bp3-intent-warning,
-[class^="rl"] .bp3-button-group button.bp3-intent-warning {
+[class*="rl-"] .bp3-button.bp3-intent-warning,
+[class*="rl-"] .bp3-button-group button.bp3-intent-warning {
     --rl-base-tone: var(--rl-accent-2-hsl);
 }
 
-[class^="rl"] .bp3-button.bp3-intent-success,
-[class^="rl"] .bp3-button-group button.bp3-intent-success {
+[class*="rl-"] .bp3-button.bp3-intent-success,
+[class*="rl-"] .bp3-button-group button.bp3-intent-success {
     --rl-base-tone: var(--rl-positive-hsl);
 }
 
-[class^="rl"] .bp3-button.bp3-intent-danger,
-[class^="rl"] .bp3-button-group button.bp3-intent-danger {
+[class*="rl-"] .bp3-button.bp3-intent-danger,
+[class*="rl-"] .bp3-button-group button.bp3-intent-danger {
     --rl-base-tone: var(--rl-negative-hsl);
 }
 
-[class^="rl"] .bp3-button.bp3-minimal:not([class*="bp3-intent-"]) {
+[class*="rl-"] .bp3-button.bp3-minimal:not([class*="bp3-intent-"]) {
     color: var(--rl-text-co);
 }
 
-[class^="rl"] .bp3-button.bp3-minimal:not([class*="bp3-intent-"]):hover,
-[class^="rl"] .bp3-popover-target .bp3-button.bp3-minimal:not([class*="bp3-intent-"]) {
+[class*="rl-"] .bp3-button.bp3-minimal:not([class*="bp3-intent-"]):hover,
+[class*="rl-"] .bp3-popover-target .bp3-button.bp3-minimal:not([class*="bp3-intent-"]) {
     background: var(--rl-box-bg);
 }
 
-[class^="rl"] .bp3-button[class*="bp3-intent-"]:not(.bp3-minimal):not(.bp3-outlined) {
+[class*="rl-"] .bp3-button[class*="bp3-intent-"]:not(.bp3-minimal):not(.bp3-outlined) {
     background: hsla(var(--rl-base-tone), 80%);
     color: white;
 }
 
-[class^="rl"] .bp3-button[class*="bp3-intent-"]:not(.bp3-minimal):not(.bp3-outlined):hover {
+[class*="rl-"] .bp3-button[class*="bp3-intent-"]:not(.bp3-minimal):not(.bp3-outlined):hover {
     background: hsla(var(--rl-base-tone), 90%);
     color: white;
 }
 
-[class^="rl"] .bp3-button.bp3-minimal[class*="bp3-intent-"],
-[class^="rl"] .bp3-button.bp3-outlined[class*="bp3-intent-"],
-[class^="rl"] .bp3-button.bp3-minimal[class*="bp3-intent-"]:hover,
-[class^="rl"] .bp3-button-group.bp3-minimal button[class*="bp3-intent-"] {
+[class*="rl-"] .bp3-button.bp3-minimal[class*="bp3-intent-"],
+[class*="rl-"] .bp3-button.bp3-outlined[class*="bp3-intent-"],
+[class*="rl-"] .bp3-button.bp3-minimal[class*="bp3-intent-"]:hover,
+[class*="rl-"] .bp3-button-group.bp3-minimal button[class*="bp3-intent-"] {
     color: hsla(var(--rl-base-tone), 95%);
 }
 
-[class^="rl"] .bp3-button.bp3-outlined[class*="bp3-intent-"] {
+[class*="rl-"] .bp3-button.bp3-outlined[class*="bp3-intent-"] {
     border-color: hsla(var(--rl-base-tone), 10%);
 }
 
-[class^="rl"] .bp3-button.bp3-minimal[class*="bp3-intent-"]:hover {
+[class*="rl-"] .bp3-button.bp3-minimal[class*="bp3-intent-"]:hover {
     background: hsla(var(--rl-base-tone), 10%);
 }
   
 .latex-roam-popover.bp3-popover2 .bp3-popover2-content,
 .latex-roam-popover.bp3-popover .bp3-popover-content,
 .latex-roam-popover .bp3-menu,
-[class^="rl"] .bp3-menu {
+[class*="rl-"] .bp3-menu {
     background: var(--rl-box-bg);
     color: var(--rl-text-co);
     font-size: var(--rl-text-small);
