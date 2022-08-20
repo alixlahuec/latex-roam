@@ -1,5 +1,20 @@
 # Changelog
 
+### [0.3.4-beta.0](https://github.com/alixlahuec/latex-roam/compare/0.3.3-beta.0...0.3.4-beta.0) (2022-08-20)
+
+### [0.3.3-beta.0](https://github.com/alixlahuec/latex-roam/compare/0.3.2-beta.0...0.3.3-beta.0) (2022-08-19)
+
+
+### Bug Fixes
+
+* code block parsing should exclude language ([#14](https://github.com/alixlahuec/latex-roam/issues/14)) ([b1b106d](https://github.com/alixlahuec/latex-roam/commit/b1b106d79ca2d36364ce7300c6dbc97d84fcf4f5))
+
+### [0.3.2-beta.0](https://github.com/alixlahuec/latex-roam/compare/0.3.1-beta.0...0.3.2-beta.0) (2022-08-18)
+
+### [0.3.1-beta.0](https://github.com/alixlahuec/latex-roam/compare/0.3.0...0.3.1-beta.0) (2022-08-17)
+
+## [0.3.0](https://github.com/alixlahuec/latex-roam/compare/0.3.0...0.3.1-beta.0) (2022-08-17)
+
 ## [0.3.0](https://github.com/alixlahuec/latex-roam/compare/v0.2.0...0.3.0) (2022-08-17)
 
 ## [0.3.0-beta.0](https://github.com/alixlahuec/latex-roam/compare/0.2.8-beta.0...0.3.0-beta.0) (2022-08-17)

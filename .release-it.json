@@ -2,7 +2,9 @@
     "hooks": {
         "before:init": [
             "npm run ci:lint",
-            "npm run ci:test"
+            "npm run ci:test",
+            "chmod +x \"./ci-storybook.sh\"",
+            "./ci-storybook.sh"
         ],
         "after:bump": [
             "npm run build:roam"
@@ -24,9 +26,6 @@
     },
     "plugins": {
         "@release-it/conventional-changelog": {
-            "gitRawCommitsOpts": {
-                "from": "3c159c0ecfa242be0780c700f339c0876449c10e"
-            },
             "header": "# Changelog",
             "infile": "CHANGELOG.md",
             "skipUnstable": true,
