@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.3.7-beta.0](https://github.com/alixlahuec/latex-roam/compare/0.3.6-beta.0...0.3.7-beta.0) (2022-08-21)
+
+
+### Bug Fixes
+
+* no newline at end of code blocks ([#19](https://github.com/alixlahuec/latex-roam/issues/19)) ([fd42e0c](https://github.com/alixlahuec/latex-roam/commit/fd42e0cde5b7524b821958d2c172bcba47980faa))
+
 ### [0.3.6-beta.0](https://github.com/alixlahuec/latex-roam/compare/0.3.4...0.3.6-beta.0) (2022-08-20)
 
 ### [0.3.4](https://github.com/alixlahuec/latex-roam/compare/0.3.4-beta.0...0.3.4) (2022-08-20)
