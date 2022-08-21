@@ -1,7 +1,7 @@
 import { arrayOf, bool, func, instanceOf, shape, string } from "prop-types";
 import { useCallback, useEffect, useMemo } from "react";
 
-import { AnchorButton, Button, ButtonGroup, Classes, ControlGroup, Dialog, FormGroup, Icon, InputGroup, MenuItem, NonIdealState, Switch, TextArea } from "@blueprintjs/core";
+import { AnchorButton, Button, ButtonGroup, Callout, Classes, ControlGroup, Dialog, FormGroup, Icon, InputGroup, MenuItem, NonIdealState, Switch, TextArea } from "@blueprintjs/core";
 import { Select } from "@blueprintjs/select";
 
 import useBool from "../../hooks/useBool";
@@ -85,26 +85,35 @@ DownloadButton.propTypes = {
 };
 
 function Output({ output, title }){
+	const { logger: { errors, warnings } } = output;
+	const hasError = errors.length > 0;
 
-	return output.tex.content.length > 0
-		? <form
-			action="https://www.overleaf.com/docs"
-			className={Classes.FILL} 
-			id="latex-roam-export-form"
-			method="POST"
-			target="_blank" >
-			<TextArea aria-label="Generated LaTeX output" id="latex-roam-export-contents" fill={true} growVertically={false} name="snip" readOnly={true} small={true} value={output.tex.content} />
-			<ButtonGroup className="rl-tex-buttons--top" minimal={true} >
-				<DownloadButton entity={output.tex} fileName={title + ".tex"} icon="download" minimal={true} text=".TEX" title="Download .tex file" />
-				<Button icon="share" minimal={true} text="Open in Overleaf" title="Open LaTeX document in Overleaf" type="submit" />
-			</ButtonGroup>
-			<ButtonGroup className="rl-tex-buttons--bottom" minimal={true} >
-				<DownloadButton entity={output.bib} fileName="bibliography.bib" icon="manual" intent="primary" text=".BIB" title="Download bibliography" />
-				<DownloadButton entity={output.figs} fileName="figures.zip" icon="media" intent="primary" text={"Figures (" + output.figs.list.length + ")"} title="Download figures" />
-				<DownloadButton entity={output.package} fileName={title + ".zip"} icon="download" intent="success" text="Download all" title="Download all files" />
-			</ButtonGroup>
-		</form>
-		: <NonIdealState description="Pick some settings to generate LaTeX." icon="clean" title="Ready to export" />;
+	return (
+		<>
+			{hasError
+				? errors.map((err, i) => <Callout key={i} intent="danger" title={err.name} role="complementary" aria-label={"Export error " + (i + 1)}><p>{err.message}</p></Callout>)
+				: output.tex.content.length > 0
+					? <form
+						action="https://www.overleaf.com/docs"
+						className={Classes.FILL} 
+						id="latex-roam-export-form"
+						method="POST"
+						target="_blank" >
+						<TextArea aria-label="Generated LaTeX output" id="latex-roam-export-contents" fill={true} growVertically={false} name="snip" readOnly={true} small={true} value={output.tex.content} />
+						<ButtonGroup className="rl-tex-buttons--top" minimal={true} >
+							<DownloadButton entity={output.tex} fileName={title + ".tex"} icon="download" minimal={true} text=".TEX" title="Download .tex file" />
+							<Button icon="share" minimal={true} text="Open in Overleaf" title="Open LaTeX document in Overleaf" type="submit" />
+						</ButtonGroup>
+						<ButtonGroup className="rl-tex-buttons--bottom" minimal={true} >
+							<DownloadButton entity={output.bib} fileName="bibliography.bib" icon="manual" intent="primary" text=".BIB" title="Download bibliography" />
+							<DownloadButton entity={output.figs} fileName="figures.zip" icon="media" intent="primary" text={"Figures (" + output.figs.list.length + ")"} title="Download figures" />
+							<DownloadButton entity={output.package} fileName={title + ".zip"} icon="download" intent="success" text="Download all" title="Download all files" />
+						</ButtonGroup>
+					</form>
+					: <NonIdealState description="Pick some settings to generate LaTeX." icon="clean" title="Ready to export" />}
+			{warnings.map((wrn, i) => <Callout key={i} intent="warning" role="complementary" aria-label={"Export warning " + (i + 1)}><p>{wrn}</p></Callout>)}
+		</>
+	);
 }
 Output.propTypes = {
 	output: shape({
@@ -127,6 +136,10 @@ Output.propTypes = {
 			blob: instanceOf(Blob),
 			blobURL: string
 		}),
+		logger: shape({
+			errors: arrayOf(instanceOf(Error)),
+			warnings: arrayOf(string)
+		})
 	}),
 	title: string
 };
@@ -218,7 +231,9 @@ function ExportDialog({ isOpen, onClose, uid }){
 				</ControlGroup>
 				<Button id="latex-roam-export-trigger" intent="primary" loading={isLoading} onClick={startExport} outlined={true} rightIcon="lightning" text="Generate LaTeX" title="Export contents as LaTeX" />
 			</div>
-			<Output output={output} title={title} />
+			<div id="latex-roam-output-div">
+				<Output output={output} title={title} />
+			</div>
 		</div>
 	</Dialog>;
 }

@@ -22,6 +22,10 @@ export const DEFAULT_OUTPUT = {
 	package: {
 		blob: null,
 		blobURL: null
+	},
+	logger: {
+		errors: [],
+		warnings: []
 	}
 };
 
@@ -35,9 +39,21 @@ export class ExportManager {
 		this.figs = { ...DEFAULT_OUTPUT.figs };
 		this.tex = { ...DEFAULT_OUTPUT.tex };
 		this.package = { ...DEFAULT_OUTPUT.package };
+		this.logger = {
+			errors: [],
+			warnings: []
+		};
         
 		this.#jszipFigures = new JSZip();
 		this.#jszipPackage = new JSZip();
+	}
+
+	error(e){
+		this.logger.errors.push(e);
+	}
+
+	warn(e){
+		this.logger.warnings.push(e);
 	}
 
 	#resetBlobBib(){
@@ -80,6 +96,10 @@ export class ExportManager {
 		};
 		this.tex = { ...DEFAULT_OUTPUT.tex };
 		this.package = { ...DEFAULT_OUTPUT.package };
+		this.logger = {
+			errors: [],
+			warnings: []
+		};
 
 		this.#jszipFigures = new JSZip();
 		this.#jszipPackage = new JSZip();
@@ -191,7 +211,8 @@ export class ExportManager {
 			bib: this.bib,
 			figs: this.figs,
 			tex: this.tex,
-			package: this.package
+			package: this.package,
+			logger: this.logger
 		};
 	}
 }
