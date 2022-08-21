@@ -13,9 +13,9 @@ async function replacePopover(capture){
 }
 
 async function parseDoubleBraces(match, pre, capture, _post){
-	return (capture.includes("iframe") || capture.includes("word-count")) 
+	return REGEX.doubleBracesDelete.test(capture)
 		? ""
-		: capture.includes("=:")
+		: capture.startsWith("=:")
 			? (pre + await replacePopover(capture))
 			: match;
 }
