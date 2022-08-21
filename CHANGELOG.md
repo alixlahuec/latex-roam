@@ -1,5 +1,11 @@
 ## Changelog
 
+### [0.4.2](https://github.com/alixlahuec/latex-roam/compare/0.4.0...0.4.2) -  21 August 2022 
+
+#### New Features
+
+-  expand parser for double braces and attributes ([`#23`](https://github.com/alixlahuec/latex-roam/pull/23))
+
 ### [0.4.0](https://github.com/alixlahuec/latex-roam/compare/0.3.4...0.4.0) -  21 August 2022 
 
 #### New Features
