@@ -8,7 +8,7 @@
         ],
         "after:bump": [
             "npm run build:roam",
-            "npx auto-changelog -p"
+            "npx auto-changelog"
         ]
     },
     "git": {
