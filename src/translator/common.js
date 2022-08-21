@@ -71,7 +71,6 @@ async function formatText(string){
 	output = replaceTextFormatting(output);
 
 	// TODO: clean up calc/etc. ? attributes ?
-	// TODO: strikethrough. Seems like this requires an external package, leaving it aside for now
 
 	return output;
 }

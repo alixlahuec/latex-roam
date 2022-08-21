@@ -25,7 +25,7 @@ const REGEX = {
 	citekey: /(^|[^#])\[{2}@([^\]]+?)\]{2}/g,
 	
 	// Code
-	codeBlock: /```(.+)?\n([\s\S]+?)\n```/g,
+	codeBlock: /```(.+)?\n([\s\S]+?)```/g,
 	codeInline: /(?:^|[^`])`([^`]+?)`/g,
 	
 	// Markup

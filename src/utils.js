@@ -45,11 +45,11 @@ function hasNodeListChanged(prev, current){
 
 async function makeBibliography(citekeys){
 	if(!window.zoteroRoam){
-		throw new Error("No instance of zoteroRoam was found");
+		throw new Error("No instance of zoteroRoam was found : bibliography won't be generated.");
 	} else {
 		const instance = window.zoteroRoam;
 		if(!instance.getBibEntries){
-			throw new Error("The zoteroRoam instance does not expose bibliographic entries.");
+			throw new Error("The zoteroRoam instance does not expose bibliography data : no bibliography will be generated.");
 		} else {
 			return await instance.getBibEntries(citekeys);
 		}

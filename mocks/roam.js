@@ -3,6 +3,7 @@
 export const defaultUID = "some_uid";
 export const uidWithFormatting = "with_formatting";
 export const defaultPageUID = "some_page_uid";
+export const pageUIDWithCitekey = "some_page_with_citekey";
 export const pageUIDWithFigure = "some_page_with_fig";
 export const pageUIDWithHeader = "some_page_with_header";
 
@@ -11,6 +12,11 @@ export const plainBlock = {
 	order: 0,
 	"view-type": "bulleted",
 	"text-align": "left"
+};
+
+const citekeyBlock = {
+	string: "Text with an inline [[@citekey]]",
+	order: 0
 };
 
 const imageBlock = {
@@ -40,6 +46,14 @@ export const sampleBlocks = {
 		title: defaultPageTitle,
 		children: [
 			plainBlock
+		],
+		"view-type": "bulleted",
+		"text-align": "left"
+	},
+	[pageUIDWithCitekey]: {
+		title: "Page with Citekey",
+		children: [
+			citekeyBlock
 		],
 		"view-type": "bulleted",
 		"text-align": "left"
