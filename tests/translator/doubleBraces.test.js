@@ -18,6 +18,50 @@ describe("Parsing content of double braces", () => {
 			() => "Paragraph"
 		],
 		[
+			"{{[[POMO]]: 25}} Paragraph", 
+			() => "Paragraph"
+		],
+		[
+			"{{date}} Paragraph", 
+			() => "Paragraph"
+		],
+		[
+			"{{[[calc]]: ((uid))}} Paragraph", 
+			() => "Paragraph"
+		],
+		[
+			"{{slider}} Paragraph", 
+			() => "Paragraph"
+		],
+		[
+			"{{[[encrypt]]}} Paragraph", 
+			() => "Paragraph"
+		],
+		[
+			"{{diagram}} Paragraph", 
+			() => "Paragraph"
+		],
+		[
+			"{{[[drawing]]}} Paragraph", 
+			() => "Paragraph"
+		],
+		[
+			"{{kanban}} Paragraph", 
+			() => "Paragraph"
+		],
+		[
+			"{{[[mentions]]: ((uid))}} Paragraph", 
+			() => "Paragraph"
+		],
+		[
+			"{{character-count}} Paragraph", 
+			() => "Paragraph"
+		],
+		[
+			"{{[[query]]: {and: [[page]] [[other page]]} }} Paragraph", 
+			() => "Paragraph"
+		],
+		[
 			"Text with a {{=: popover|Some content}}", 
 			() => "Text with a popover \\footnote{Some content}"
 		],
