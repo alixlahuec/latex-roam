@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.0-beta.0](https://github.com/alixlahuec/latex-roam/compare/0.3.7-beta.0...0.4.0-beta.0) (2022-08-21)
+
+
+### Features
+
+* add logging ([#18](https://github.com/alixlahuec/latex-roam/issues/18)) ([a01e19e](https://github.com/alixlahuec/latex-roam/commit/a01e19e77b991326217f4f140afd87d4f5d5befa))
+
 ### [0.3.7-beta.0](https://github.com/alixlahuec/latex-roam/compare/0.3.6-beta.0...0.3.7-beta.0) (2022-08-21)
 
 

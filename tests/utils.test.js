@@ -61,13 +61,13 @@ describe("Calling zoteroRoam instance if exists", () => {
 
 	test("No zoteroRoam instance available", () => {
 		return expect(makeBibliography(citekeys)).rejects
-			.toEqual(new Error("No instance of zoteroRoam was found"));
+			.toEqual(new Error("No instance of zoteroRoam was found : bibliography won't be generated."));
 	});
 
 	test("No bibliography util is exposed by the zoteroRoam instance", () => {
 		window.zoteroRoam = {};
 		return expect(makeBibliography(citekeys)).rejects
-			.toEqual(new Error("The zoteroRoam instance does not expose bibliographic entries."));
+			.toEqual(new Error("The zoteroRoam instance does not expose bibliography data : no bibliography will be generated."));
 	});
 
 	test("Bibliography util is available", async() => {

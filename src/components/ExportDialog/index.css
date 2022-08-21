@@ -16,7 +16,7 @@
 }
 
 .rl--dialog > .bp3-dialog-body {
-    align-items: center;
+    align-items: stretch;
     display: flex;
     justify-content: space-between;
     margin: 10px 20px;
@@ -54,28 +54,31 @@
     margin: 10px 0px;
 }
 
-#latex-roam-export-form {
+#latex-roam-output-div {
     flex: 0 0 65%;
-    margin: 10px;
     padding: 10px;
+}
+
+#latex-roam-export-form {
+    margin: 10px;
     position: relative;
 }
 
 .rl-tex-buttons--top {
     background: var(--rl-dialog-bg);
     margin: 1px;
-    top: 10px;
+    top: 1px;
 }
 
 .rl-tex-buttons--bottom {
     background: var(--rl-box-bg);
-    bottom: 10px;
+    bottom: 1px;
 }
 
 .rl-tex-buttons--top,
 .rl-tex-buttons--bottom {
     position: absolute;
-    right: 10px;
+    right: 1px;
 }
 
 .rl-tex-buttons--top .bp3-button,

@@ -4,7 +4,6 @@ import { formatText } from "./common";
 import { asyncReplaceAll } from "../utils";
 
 
-// TODO: process the popover's contents
 async function parsePopover(_match, text, content){
 	return `${text.trim()} \\footnote{${await formatText(content.trim())}}`;
 }
