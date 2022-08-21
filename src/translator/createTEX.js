@@ -51,8 +51,12 @@ async function _createTEX(exportUID, document_class = "book", { numbered = true,
 	if(citekeys.length > 0){
 		try{
 			bibliography = await makeBibliography(citekeys);
-			if(bibliography && JSON.stringify(bibliography) !== ""){
-				window.latexRoam.addBibliography(bibliography);
+			if(bibliography){
+				if(JSON.stringify(bibliography) !== ""){
+					window.latexRoam.addBibliography(bibliography);
+				} else {
+					window.latexRoam.warn("zoteroRoam did not return any data. Make sure the extension is active and has access to the items you are referencing.");
+				}
 			}
 		} catch(e){
 			window.latexRoam.warn(e.message);
