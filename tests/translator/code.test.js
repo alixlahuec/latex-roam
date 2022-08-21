@@ -22,7 +22,7 @@ describe("Code blocks are formatted into correct LaTeX", () => {
 	});
 
 	test("Replacement is correct", () => {
-		const input = "Some text, then a code block:\n```\n" + sampleCodeBlock + "\n```";
+		const input = "Some text, then a code block:\n```\n" + sampleCodeBlock + "```";
 		const inputWithLanguage = "Some text, then a code block:\n```python\n" + sampleCodeBlock + "```";
 
 		expect(input.replaceAll(REGEX.codeBlock, parseCodeBlock))
