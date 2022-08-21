@@ -78,3 +78,29 @@ test("Generating export", async() => {
 	expect(output.package.blobURL).toBe("blob://some-url");
 
 });
+
+test("Logging", () => {
+	expect(window.latexRoam.logger)
+		.toEqual({
+			errors: [],
+			warnings: []
+		});
+    
+	window.latexRoam.error("sample message");
+
+	expect(window.latexRoam.logger.errors)
+		.toEqual(["sample message"]);
+    
+	window.latexRoam.warn("sample warning");
+
+	expect(window.latexRoam.logger.warnings)
+		.toEqual(["sample warning"]);
+    
+	window.latexRoam.resetExport();
+
+	expect(window.latexRoam.logger)
+		.toEqual({
+			errors: [],
+			warnings: []
+		});
+});

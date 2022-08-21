@@ -55,7 +55,7 @@ async function _createTEX(exportUID, document_class = "book", { numbered = true,
 				window.latexRoam.addBibliography(bibliography);
 			}
 		} catch(e){
-			console.error(e);
+			window.latexRoam.warn(e);
 		}
 	}
 
@@ -68,7 +68,7 @@ async function _createTEX(exportUID, document_class = "book", { numbered = true,
 	try{
 		body += await convertBlocks(contents.children, { document_class: document_class, numbered: numbered, start_header: start_header });
 	} catch(e){
-		console.error(e);
+		window.latexRoam.error(e);
 	}
 
 	const footer = `\n${bibPrint}\\end{document}`;
