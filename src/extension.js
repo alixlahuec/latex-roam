@@ -211,7 +211,8 @@ export class ExportManager {
 			bib: this.bib,
 			figs: this.figs,
 			tex: this.tex,
-			package: this.package
+			package: this.package,
+			logger: this.logger
 		};
 	}
 }
