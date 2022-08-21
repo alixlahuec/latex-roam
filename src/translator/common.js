@@ -68,9 +68,12 @@ async function formatText(string){
 	if(output.charAt(0) == ">"){
 		output = `\\begin{quote}${output.slice(1)}\\end{quote}`;
 	}
-	output = replaceTextFormatting(output);
 
-	// TODO: clean up calc/etc. ? attributes ?
+	// Attributes
+	const attributeRegex = /^(.+):{2}/g;
+	output = output.replaceAll(attributeRegex, (_match, attr) => `${attr}:`);
+
+	output = replaceTextFormatting(output);
 
 	return output;
 }
