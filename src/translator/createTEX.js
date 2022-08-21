@@ -55,7 +55,7 @@ async function _createTEX(exportUID, document_class = "book", { numbered = true,
 				window.latexRoam.addBibliography(bibliography);
 			}
 		} catch(e){
-			window.latexRoam.warn(e);
+			window.latexRoam.warn(e.message);
 		}
 	}
 

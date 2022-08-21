@@ -90,9 +90,8 @@ function Output({ output, title }){
 
 	return (
 		<>
-			{warnings.map((wrn, i) => <Callout key={i} intent="warning">{wrn}</Callout>)}
 			{hasError
-				? errors.map((err, i) => <Callout key={i} intent="danger">{err}</Callout>)
+				? errors.map((err, i) => <Callout key={i} intent="danger" title={err.name} role="complementary" aria-label={"Export error " + (i + 1)}><p>{err.message}</p></Callout>)
 				: output.tex.content.length > 0
 					? <form
 						action="https://www.overleaf.com/docs"
@@ -112,6 +111,7 @@ function Output({ output, title }){
 						</ButtonGroup>
 					</form>
 					: <NonIdealState description="Pick some settings to generate LaTeX." icon="clean" title="Ready to export" />}
+			{warnings.map((wrn, i) => <Callout key={i} intent="warning" role="complementary" aria-label={"Export warning " + (i + 1)}><p>{wrn}</p></Callout>)}
 		</>
 	);
 }
