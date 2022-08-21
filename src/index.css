@@ -1,24 +1,26 @@
 :root {
     --rl-accent-1-hsl: 208, 100%, 40%;
-    --rl-accent-2-hsl: 18, 63%, 39%;
+    --rl-accent-2-hsl: 40, 63%, 50%;
     --rl-negative-hsl: 0, 92%, 41%;
     --rl-positive-hsl: 155, 58%, 27%;
     --rl-border-co: #ececec;
     --rl-box-bg: #f8f8f8;
     --rl-dialog-bg: #f7f7f7;
     --rl-dialog-margin: 15%;
+    --rl-negative-bg: #fff1f2;
     --rl-text-co: inherit;
     --rl-text-small: 0.85rem;
 }
 
 [rl-dark-theme="true"] {
     --rl-accent-1-hsl: 208, 100%, 62%;
-    --rl-accent-2-hsl: 30, 70%, 51%;
+    --rl-accent-2-hsl: 38, 79%, 61%;
     --rl-negative-hsl: 0, 85%, 69%;
     --rl-positive-hsl: 172, 50%, 18%;
     --rl-border-co: #2f3133;
     --rl-box-bg: #1f1f1f;
     --rl-dialog-bg: #191919;
+    --rl-negative-bg: #332828;
     --rl-text-co: #92a3b4;
 }
 
@@ -122,6 +124,37 @@
 
 [class*="rl-"] .bp3-button.bp3-minimal[class*="bp3-intent-"]:hover {
     background: hsla(var(--rl-base-tone), 10%);
+}
+
+[class*="rl-"] .bp3-callout {
+    background: var(--rl-box-bg);
+    border: 1px var(--rl-border-co) solid;
+    color: var(--rl-text-co);
+    font-size: var(--rl-text-small);
+    margin: 10px;
+    width: auto;
+}
+
+[class*="rl-"] .bp3-callout[class*="bp3-intent"] {
+    background: var(--rl-bg-tone);
+}
+
+[class*="rl-"] .bp3-callout.bp3-intent-warning {
+    --rl-bg-tone: hsla(var(--rl-accent-2-hsl), 10%);
+    --rl-co-tone: hsla(var(--rl-accent-2-hsl), 100%);
+}
+
+[class*="rl-"] .bp3-callout.bp3-intent-danger {
+    --rl-bg-tone: var(--rl-negative-bg);
+    --rl-co-tone: var(--rl-negative-co);
+}
+
+[class*="rl-"] .bp3-callout[class*="bp3-intent"],
+[class*="rl-"] .bp3-callout[class*="bp3-intent"][class*=bp3-icon-]::before,
+[class*="rl-"] .bp3-callout[class*="bp3-intent"]>.bp3-icon:first-child,
+[class*="rl-"] .bp3-callout[class*="bp3-intent"] .bp3-heading,
+[class*="rl-"] .bp3-button.bp3-outlined[class*="bp3-intent"] {
+    color: var(--rl-co-tone);
 }
   
 .latex-roam-popover.bp3-popover2 .bp3-popover2-content,

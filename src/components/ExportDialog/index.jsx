@@ -231,7 +231,9 @@ function ExportDialog({ isOpen, onClose, uid }){
 				</ControlGroup>
 				<Button id="latex-roam-export-trigger" intent="primary" loading={isLoading} onClick={startExport} outlined={true} rightIcon="lightning" text="Generate LaTeX" title="Export contents as LaTeX" />
 			</div>
-			<Output output={output} title={title} />
+			<div id="latex-roam-output-div">
+				<Output output={output} title={title} />
+			</div>
 		</div>
 	</Dialog>;
 }
