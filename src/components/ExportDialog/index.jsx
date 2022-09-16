@@ -147,8 +147,7 @@ Output.propTypes = {
 function ExportDialog({ isOpen, onClose, uid }){
 	const [output, { isLoading, resetOutput, triggerExport }] = useExport({ uid });
 	const [document_class, setDocumentClass] = useSelect({
-		start: "report",
-		transform: (val) => DOC_CLASS_OPTIONS.find(op => op.value == val)
+		start: "report"
 	});
 	const [authors, setAuthors] = useText("");
 	const [title, setTitle] = useText("");
