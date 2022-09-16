@@ -26,12 +26,6 @@ const DOC_CLASS_OPTIONS = [
 	{ value: "report", label: "Report" }
 ];
 
-function renderAsMenuItem(item, itemProps) {
-	const { handleClick, modifiers: { active } } = itemProps;
-
-	return <MenuItem active={active} key={item.value} onClick={handleClick} text={item.label} />;
-}
-
 function SingleSelect({ menuTitle, onChange, options, value }){
     
 	const menuProps = useMemo(() => ({
@@ -47,10 +41,17 @@ function SingleSelect({ menuTitle, onChange, options, value }){
 		onChange(item.value);
 	}, [onChange]);
 
+	const itemRenderer = useCallback((item, itemProps) => {
+		const { handleClick/*, modifiers: { active }*/ } = itemProps;
+		const isSelected = item.value == value;
+
+		return <MenuItem key={item.value} htmlTitle={item.label} labelElement={isSelected ? <Icon icon="small-tick" /> : null} onClick={handleClick} aria-selected={isSelected} text={item.label} />;
+	}, [value]);
+
 	return (
 		<Select 
 			filterable={false}
-			itemRenderer={renderAsMenuItem}
+			itemRenderer={itemRenderer}
 			itemsEqual="value"
 			items={options}
 			menuProps={menuProps}

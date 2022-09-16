@@ -170,7 +170,14 @@
     fill: var(--rl-box-bg);
 }
 
-.latex-roam-popover .bp3-menu-item:hover {
-    background: var(--rl-dialog-bg);
-    color: var(--rl-text-co);
+.latex-roam-popover .bp3-menu .bp3-menu-item[aria-selected="true"],
+.latex-roam-popover .bp3-menu .bp3-menu-item[aria-selected="true"] .bp3-icon,
+.latex-roam-popover .bp3-menu .bp3-menu-item[aria-selected="true"]:hover {
+    background-color: inherit;
+    color: hsla(var(--rl-accent-1-hsl), 95%);
+}
+
+.latex-roam-popover .bp3-menu .bp3-menu-item[aria-selected="false"]:hover {
+    background: var(--rl-box-bg);
+    color: hsla(var(--rl-accent-1-hsl), 95%);
 }

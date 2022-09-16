@@ -9,8 +9,8 @@ const defaultTransform = (value) => value;
 const useSelect = ({ start = null, transform = defaultTransform }) => {
 	const [state, setState] = useState(start);
 
-	const set = useCallback((event) => {
-		setState(transform(event.currentTarget.value));
+	const set = useCallback((value) => {
+		setState(transform(value));
 	}, [transform]);
 
 	return [state, set];
