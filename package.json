@@ -29,8 +29,12 @@
         "build-storybook": "build-storybook --quiet",
         "test-storybook": "test-storybook",
         "ci:test-storybook": "test-storybook --coverage",
-        "release:latest": "release-it --ci --git.requireBranch=main --github.autoGenerate --npm.skipChecks",
-        "release:beta": "release-it --ci --git.requireBranch=beta --preRelease=beta --github.releaseNotes=\"echo\" --npm.skipChecks",
+		"version": "release-it --ci --no-git --no-npm --no-github.release",
+		"version:latest": "npm run version -- --git.requireBranch=main",
+		"version:beta": "npm run version -- --preRelease=beta --git.requireBranch=beta",
+		"publish": "release-it --ci --npm.skipChecks --no-increment",
+		"publish:latest": "npm run publish -- --git.requireBranch=main --github.autoGenerate",
+		"publish:beta": "npm run publish -- --git.requireBranch=beta --preRelease=beta --github.releaseNotes=\"echo\"",
         "release:preview": "release-it --dry-run"
     },
     "devDependencies": {

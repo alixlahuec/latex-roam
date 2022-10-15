@@ -1,0 +1,46 @@
+name: Make new release (latest)
+on: workflow_dispatch
+jobs:
+  createReleasePR:
+    name: Create PR for release
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          ref: main
+
+      - uses: actions/setup-node@v2
+
+      - name: Install packages
+        run: npm ci --legacy-peer-deps
+
+      - name: Get changelog
+        id: changelog
+        run: |
+          changelog=$(npx auto-changelog --stdout --unreleased-only)
+          echo $changelog
+          echo "::set-output name=changelog::$changelog"
+
+      - name: Stage changes to version, changelog, build
+        run: |
+          npm run version:latest
+
+      # https://github.com/peter-evans/create-pull-request#action-outputs
+      - name: Create Pull Request
+        id: cpr
+        uses: peter-evans/create-pull-request@v4
+        with:
+          branch: release/latest
+          delete-branch: true
+          draft: false
+          token: ${{ secrets.GITHUB_TOKEN }}
+          title: "chore(release): publish latest"
+          commit-message: "auto-commit: staged changes"
+          labels: release
+          body: |
+            🤖 **Preparing to release as @latest**
+
+            ${{ steps.changelog.outputs.changelog }}

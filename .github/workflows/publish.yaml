@@ -1,10 +1,14 @@
-name: Automatic pre-release
+name: Automated release publication
 on:
-  push:
-    branches: 
-      - beta
+  pull_request:
+    branches:
+      - release/latest
+      - release/beta
+    types:
+      - closed
 jobs:
-  release:
+  release_if_merged:
+    if: github.event.pull_request.merged == true
     name: Make release
     runs-on: ubuntu-latest
 
@@ -13,7 +17,11 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
+
       - uses: actions/setup-node@v2
+
+      - name: Install packages
+        run: npm ci --legacy-peer-deps
 
       - name: NPM authentication
         run: npm config set //registry.npmjs.org/:_authToken ${{ secrets.NPM_TOKEN }}
@@ -25,11 +33,25 @@ jobs:
 
       - name: Install packages
         run: npm ci --legacy-peer-deps
-      
-      - name: Release as beta
-        run: npm run release:beta
+
+      - name: Run test suites
+        run: |
+          npm run ci:lint
+          npm run ci:test
+          chmod +x "./ci-storybook.sh"
+          ./ci-storybook.sh
+
+      - name: Publish release @beta
+        if: github.event.pull_request.head.ref  == 'release/beta'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npm run publish:beta
+
+      - name: Publish release @latest
+        if: github.event.pull_request.head.ref  == 'release/latest'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npm run publish:latest
 
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v3
