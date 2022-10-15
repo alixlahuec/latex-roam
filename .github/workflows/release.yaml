@@ -1,11 +1,8 @@
-name: Automatic release
-on:
-  push:
-    branches: 
-      - main
+name: Make new release (latest)
+on: workflow_dispatch
 jobs:
-  release:
-    name: Make release
+  createReleasePR:
+    name: Create PR for release
     runs-on: ubuntu-latest
 
     steps:
@@ -13,26 +10,37 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
+          ref: main
+
       - uses: actions/setup-node@v2
-
-      - name: NPM authentication
-        run: npm config set //registry.npmjs.org/:_authToken ${{ secrets.NPM_TOKEN }}
-
-      - name: git config
-        run: |
-          git config user.name "${GITHUB_ACTOR}"
-          git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
 
       - name: Install packages
         run: npm ci --legacy-peer-deps
-      
-      - name: Release as latest
-        run: npm run release:latest
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Upload coverage reports to Codecov
-        uses: codecov/codecov-action@v3
+      - name: Get changelog
+        id: changelog
+        run: |
+          changelog=$(npx auto-changelog --stdout --unreleased-only)
+          echo $changelog
+          echo "::set-output name=changelog::$changelog"
+
+      - name: Stage changes to version, changelog, build
+        run: |
+          npm run version:latest
+
+      # https://github.com/peter-evans/create-pull-request#action-outputs
+      - name: Create Pull Request
+        id: cpr
+        uses: peter-evans/create-pull-request@v4
         with:
-          directory: ./coverage/
-          verbose: true
+          branch: release/latest
+          delete-branch: true
+          draft: false
+          token: ${{ secrets.GITHUB_TOKEN }}
+          title: "chore(release): publish latest"
+          commit-message: "auto-commit: staged changes"
+          labels: release
+          body: |
+            🤖 **Preparing to release as @latest**
+
+            ${{ steps.changelog.outputs.changelog }}
