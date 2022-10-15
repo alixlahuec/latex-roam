@@ -1,5 +1,11 @@
 ## Changelog
 
+### [0.4.4](https://github.com/alixlahuec/latex-roam/compare/0.4.3...0.4.4) -  17 September 2022 
+
+#### Fixes
+
+-  dropdown not working for document class ([`#27`](https://github.com/alixlahuec/latex-roam/pull/27))
+
 ### [0.4.3](https://github.com/alixlahuec/latex-roam/compare/0.4.2...0.4.3) -  21 August 2022 
 
 ### [0.4.2](https://github.com/alixlahuec/latex-roam/compare/0.4.0...0.4.2) -  21 August 2022 
