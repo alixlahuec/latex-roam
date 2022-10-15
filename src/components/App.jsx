@@ -5,8 +5,10 @@ import { Component } from "react";
 import ExportDialog from "./ExportDialog";
 import GraphWatcher from "./GraphWatcher";
 
+import { addBlockMenuCommand, removeBlockMenuCommand } from "Roam";
 
-import { addBlockMenuCommand } from "Roam";
+
+const blockMenuCommandLabel = "Export to LaTeX";
 
 class App extends Component {
 	constructor(props){
@@ -20,9 +22,13 @@ class App extends Component {
 	}
 
 	componentDidMount(){
-		addBlockMenuCommand("Export to LaTeX", (entity) => {
+		addBlockMenuCommand(blockMenuCommandLabel, (entity) => {
 			this.openDialog(entity["block-uid"]);
 		});
+	}
+
+	componentWillUnmount(){
+		removeBlockMenuCommand(blockMenuCommandLabel);
 	}
 
 	render(){
