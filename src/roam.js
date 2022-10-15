@@ -1,4 +1,9 @@
 /* istanbul ignore file */
+/** Adds an option to context menu for blocks
+ * @param {String} label - The label for the menu option
+ * @param {Function} onClick - The command to execute
+ * @returns 
+ */
 function addBlockMenuCommand(label, onClick){
 	return window.roamAlphaAPI.ui.blockContextMenu.addCommand({
 		label,
@@ -58,10 +63,19 @@ function queryPageContentsByTitle(title){
 	]`, title)[0];
 }
 
+/** Removes an option from context menu for blocks
+ * @param {String} label - The label of the menu option
+ * @returns 
+ */
+function removeBlockMenuCommand(label){
+	return window.roamAlphaAPI.ui.blockContextMenu.removeCommand({ label });
+}
+
 export {
 	addBlockMenuCommand,
 	findRoamPage,
 	getBlockText,
 	queryBlockContents,
-	queryPageContentsByTitle
+	queryPageContentsByTitle,
+	removeBlockMenuCommand
 };
