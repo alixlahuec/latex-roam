@@ -1,0 +1,67 @@
+name: Automate tasks for commits to dist branches
+on:
+  push:
+    branches:
+      - main
+      - beta
+jobs:
+  setup:
+    name: Setup environment
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+      - run: npm ci --legacy-peer-deps
+
+  runTests:
+    name: Run tests suites, and upload coverage reports
+    needs: setup
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Jest
+        run: npm run ci:test
+
+      - name: Storybook CI
+        run: |
+          chmod +x "./ci-storybook.sh"
+          ./ci-storybook.sh
+        shell: bash
+
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          directory: ./coverage/
+          verbose: true
+
+  makeRelease:
+    if: contains(github.event.head_commit.message, 'chore(release):')
+    name: Make release
+    needs: setup
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    steps:
+      - name: Configure NPM
+        run: npm config set //registry.npmjs.org/:_authToken ${{ secrets.NPM_TOKEN }}
+      
+      - name: Configure Git
+        run: |
+          git config user.name "${GITHUB_ACTOR}"
+          git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+
+      - run: |
+          echo "${GITHUB_REF}"
+          echo "${GITHUB_REF##*/}"
+
+      - name: Publish release @beta
+        if: ${GITHUB_REF##*/} == 'beta'
+        run: |
+          npm run publish:beta
+
+      - name: Publish release @latest
+        if: ${GITHUB_REF##*/} == 'main'
+        run: |
+          npm run publish:latest
