@@ -8,9 +8,10 @@ jobs:
     steps:
       # Setup release branch
       - name: Delete existing branch
-        run: |
-          git push origin --delete release/latest
-        continue-on-error: true
+        uses: dawidd6/action-delete-branch@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branches: 'release/latest'
 
       - name: Create release branch
         uses: peterjgrainger/action-create-branch@v2.2.0
@@ -59,17 +60,22 @@ jobs:
 
       # Create PR for release branch
       - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v4
+        id: cpr
+        uses: repo-sync/pull-request@v2
         with:
-          base: main
-          branch: release/latest
-          delete-branch: true
-          draft: false
-          token: ${{ secrets.GITHUB_TOKEN }}
-          title: "chore(release): v${{ steps.version.outputs.next }}"
-          commit-message: "auto-commit: staged changes"
-          labels: release
-          body: |
-            🤖 **Preparing to release as @latest**
+          destination_branch: "beta"
+          source_branch: "release/latest"
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          pr_draft: false
+          pr_label: release
+          pr_title: "chore(release): v${{ steps.version.outputs.next }}"
+          pr_body: |
+            🤖 **Preparing to release as [latest]**
 
             ${{ steps.changelog.outputs.changelog }}
+
+      - name: Show PR details
+        run: |
+          echo ${{steps.cpr.outputs.pr_url}}
+          echo ${{steps.open-pr.outputs.pr_number}}
+          echo ${{steps.open-pr.outputs.has_changed_files}}
