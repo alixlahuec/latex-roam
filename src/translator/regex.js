@@ -16,7 +16,7 @@ const REGEX = {
 	doubleBraces: /( ?)\{{2}(.+?)\}{2}( ?)/g,
 	doubleBracesDelete: /^(\[{2})?iframe|^(\[{2})?word-count|^(\[{2})?POMO|^(\[{2})?date|^(\[{2})?calc|^(\[{2})?slider|^(\[{2})?encrypt|^(\[{2})?diagram|^(\[{2})?drawing|^(\[{2})?kanban|^(\[{2})?mentions|^(\[{2})?character-count|^(\[{2})?query/,
 	// Note: this will target all instances of `[[` and `]]`, even if they're not page references.
-	doubleBrackets: /(\[|\]){2}/g,
+	doubleBrackets: /(\[{2}|\]{2})/g,
 	tag: /(?!^| )#(.+?)( |$)/g,
 	
 	// Citations
