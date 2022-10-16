@@ -7,6 +7,11 @@ jobs:
 
     steps:
       # Setup release branch
+      - name: Delete existing branch
+        run: |
+          git push origin --delete release/latest
+        continue-on-error: true
+
       - name: Create release branch
         uses: peterjgrainger/action-create-branch@v2.2.0
         env:
