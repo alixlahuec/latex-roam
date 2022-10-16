@@ -4,28 +4,29 @@ jobs:
   createReleasePR:
     name: Create PR for release
     runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      RELEASE_BRANCH: "release/latest"
 
     steps:
       # Setup release branch
       - name: Delete existing branch
         uses: dawidd6/action-delete-branch@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branches: 'release/latest'
+          github_token: ${{ env.GITHUB_TOKEN }}
+          branches: ${{ env.RELEASE_BRANCH }}
         continue-on-error: true
 
       - name: Create release branch
         uses: peterjgrainger/action-create-branch@v2.2.0
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          branch: 'release/latest'
+          branch: ${{ env.RELEASE_BRANCH }}
 
       - name: Checkout code
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
-          ref: release/latest
+          ref: ${{ env.RELEASE_BRANCH }}
 
       # Push commit from release-it: version bump, changelog, build
       - uses: actions/setup-node@v2
@@ -55,7 +56,7 @@ jobs:
           echo $changelog
           echo "::set-output name=changelog::$changelog"
 
-      - name: Stage changes to version, changelog, build
+      - name: Bump version, build
         run: |
           npm run version-release:latest
 
@@ -72,8 +73,8 @@ jobs:
         uses: repo-sync/pull-request@v2
         with:
           destination_branch: "main"
-          source_branch: "release/latest"
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          source_branch: ${{ env.RELEASE_BRANCH }}
+          github_token: ${{ env.GITHUB_TOKEN }}
           pr_draft: false
           pr_label: release
           pr_title: "chore(release): v${{ steps.version.outputs.next }}"
