@@ -2,6 +2,7 @@
 
 export const defaultUID = "some_uid";
 export const uidWithFormatting = "with_formatting";
+export const uidWithHeader = "with_header";
 export const defaultPageUID = "some_page_uid";
 export const pageUIDWithCitekey = "some_page_with_citekey";
 export const pageUIDWithFigure = "some_page_with_fig";
@@ -24,7 +25,7 @@ const imageBlock = {
 	order: 0
 };
 
-const headerBlock = {
+export const headerBlock = {
 	string: "Header Text",
 	order: 0,
 	heading: 1,
@@ -42,6 +43,7 @@ export const sampleBlocks = {
 		"text-align": "left"
 	},
 	[defaultUID]: plainBlock,
+	[uidWithHeader]: headerBlock,
 	[defaultPageUID]: {
 		title: defaultPageTitle,
 		children: [

@@ -69,8 +69,15 @@ async function _createTEX(exportUID, document_class = "book", { numbered = true,
 	const header = `\n\\documentclass{${document_class}}\n\\title{${title}}\n\\author{${authors}}\n\\date{${todayDMY()}}\n\n\\usepackage{amsmath}\n\\usepackage{graphicx}\n\\usepackage{soul}\n${bibPreamble}\\usepackage{hyperref}\n\\hypersetup{colorlinks=true,citecolor=black}\n\n\\begin{document}\n${cover ? "\\maketitle" : ""}`;
 
 	let body = "";
-	try{
-		body += await convertBlocks(contents.children, { document_class: document_class, numbered: numbered, start_header: start_header });
+	try {
+		// If the export is triggered from a block (i.e, the `string` property is defined),
+		// the list of blocks to convert is that block.
+		// If the export is triggered from a page,
+		// the list of blocks to convert is the page's children (if any).
+		const blocks = contents.string
+			? [contents]
+			: (contents.children || []);
+		body += await convertBlocks(blocks, { document_class: document_class, numbered: numbered, start_header: start_header });
 	} catch(e){
 		window.latexRoam.error(e);
 	}
