@@ -62,10 +62,11 @@ jobs:
 
       - name: Update changelog
         run: |
-          npx auto-changelog
+          npx auto-changelog -p
           git add CHANGELOG.md
           git commit -m "📝 Update CHANGELOG"
           git push origin ${{ env.RELEASE_BRANCH }} --progress --porcelain
+        continue-on-error: true
 
       # Create PR for release branch
       - name: Create Pull Request
