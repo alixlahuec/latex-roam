@@ -6,12 +6,21 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # Setup release branch
+      - name: Create release branch
+        uses: peterjgrainger/action-create-branch@v2.2.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          branch: 'release/beta'
+
       - name: Checkout code
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
-          ref: beta
+          ref: release/beta
 
+      # Push commit from release-it: version bump, changelog, build
       - uses: actions/setup-node@v2
 
       - name: NPM authentication
@@ -29,6 +38,7 @@ jobs:
         run: |
           npm run version:beta
 
+      # Create PR for release branch
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v4
         with:

@@ -29,7 +29,7 @@
         "build-storybook": "build-storybook --quiet",
         "test-storybook": "test-storybook",
         "ci:test-storybook": "test-storybook --coverage",
-		"version": "release-it --ci --no-git --no-npm.publish --no-github.release",
+		"version": "release-it --ci --no-git.tag --no-npm.publish --no-github.release",
 		"version:latest": "npm run version",
 		"version:beta": "npm run version -- --preRelease=beta",
 		"publish": "release-it --ci --npm.skipChecks --no-increment",
