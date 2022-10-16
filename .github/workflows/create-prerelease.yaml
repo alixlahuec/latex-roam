@@ -36,7 +36,7 @@ jobs:
 
       - name: Stage changes to version, changelog, build
         run: |
-          npm run version:beta
+          npm run version-release:beta
 
       # Create PR for release branch
       - name: Create Pull Request

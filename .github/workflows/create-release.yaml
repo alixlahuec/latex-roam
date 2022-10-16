@@ -50,7 +50,7 @@ jobs:
 
       - name: Stage changes to version, changelog, build
         run: |
-          npm run version:latest
+          npm run version-release:latest
 
       # Create PR for release branch
       - name: Create Pull Request
