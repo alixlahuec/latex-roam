@@ -26,11 +26,10 @@ jobs:
         run: |
           npm run version:beta
 
-      # https://github.com/peter-evans/create-pull-request#action-outputs
       - name: Create Pull Request
-        id: cpr
         uses: peter-evans/create-pull-request@v4
         with:
+          base: beta
           branch: release/beta
           delete-branch: true
           draft: false

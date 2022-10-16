@@ -40,11 +40,10 @@ jobs:
         run: |
           npm run version:latest
 
-      # https://github.com/peter-evans/create-pull-request#action-outputs
       - name: Create Pull Request
-        id: cpr
         uses: peter-evans/create-pull-request@v4
         with:
+          base: main
           branch: release/latest
           delete-branch: true
           draft: false
