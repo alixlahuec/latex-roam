@@ -1,5 +1,11 @@
 ## Changelog
 
+### [0.4.5](https://github.com/alixlahuec/latex-roam/compare/0.4.4...0.4.5) -  15 October 2022 
+
+#### Fixes
+
+-  remove block context menu command on unloading ([`#29`](https://github.com/alixlahuec/latex-roam/pull/29))
+
 ### [0.4.4](https://github.com/alixlahuec/latex-roam/compare/0.4.3...0.4.4) -  17 September 2022 
 
 #### Fixes
