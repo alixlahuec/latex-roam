@@ -1,7 +1,7 @@
 import { _createTEX, makeHeader, makeList, parseBlock } from "../../src/translator/createTEX";
 import { todayDMY } from "../../src/utils";
 
-import { defaultPageUID, defaultUID, pageUIDWithHeader, plainBlock, sampleBlocks } from "../../mocks/roam";
+import { defaultPageUID, defaultUID, headerBlock, pageUIDWithHeader, plainBlock, sampleBlocks, uidWithHeader } from "../../mocks/roam";
 import { sampleBulletedList, sampleDocumentList, sampleNumberedList } from "../../mocks/content/lists";
 
 
@@ -172,6 +172,21 @@ describe("Generating TEX document with settings", () => {
 			},
 			[
 				"Header Text\\\\",
+				plainBlock.string
+			].join("\n")
+		],
+		[
+			uidWithHeader,
+			{
+				document_class: "book",
+				numbered: false,
+				cover: false,
+				start_header: "1",
+				authors: "Some authors",
+				title: "Some title"
+			},
+			[
+				headerBlock.string + "\\\\",
 				plainBlock.string
 			].join("\n")
 		]
