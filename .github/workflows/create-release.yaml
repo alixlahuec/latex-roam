@@ -7,18 +7,18 @@ jobs:
 
     steps:
       # Setup release branch
-      - name: Checkout code
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-          ref: main
-
       - name: Create release branch
         uses: peterjgrainger/action-create-branch@v2.2.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           branch: 'release/latest'
+
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          ref: release/latest
 
       # Push commit from release-it: version bump, changelog, build
       - uses: actions/setup-node@v2
