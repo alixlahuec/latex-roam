@@ -1,6 +1,6 @@
 {
     "name": "@alixlahuec/latex-roam",
-    "version": "0.4.5",
+    "version": "0.4.6",
     "description": "Exporter to LaTeX for Roam Research users",
     "license": "Apache-2.0",
     "author": {
@@ -29,12 +29,12 @@
         "build-storybook": "build-storybook --quiet",
         "test-storybook": "test-storybook",
         "ci:test-storybook": "test-storybook --coverage",
-		"version-release": "release-it --ci --no-git.tag --no-npm.publish --no-github.release",
-		"version-release:latest": "npm run version-release",
-		"version-release:beta": "npm run version-release -- --preRelease=beta",
-		"publish": "release-it --ci --npm.skipChecks --no-increment",
-		"publish:latest": "npm run publish -- --git.requireBranch=main --github.autoGenerate",
-		"publish:beta": "npm run publish -- --git.requireBranch=beta --preRelease=beta --github.releaseNotes=\"echo\"",
+        "version-release": "release-it --ci --no-git.tag --no-npm.publish --no-github.release",
+        "version-release:latest": "npm run version-release",
+        "version-release:beta": "npm run version-release -- --preRelease=beta",
+        "publish": "release-it --ci --npm.skipChecks --no-increment",
+        "publish:latest": "npm run publish -- --git.requireBranch=main --github.autoGenerate",
+        "publish:beta": "npm run publish -- --git.requireBranch=beta --preRelease=beta --github.releaseNotes=\"echo\"",
         "release:preview": "release-it --dry-run"
     },
     "devDependencies": {
