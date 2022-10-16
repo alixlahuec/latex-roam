@@ -22,6 +22,13 @@ jobs:
       - name: Install packages
         run: npm ci --legacy-peer-deps
 
+      - name: Get next version
+        id: version
+        run: |
+          next_version=$(npx release-it --release-version)
+          echo $next_version
+          echo "::set-output name=next::$next_version"
+
       - name: Get changelog
         id: changelog
         run: |
@@ -33,16 +40,15 @@ jobs:
         run: |
           npm run version:latest
 
-      # https://github.com/peter-evans/create-pull-request#action-outputs
       - name: Create Pull Request
-        id: cpr
         uses: peter-evans/create-pull-request@v4
         with:
+          base: main
           branch: release/latest
           delete-branch: true
           draft: false
           token: ${{ secrets.GITHUB_TOKEN }}
-          title: "chore(release): publish latest"
+          title: "chore(release): v${{ steps.version.outputs.next }}"
           commit-message: "auto-commit: staged changes"
           labels: release
           body: |
