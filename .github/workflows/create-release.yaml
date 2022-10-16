@@ -12,6 +12,7 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branches: 'release/latest'
+        continue-on-error: true
 
       - name: Create release branch
         uses: peterjgrainger/action-create-branch@v2.2.0
@@ -63,7 +64,7 @@ jobs:
         id: cpr
         uses: repo-sync/pull-request@v2
         with:
-          destination_branch: "beta"
+          destination_branch: "main"
           source_branch: "release/latest"
           github_token: ${{ secrets.GITHUB_TOKEN }}
           pr_draft: false
