@@ -59,6 +59,13 @@ jobs:
         run: |
           npm run version-release:latest
 
+      - name: Update changelog
+        run: |
+          npx auto-changelog
+          git add CHANGELOG.md
+          git commit -m "📝 Update CHANGELOG"
+          git push origin ${{ env.RELEASE_BRANCH }} --progress --porcelain
+
       # Create PR for release branch
       - name: Create Pull Request
         id: cpr

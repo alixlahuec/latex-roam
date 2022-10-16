@@ -1,8 +1,7 @@
 {
     "hooks": {
         "after:bump": [
-            "npm run build:roam",
-            "npx auto-changelog"
+            "npm run build:roam"
         ]
     },
     "git": {
