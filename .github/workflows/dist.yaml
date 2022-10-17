@@ -53,15 +53,15 @@ jobs:
           git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
 
       - run: |
-          echo "${GITHUB_REF}"
-          echo "${GITHUB_REF##*/}"
+          echo "GitHub ref is ${{ github.ref }}"
+          echo "GitHub ref name is ${{ github.ref_name }}"
 
       - name: Publish release @beta
-        if: ${GITHUB_REF##*/} == 'beta'
+        if: ${{ github.ref_name == 'beta' }}
         run: |
           npm run publish:beta
 
       - name: Publish release @latest
-        if: ${GITHUB_REF##*/} == 'main'
+        if: ${{ github.ref_name == 'main' }}
         run: |
           npm run publish:latest
