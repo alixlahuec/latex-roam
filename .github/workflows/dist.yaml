@@ -54,9 +54,9 @@ jobs:
       - name: Publish release @beta
         if: ${{ github.ref_name == 'beta' }}
         run: |
-          npm run publish:beta
+          npm run publish-release:beta
 
       - name: Publish release @latest
         if: ${{ github.ref_name == 'main' }}
         run: |
-          npm run publish:latest
+          npm run publish-release:latest
