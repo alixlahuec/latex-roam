@@ -1,6 +1,6 @@
 {
     "name": "@alixlahuec/latex-roam",
-    "version": "0.4.7",
+    "version": "0.4.8",
     "description": "Exporter to LaTeX for Roam Research users",
     "license": "Apache-2.0",
     "author": {
